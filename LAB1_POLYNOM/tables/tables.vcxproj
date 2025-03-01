@@ -134,6 +134,7 @@
     <ClInclude Include="list_table.h" />
     <ClInclude Include="rb_tree_table.h" />
     <ClInclude Include="sorted_array_table.h" />
+    <ClInclude Include="tables_manager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

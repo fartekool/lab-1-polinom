@@ -36,5 +36,8 @@
     <ClInclude Include="hash_chaining_table.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="tables_manager.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
