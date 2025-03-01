@@ -1,7 +1,5 @@
-#pragma once
-
-// просто закинул стек из третьей лабы про postfix, чтобы разобраться с гитом
-// если хотите, то можете удалить 
+#ifndef STACK_H
+#define STACK_H
 
 #include <stdexcept>
 #include <vector>
@@ -23,9 +21,8 @@ public:
             throw std::invalid_argument("Size must be between 1 and MaxStackSize");
     }
 
-    // we prohibit copying and assignment of the stack, since we use it as a service structure
-    TStack(const TStack&) = delete; // Removing the copy constructor
-    TStack& operator=(const TStack&) = delete; // Removing the assignment operator
+    TStack(const TStack&) = delete;
+    TStack& operator=(const TStack&) = delete; 
 
     void Push(const T& val) {
         if (IsFull())
@@ -66,3 +63,5 @@ public:
         else mem.clear();
     }
 };
+
+#endif

@@ -1,9 +1,11 @@
 #ifndef LIST_H
 #define LIST_H
 
+#include <stdexcept>
+
 using namespace std;
 
-template<class T>//тут потом эксепшены адекватные надо сделать будет
+template<class T>
 class List
 {
 	struct Node
@@ -70,9 +72,9 @@ public:
 	void erase(size_t pos)
 	{
 		if (is_empty())
-			throw "list is empty!";
+			throw underflow_error("List is empty");
 		if (pos >= sz)
-			throw "Incorrect list's elem position!";
+			throw invalid_argument("Incorrect list's elem position!");
 		Node* p = pFirst;
 		if (pos == 0)
 		{
@@ -91,9 +93,9 @@ public:
 	T& operator[](size_t index)
 	{
 		if (is_empty())
-			throw "list is empty!";
+			throw underflow_error("List is empty");
 		if (index >= sz)
-			throw "Incorrect list's elem position!";
+			throw invalid_argument("Incorrect list's elem position!");
 		Node* p = pFirst;
 		for (size_t i = 0; i != index; i++, p = p->pNext);
 		return p->data;
@@ -102,9 +104,9 @@ public:
 	const T& operator[](size_t index) const
 	{
 		if (is_empty())
-			throw "list is empty!";
+			throw underflow_error("List is empty");
 		if (index >= sz)
-			throw "Incorrect list's elem position!";
+			throw invalid_argument("Incorrect list's elem position!");
 		Node* p = pFirst;
 		for (size_t i = 0; i != index; i++, p = p->pNext);
 		return p->data;

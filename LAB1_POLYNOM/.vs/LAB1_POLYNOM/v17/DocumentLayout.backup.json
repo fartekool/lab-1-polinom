@@ -3,12 +3,16 @@
   "WorkspaceRootPath": "C:\\OP\\lab-1-polinom\\LAB1_POLYNOM\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{9267BA27-7541-49DA-AD63-3303386CF2E0}|polynomial_algebra\\polynomial_algebra.vcxproj|C:\\OP\\lab-1-polinom\\LAB1_POLYNOM\\polynomial_algebra\\expression.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{9267BA27-7541-49DA-AD63-3303386CF2E0}|polynomial_algebra\\polynomial_algebra.vcxproj|solutionrelative:polynomial_algebra\\expression.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{9267BA27-7541-49DA-AD63-3303386CF2E0}|polynomial_algebra\\polynomial_algebra.vcxproj|C:\\OP\\lab-1-polinom\\LAB1_POLYNOM\\polynomial_algebra\\stack.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{9267BA27-7541-49DA-AD63-3303386CF2E0}|polynomial_algebra\\polynomial_algebra.vcxproj|solutionrelative:polynomial_algebra\\stack.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0E3CF55-733D-4B81-8744-6DC3E2878AAA}|polynom\\LAB1_POLYNOM.vcxproj|C:\\OP\\lab-1-polinom\\LAB1_POLYNOM\\polynom\\list.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{C0E3CF55-733D-4B81-8744-6DC3E2878AAA}|polynom\\LAB1_POLYNOM.vcxproj|solutionrelative:polynom\\list.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9267BA27-7541-49DA-AD63-3303386CF2E0}|polynomial_algebra\\polynomial_algebra.vcxproj|C:\\OP\\lab-1-polinom\\LAB1_POLYNOM\\polynomial_algebra\\expression.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{9267BA27-7541-49DA-AD63-3303386CF2E0}|polynomial_algebra\\polynomial_algebra.vcxproj|solutionrelative:polynomial_algebra\\expression.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{264E85FC-8568-46F3-9A97-4586090BE2A2}|tables\\tables.vcxproj|C:\\OP\\lab-1-polinom\\LAB1_POLYNOM\\tables\\tables_manager.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -17,10 +21,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{264E85FC-8568-46F3-9A97-4586090BE2A2}|tables\\tables.vcxproj|C:\\OP\\lab-1-polinom\\LAB1_POLYNOM\\tables\\sorted_array_table.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{264E85FC-8568-46F3-9A97-4586090BE2A2}|tables\\tables.vcxproj|solutionrelative:tables\\sorted_array_table.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C0E3CF55-733D-4B81-8744-6DC3E2878AAA}|polynom\\LAB1_POLYNOM.vcxproj|C:\\OP\\lab-1-polinom\\LAB1_POLYNOM\\polynom\\list.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{C0E3CF55-733D-4B81-8744-6DC3E2878AAA}|polynom\\LAB1_POLYNOM.vcxproj|solutionrelative:polynom\\list.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{264E85FC-8568-46F3-9A97-4586090BE2A2}|tables\\tables.vcxproj|C:\\OP\\lab-1-polinom\\LAB1_POLYNOM\\tables\\hash_chaining_table.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -66,11 +66,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "tables_manager.h",
               "DocumentMoniker": "C:\\OP\\lab-1-polinom\\LAB1_POLYNOM\\tables\\tables_manager.h",
               "RelativeDocumentMoniker": "tables\\tables_manager.h",
@@ -83,33 +83,33 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 1,
               "Title": "list.h",
               "DocumentMoniker": "C:\\OP\\lab-1-polinom\\LAB1_POLYNOM\\polynom\\list.h",
               "RelativeDocumentMoniker": "polynom\\list.h",
               "ToolTip": "C:\\OP\\lab-1-polinom\\LAB1_POLYNOM\\polynom\\list.h",
               "RelativeToolTip": "polynom\\list.h",
-              "ViewState": "AgIAAA8AAAAAAAAAAAAAAAgAAAAMAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAGwAAAA9AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2025-03-01T17:27:29.08Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "stack.h",
               "DocumentMoniker": "C:\\OP\\lab-1-polinom\\LAB1_POLYNOM\\polynomial_algebra\\stack.h",
               "RelativeDocumentMoniker": "polynomial_algebra\\stack.h",
               "ToolTip": "C:\\OP\\lab-1-polinom\\LAB1_POLYNOM\\polynomial_algebra\\stack.h",
               "RelativeToolTip": "polynomial_algebra\\stack.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAABTAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2025-02-27T17:12:55.813Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "sorted_array_table.h",
               "DocumentMoniker": "C:\\OP\\lab-1-polinom\\LAB1_POLYNOM\\tables\\sorted_array_table.h",
               "RelativeDocumentMoniker": "tables\\sorted_array_table.h",
@@ -117,12 +117,11 @@
               "RelativeToolTip": "tables\\sorted_array_table.h",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-02-27T17:14:57.755Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-27T17:14:57.755Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "expression.h",
               "DocumentMoniker": "C:\\OP\\lab-1-polinom\\LAB1_POLYNOM\\polynomial_algebra\\expression.h",
               "RelativeDocumentMoniker": "polynomial_algebra\\expression.h",
@@ -143,8 +142,7 @@
               "RelativeToolTip": "tables\\hash_chaining_table.h",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-02-27T17:16:20.502Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-27T17:16:20.502Z"
             },
             {
               "$type": "Document",
