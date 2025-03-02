@@ -132,6 +132,9 @@
     <ClInclude Include="monom.h" />
     <ClInclude Include="polynom.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="sample.cpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
