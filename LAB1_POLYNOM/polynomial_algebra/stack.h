@@ -1,5 +1,4 @@
-#ifndef STACK_H
-#define STACK_H
+#pragma once
 
 #include <stdexcept>
 #include <vector>
@@ -63,5 +62,3 @@ public:
         else mem.clear();
     }
 };
-
-#endif

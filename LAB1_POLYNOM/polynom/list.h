@@ -1,5 +1,4 @@
-#ifndef LIST_H
-#define LIST_H
+#pragma once
 
 #include <stdexcept>
 
@@ -146,5 +145,4 @@ public:
 	}
 };
 
-#endif 
 
