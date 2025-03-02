@@ -62,8 +62,12 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 2,
           "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
             {
               "$type": "Document",
               "DocumentIndex": 1,
@@ -85,14 +89,10 @@
               "RelativeDocumentMoniker": "polynom\\polynom.h",
               "ToolTip": "C:\\Users\\andrew_baldin\\source\\repos\\Andrew-8705\\lab-1-polinom\\LAB1_POLYNOM\\polynom\\polynom.h",
               "RelativeToolTip": "polynom\\polynom.h",
-              "ViewState": "AQIAAAkAAAAAAAAAAAAAABgAAAA2AAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAAoAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2025-03-02T11:25:40.776Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
             },
             {
               "$type": "Document",
@@ -104,8 +104,7 @@
               "RelativeToolTip": "tables\\tables_manager.h",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-03-01T17:40:00.947Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-01T17:40:00.947Z"
             },
             {
               "$type": "Document",
@@ -117,8 +116,7 @@
               "RelativeToolTip": "polynom\\list.h",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAJIAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-03-01T17:27:29.08Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-01T17:27:29.08Z"
             },
             {
               "$type": "Document",
@@ -130,8 +128,7 @@
               "RelativeToolTip": "polynomial_algebra\\stack.h",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAEAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-02-27T17:12:55.813Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-27T17:12:55.813Z"
             },
             {
               "$type": "Document",
@@ -143,8 +140,7 @@
               "RelativeToolTip": "tables\\sorted_array_table.h",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-02-27T17:14:57.755Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-27T17:14:57.755Z"
             },
             {
               "$type": "Document",
@@ -156,8 +152,7 @@
               "RelativeToolTip": "polynomial_algebra\\expression.h",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-02-27T17:13:16.709Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-27T17:13:16.709Z"
             },
             {
               "$type": "Document",
@@ -169,8 +164,7 @@
               "RelativeToolTip": "tables\\hash_chaining_table.h",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-02-27T17:16:20.502Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-27T17:16:20.502Z"
             },
             {
               "$type": "Document",
@@ -182,8 +176,7 @@
               "RelativeToolTip": "tables\\rb_tree_table.h",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-02-27T17:15:36.024Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-27T17:15:36.024Z"
             },
             {
               "$type": "Document",
@@ -195,8 +188,7 @@
               "RelativeToolTip": "tables\\hash_open_addr_table.h",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-02-27T17:15:59.31Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-27T17:15:59.31Z"
             },
             {
               "$type": "Document",
@@ -208,8 +200,7 @@
               "RelativeToolTip": "tables\\avl_tree_table.h",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-02-27T17:15:15.444Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-27T17:15:15.444Z"
             },
             {
               "$type": "Document",
@@ -221,8 +212,7 @@
               "RelativeToolTip": "tables\\list_table.h",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-02-27T17:14:38.054Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-27T17:14:38.054Z"
             },
             {
               "$type": "Document",
@@ -234,8 +224,7 @@
               "RelativeToolTip": "tables\\array_table.h",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-02-27T17:14:13.521Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-27T17:14:13.521Z"
             }
           ]
         }
