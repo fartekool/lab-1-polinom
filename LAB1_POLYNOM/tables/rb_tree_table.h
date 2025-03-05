@@ -1,9 +1,19 @@
-#pragma once
+#ifndef RB_TREE_TABLE_H
+#define RB_TREE_TABLE_H
+
 #include <string>
+#include "base_table.h"
+
 template<class T>
-class Rb_tree_table
+class RB_tree : public Base_table<T>
 {
-	T find(const std::string& name) const;
-	void insert(const std::string& name, const T& obj);
-	void pop(const std::string& name);
+	size_t fill;
+public:
+	RB_tree();
+	T find(const string& name) const override;
+	void insert(const string& name, const T& obj) override;
+	void pop(const string& name) override;
+	~RB_tree() override;
 };
+
+#endif

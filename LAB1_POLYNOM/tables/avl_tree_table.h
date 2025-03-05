@@ -1,9 +1,19 @@
-#pragma once
+#ifndef AVL_TREE_TABLE_H
+#define AVL_TREE_TABLE_H
+
 #include <string>
+#include "base_table.h"
+
 template<class T>
-class Avl_tree_table
+class Avl_tree_table : public Base_table<T>
 {
-	T find(const std::string& name) const;
-	void insert(const std::string& name, const T& obj);
-	void pop(const std::string& name);
+	size_t fill;
+public:
+	Avl_tree_table();
+	T find(const string& name) const override;
+	void insert(const string& name, const T& obj) override;
+	void pop(const string& name) override;
+	~Avl_tree_table() override;
 };
+
+#endif
