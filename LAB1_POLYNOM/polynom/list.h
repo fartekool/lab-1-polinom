@@ -1,148 +1,156 @@
 #pragma once
 
+#include <vector>
+#include <utility>
 #include <stdexcept>
 
 using namespace std;
 
-template<class T>
-class List
-{
-	struct Node
-	{
-		T data;
-		Node* pNext = nullptr;
-	};
-	Node* pFirst, * pLast;
-	size_t sz;
+template<typename T>
+class List {
+    struct Node {
+        T value;
+        Node* pNext;
+        Node(const T& val, Node* next = nullptr) : value(val), pNext(next) {}
+    };
+    Node* pFirst;
+    size_t sz;
+    mutable Node* lastNode; // кэшированный узел
+    mutable size_t lastIndex; // кэшированный индекс
+
+    friend void swap(List& l, List& r) noexcept {
+        using std::swap;
+        swap(l.pFirst, r.pFirst);
+        swap(l.sz, r.sz);
+        swap(l.lastNode, r.lastNode);
+        swap(l.lastIndex, r.lastIndex);
+    }
+
+    Node* ToPos(size_t pos) const {
+        if (pos >= sz)
+            throw out_of_range("Index out of range");
+
+        if (lastNode && lastIndex <= pos) {
+            for (; lastIndex < pos; ++lastIndex) {
+                lastNode = lastNode->pNext;
+            }
+        }
+        else {
+            lastNode = pFirst;
+            lastIndex = 0;
+            for (; lastIndex < pos; ++lastIndex) {
+                lastNode = lastNode->pNext;
+            }
+        }
+        return lastNode;
+    }
+
 public:
-	List() :pFirst(nullptr), pLast(nullptr), sz(0) {}
+    List() : pFirst(nullptr), sz(0), lastNode(nullptr), lastIndex(0) {}
 
-	List(const List& to_copy) :sz(to_copy.sz), pFirst(nullptr), pLast(nullptr)
-	{
-		if (!to_copy.pFirst)
-			return;
-		pFirst = new Node{ to_copy.pFirst->data };
-		Node* p = to_copy.pFirst->pNext;
-		Node* current = pFirst;
-		while (p)
-		{
-			current->pNext = new Node{ p->data };
-			current = current->pNext;
-			p = p->pNext;
-		}
-		pLast = current;
-	}
+    List(const vector<T>& v) : pFirst(nullptr), sz(0), lastNode(nullptr), lastIndex(0) {
+        for (size_t i = v.size(); i > 0; i--) {
+            PushFront(v[i - 1]);
+        }
+    }
 
-	~List()
-	{
-		Node* p = pFirst;
-		while (p)
-		{
-			pFirst = pFirst->pNext;
-			delete p;
-			p = pFirst;
-		}
-	}
+    List(const List& list) : pFirst(nullptr), sz(list.sz), lastNode(nullptr), lastIndex(0) {
+        if (list.pFirst == nullptr) return;
+        pFirst = new Node(list.pFirst->value);
+        Node* currentNew = pFirst;
+        Node* currentOld = list.pFirst->pNext;
+        while (currentOld != nullptr) {
+            currentNew->pNext = new Node(currentOld->value);
+            currentNew = currentNew->pNext;
+            currentOld = currentOld->pNext;
+        }
+    }
 
-	size_t get_size() const noexcept
-	{
-		return sz;
-	}
+    List(List&& list) noexcept : pFirst(nullptr), sz(0), lastNode(nullptr), lastIndex(0) {
+        swap(*this, list);
+    }
 
-	bool is_empty() const noexcept
-	{
-		return sz == 0;
-	}
+    List& operator=(const List& list) {
+        if (this != &list) {
+            List tmp(list);
+            swap(*this, tmp);
+        }
+        return *this;
+    }
 
-	void push_back(const T& elem)
-	{
-		Node* to_push = new Node{ elem };
-		if (!pFirst)
-		{
-			pFirst = pLast = to_push;
-			sz++;
-			return;
-		}
-		pLast->pNext = to_push;
-		pLast = to_push;
-		sz++;
-	}
+    List& operator=(List&& list) noexcept {
+        if (this != &list) {
+            swap(*this, list);
+        }
+        return *this;
+    }
 
-	void erase(size_t pos)
-	{
-		if (is_empty())
-			throw underflow_error("List is empty");
-		if (pos >= sz)
-			throw invalid_argument("Incorrect list's elem position!");
-		Node* p = pFirst;
-		if (pos == 0)
-		{
-			pFirst = pFirst->pNext;
-			delete p;
-			sz--;
-			return;
-		}
-		for (size_t i = 0; i != pos - 1; p = p->pNext, i++);
-		Node* to_del = p->pNext;
-		p->pNext = p->pNext->pNext;
-		delete to_del;
-		sz--;
-	}
+    ~List() {
+        Node* p;
+        while (pFirst != nullptr) {
+            p = pFirst;
+            pFirst = pFirst->pNext;
+            delete p;
+        }
+    }
 
-	T& operator[](size_t index)
-	{
-		if (is_empty())
-			throw underflow_error("List is empty");
-		if (index >= sz)
-			throw invalid_argument("Incorrect list's elem position!");
-		Node* p = pFirst;
-		for (size_t i = 0; i != index; i++, p = p->pNext);
-		return p->data;
-	}
+    size_t size() const noexcept { return sz; }
 
-	const T& operator[](size_t index) const
-	{
-		if (is_empty())
-			throw underflow_error("List is empty");
-		if (index >= sz)
-			throw invalid_argument("Incorrect list's elem position!");
-		Node* p = pFirst;
-		for (size_t i = 0; i != index; i++, p = p->pNext);
-		return p->data;
-	}
+    bool isEmpty() const noexcept { return sz == 0; }
 
-	bool operator==(const List& compare)  const
-	{
-		if (this == &compare)
-			return true;
-		if (sz != compare.sz)
-			return false;
-		Node* leftCur = pFirst, * rightCur = compare.pFirst;
-		while (leftCur)
-		{
-			if (leftCur->data != rightCur->data)
-				return false;
-			leftCur = leftCur->pNext;
-			rightCur = rightCur->pNext;
-		}
-		return true;
-	}
+    T& Front() noexcept {
+        return pFirst->value;
+    }
 
-	bool operator!=(const List& compare)
-	{
-		return !(operator==(compare));
-	}
+    const T& Front() const noexcept {
+        return pFirst->value;
+    }
 
-	List& operator = (const List& other)
-	{
-		if (*this == other)
-			return *this;
-		List tmp(other);
-		swap(sz, tmp.sz);
-		swap(pFirst, tmp.pFirst);
-		swap(pLast, tmp.pLast);
-		return *this;
-	}
+    void PushFront(const T& val) {
+        Node* node = new Node(val, pFirst);
+        pFirst = node;
+        sz++;
+        lastNode = nullptr;
+        lastIndex = 0;
+    }
+
+    void PopFront() noexcept {
+        if (pFirst == nullptr) return;
+        Node* p = pFirst;
+        pFirst = pFirst->pNext;
+        delete p;
+        sz--;
+        lastNode = nullptr;
+        lastIndex = 0;
+    }
+
+    T& operator[] (size_t pos) {
+        Node* p = ToPos(pos);
+        return p->value;
+    }
+
+    const T& operator[] (size_t pos) const {
+        Node* p = ToPos(pos);
+        return p->value;
+    }
+
+    void PushAfter(size_t pos, const T& val) {
+        Node* p = ToPos(pos);
+        Node* pNew = new Node(val, p->pNext);
+        p->pNext = pNew;
+        sz++;
+        lastNode = nullptr;
+        lastIndex = 0;
+    }
+
+    void EraseAfter(size_t pos) {
+        Node* p = ToPos(pos);
+        if (p->pNext == nullptr) return;
+        Node* pDel = p->pNext;
+        p->pNext = pDel->pNext;
+        delete pDel;
+        sz--;
+        lastNode = nullptr;
+        lastIndex = 0;
+    }
 };
-
-
