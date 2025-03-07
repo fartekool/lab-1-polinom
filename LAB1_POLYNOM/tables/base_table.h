@@ -12,7 +12,6 @@ class Base_table
 {
 	size_t fill;
 public:
-	Base_table() = 0;
 	virtual T find(const string& name) const = 0;
 	virtual void insert(const string& name, const T& obj) = 0;
 	virtual void pop(const string& name) = 0;
