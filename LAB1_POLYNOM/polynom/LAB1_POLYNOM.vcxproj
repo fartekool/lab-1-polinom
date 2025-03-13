@@ -134,6 +134,7 @@
     <ClInclude Include="test_for_form.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="polynom.cpp" />
     <ClCompile Include="sample.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

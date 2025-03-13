@@ -7,6 +7,16 @@
 
 using namespace std;
 
+class ExpressionValidator {
+    static void CheckValidCharacters(const std::string& expr);
+    static void CheckBrackets(const string& expr);
+
+public:
+    static bool IsOperator(char c);
+
+    static void Validate(const string& expr);
+};
+
 class Parser { 
 public:
 	static vector<string> Parse(const string& str);

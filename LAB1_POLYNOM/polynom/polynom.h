@@ -37,4 +37,6 @@ public:
 	Polynom operator*(const Polynom& other);
 
 	Polynom derivative(char var) const;
+
+	Polynom integrate(char var) const;
 };

@@ -130,6 +130,9 @@
     <ClInclude Include="expression.h" />
     <ClInclude Include="stack.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="expression.cpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
