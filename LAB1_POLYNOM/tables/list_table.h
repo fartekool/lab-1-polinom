@@ -3,16 +3,23 @@
 
 #include <string>
 #include "base_table.h"
+#include "../polynom/list.h"
 
-template<class T>
-class List_table : public Base_table<T>
+template<class T,class B>
+class List_table : public Base_table<T,B>
 {
+	struct record
+	{
+		T data;
+		B key;
+	};
+	List<record> table;
 	size_t fill;
 public:
 	List_table();
-	T find(const string& name) const override;
-	void insert(const string& name, const T& obj) override;
-	void pop(const string& name) override;
+	T& find(const B& name) const override;
+	bool insert(const B& name, const T& obj) override;
+	bool delete_rec(const B& name) override;
 	~List_table() override;
 };
 

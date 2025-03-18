@@ -137,6 +137,10 @@
     <ClInclude Include="sorted_array_table.h" />
     <ClInclude Include="tables_manager.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="array_table.cpp" />
+    <ClCompile Include="list_table.cpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
