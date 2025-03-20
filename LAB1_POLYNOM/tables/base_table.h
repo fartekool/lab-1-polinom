@@ -23,7 +23,7 @@ public:
 	virtual bool insert(const B& name, const T& obj) = 0;
 	virtual bool delete_rec(const B& name) = 0;
 	virtual bool isEmpty() const = 0;
-	virtual ~Base_table();
+	//virtual ~Base_table();
 };
 
 #endif

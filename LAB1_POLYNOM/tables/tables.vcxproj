@@ -138,7 +138,6 @@
     <ClInclude Include="tables_manager.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="array_table.cpp" />
     <ClCompile Include="list_table.cpp" />
     <ClCompile Include="sorted_array_table.cpp" />
   </ItemGroup>

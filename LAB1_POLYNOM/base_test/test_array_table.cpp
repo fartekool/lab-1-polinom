@@ -1,14 +1,18 @@
 #include "gtest.h"
 #include "../tables/array_table.h"
-
+#include<string>
+#include <type_traits>
 TEST(Array_table, can_create_table)
-{
-	Array_table<string,int> tmp;
+{	
+	static constexpr std::size_t n = TypeParam::value;
+	ASSERT_NO_THROW(Array_table<TYPED_TEST, TYPED_TEST> tmp);
+
 }
 
 TEST(Array_table, can_insert_elem)
 {
-	ADD_FAILURE();
+	Array_table<int, string> A;
+	ASSERT_NO_THROW(A.insert("name", 4));
 }
 
 TEST(Array_table, throws_when_insert_if_table_is_full)
