@@ -5,14 +5,14 @@
 #include "base_table.h"
 
 template<class T, class B>
-class Hash_open_addr_table : public Base_table<T,B>
+class Hash_open_addr_table : public Base_table<T, B>
 {
 	size_t fill;
 public:
 	Hash_open_addr_table();
-	T find(const string& name) const override;
-	void insert(const string& name, const T& obj) override;
-	void pop(const string& name) override;
+	B find(const T& name) const override;
+	void insert(const T& name, const T& obj) override;
+	void pop(const T& name) override;
 	~Hash_open_addr_table() override;
 };
 

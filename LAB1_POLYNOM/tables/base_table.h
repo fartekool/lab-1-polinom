@@ -9,21 +9,22 @@ using namespace std;
 
 const size_t max_fill = 1000;
 
-template<class T,class B>
+template<class T, class B>
 class Base_table
 {
+protected:
 	struct record
-	{
-		T data;
-		B key;
+	{	
+		T key;
+		B data;
 	};
-	size_t fill;
+	size_t Fill;
 public:
-	virtual const T& find(const B& name) const = 0;
-	virtual bool insert(const B& name, const T& obj) = 0;
-	virtual bool delete_rec(const B& name) = 0;
+	virtual const B& find(const T& name) const = 0;
+	virtual bool insert(const T& name, const B& obj) = 0;
+	virtual bool delete_rec(const T& name) = 0;
 	virtual bool isEmpty() const = 0;
-	//virtual ~Base_table();
+	virtual ~Base_table() = default;
 };
 
 #endif

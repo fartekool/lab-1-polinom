@@ -1,6 +1,7 @@
 #include "gtest.h"
 #include "../polynom/polynom.h"
 #include "../polynom/polynom.cpp"
+
 TEST(Polynom, can_create_empty_polinom) {
     ASSERT_NO_THROW(Polynom());
 }
