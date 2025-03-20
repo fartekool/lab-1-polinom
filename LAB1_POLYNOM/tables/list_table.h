@@ -5,19 +5,15 @@
 #include "base_table.h"
 #include "../polynom/list.h"
 
-template<class T,class B>
-class List_table : public Base_table<T,B>
+template<class T>
+class List_table : public Base_table<T>
 {
-	struct record
-	{
-		T data;
-		B key;
-	};
-	size_t fill;
+	using Base_table<T>::record;
+	using Base_table<T>::Fill;
 	List<record> table;
 public:
-	List_table();
-	const T& find(const B& name) const override
+	List_table() : Fill(0) {}
+	const T& find(const string& name) const override
 	{
 		if (table.isEmpty())
 			throw runtime_error("Table is empty!");
@@ -31,16 +27,16 @@ public:
 		}
 		throw runtime_error("Key not finded!");
 	}
-	bool insert(const B& name, const T& obj) override
+	bool insert(const string& name, const T& obj) override
 	{
 		for (int i = 0; i < table.size(); i++)
 			if (table[i].key == name)
 				return false;
-		table.PushFront(record{ name, obj });
-		fill++;
+		table.PushFront(record{ obj,name });
+		Fill++;
 		return true;
 	}
-	bool delete_rec(const B& name) override
+	bool delete_rec(const string& name) override
 	{
 		for (int i = 0; i < table.size(); i++)
 			if (table[i].key == name)
@@ -53,9 +49,8 @@ public:
 	}
 	bool isEmpty() const override
 	{
-		return fill == 0;
+		return Fill == 0;
 	}
 	~List_table() override;
 };
-
 #endif

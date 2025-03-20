@@ -3,39 +3,35 @@
 
 #include "base_table.h"
 
-template<class T, class B>
-class Array_table: public Base_table<T,B>
+template<class T>
+class Array_table: public Base_table<T>
 {
-	struct record
-	{
-		T data;
-		B key;
-	};
-	size_t fill;
+	using Base_table<T>::record;
+	using Base_table<T>::Fill;
 	vector<record> table;
 public:
-	Array_table() : fill(0) {};
-	const T& find(const B& name) const override
+	Array_table() { Fill = 0; }
+	const T& find(const string& name) const override
 	{
-		if (is_empty())
+		if (isEmpty())
 			throw runtime_error("Table is empty!");//придумать вариант получше
 		for (int i = 0; i < table.size(); i++)
 			if (table[i].key == name)
 				return table[i].data;
 		throw runtime_error("Key not finded!");//придумать вариант получше
 	}
-	bool insert(const B& name, const T& obj) override
+	bool insert(const string& name, const T& obj) override
 	{
-		if (fill == max_fill)//?
+		if (Fill == max_fill)//?
 			return false;
 		for (int i = 0; i < table.size(); i++)
 			if (table[i].key == name)
 				return false;
-		table.push_back(record{ name, obj });
-		fill++;
+		table.push_back(record{ obj,name });
+		Fill++;
 		return true;
 	}
-	bool delete_rec(const B& name) override
+	bool delete_rec(const string& name) override
 	{
 		if (isEmpty())
 			return false;
@@ -43,15 +39,15 @@ public:
 			if (table[i].key == name)
 			{
 				table.erase(table.begin() + i);
-				fill--;
+				Fill--;
 				return true;
 			}
 		return false;
 	}
 	bool isEmpty() const
 	{
-		return fill == 0;
+		return Fill == 0;
 	}
+	~Array_table() = default;
 };
-
 #endif

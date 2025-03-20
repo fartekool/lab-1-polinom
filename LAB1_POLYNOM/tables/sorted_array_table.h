@@ -5,22 +5,18 @@
 #include <algorithm>
 #include "base_table.h"
 
-template<class T, class B>
-class Sorted_array_table : public Base_table<T,B>
+template<class T>
+class Sorted_array_table : public Base_table<T>
 {
-	struct record
-	{
-		T data;
-		B key;
-	};
-	size_t fill;
+	using Base_table<T>::record;
+	using Base_table<T>::Fill;
 	struct binary_result
 	{
 		bool flag;
 		size_t index;
 	};
 	vector<record> table;
-	void shift_elem(size_t pos, const B& name, const T& obj)
+	void shift_elem(size_t pos, const string& name, const T& obj)
 	{
 		table.push_back(record{ obj,name });
 		for (int i = table.size() - 1; i > pos; i--)
@@ -30,7 +26,7 @@ class Sorted_array_table : public Base_table<T,B>
 			table[i - 1] = tmp;
 		}
 	}
-	binary_result binary_search(const B& name)
+	binary_result binary_search(const string& name)
 	{
 		size_t left = 0;
 		size_t right = table.size() - 1;
@@ -52,8 +48,8 @@ class Sorted_array_table : public Base_table<T,B>
 		return binary_result{ false, left };
 	}
 public:
-	Sorted_array_table() :fill(0) {}
-	const T& find(const B& name) const override
+	Sorted_array_table() :Fill(0) {}
+	const T& find(const string& name) const override
 	{
 		if (isEmpty())
 			throw runtime_error("Table is empty!");
@@ -62,31 +58,31 @@ public:
 			return table[search.index];
 		throw runtime_error("Key not finded!");
 	}
-	bool insert(const B& name, const T& obj) override
+	bool insert(const string& name, const T& obj) override
 	{
-		if (fill == max_fill)
+		if (Fill == max_fill)
 			return false;
 		binary_result search = binary_search(name);
 		if (search.flag)
 			return false;
 		shift_elem(search.index, name, obj);
-		fill++;
+		Fill++;
 		return true;
 	}
-	bool delete_rec(const B& name) override
+	bool delete_rec(const string& name) override
 	{
-		if (is_empty())
+		if (isEmpty())
 			return false;
 		binary_result search = binary_search(name);
 		if (!search.flag)
 			return false;
 		table.erase(table.begin() + search.index);
-		fill--;
+		Fill--;
 		return true;
 	}
 	bool isEmpty() const override
 	{
-		return fill == 0;
+		return Fill == 0;
 	}
 	~Sorted_array_table() override = default;
 };
