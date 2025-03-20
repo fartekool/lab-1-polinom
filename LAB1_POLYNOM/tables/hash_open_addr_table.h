@@ -4,8 +4,8 @@
 #include <string>
 #include "base_table.h"
 
-template<class T>
-class Hash_open_addr_table : public Base_table<T>
+template<class T, class B>
+class Hash_open_addr_table : public Base_table<T,B>
 {
 	size_t fill;
 public:

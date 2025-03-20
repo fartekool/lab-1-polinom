@@ -22,11 +22,11 @@ const table_type list_table = 4;
 const table_type rb_tree_table = 5;
 const table_type sorted_array_table = 6;
 
-template<class T>
+template<class T, class B>
 class Tables_manager
 {
-	vector<Base_table<T>*> tables(count_of_tables);
-	vector<T> database;//мб тоже не надо
+	vector<Base_table<T,B>*> tables(count_of_tables);
+	vector<T,B> database;//мб тоже не надо
 	Base_table* current_table;//тут можно тэйбл_тайпом наверное
 	//а может и не лучше
 	size_t tables_fill;

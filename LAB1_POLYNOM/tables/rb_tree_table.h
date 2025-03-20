@@ -4,8 +4,8 @@
 #include <string>
 #include "base_table.h"
 
-template<class T>
-class RB_tree : public Base_table<T>
+template<class T, class B>
+class RB_tree : public Base_table<T,B>
 {
 	size_t fill;
 public:

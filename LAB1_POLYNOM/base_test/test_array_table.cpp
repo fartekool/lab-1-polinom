@@ -3,7 +3,7 @@
 
 TEST(Array_table, can_create_table)
 {
-	ADD_FAILURE();
+	Array_table<string,int> tmp;
 }
 
 TEST(Array_table, can_insert_elem)

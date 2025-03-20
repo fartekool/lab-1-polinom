@@ -4,8 +4,8 @@
 #include <string>
 #include "base_table.h"
 
-template<class T>
-class Avl_tree_table : public Base_table<T>
+template<class T, class B>
+class Avl_tree_table : public Base_table<T,B>
 {
 	size_t fill;
 public:

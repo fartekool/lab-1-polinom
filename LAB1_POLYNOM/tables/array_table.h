@@ -22,7 +22,6 @@ public:
 	{
 		return fill == 0;
 	}
-	~Array_table() override;
 };
 
 #endif
