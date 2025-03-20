@@ -19,9 +19,10 @@ class Base_table
 	};
 	size_t fill;
 public:
-	virtual T& find(const string& name) const = 0;
+	virtual const T& find(const string& name) const = 0;
 	virtual bool insert(const string& name, const T& obj) = 0;
 	virtual bool delete_rec(const string& name) = 0;
+	virtual bool isEmpty() const = 0;
 	virtual ~Base_table() = 0;
 };
 

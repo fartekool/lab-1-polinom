@@ -2,7 +2,7 @@
 
 
 template<class T, class B>
-T& List_table<T, B>::find(const B& name) const
+const T& List_table<T, B>::find(const B& name) const
 {
 	if (table.isEmpty())
 		throw runtime_error("Table is empty!");

@@ -1,7 +1,7 @@
 #include "array_table.h"
 
 template<class T, class B>
-T& Array_table<T, B>::find(const B& name) const
+const T& Array_table<T, B>::find(const B& name) const
 {
 	if (is_empty())
 		throw runtime_error("Table is empty!");//придумать вариант получше

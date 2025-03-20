@@ -15,10 +15,10 @@ class Array_table: public Base_table<T,B>
 	size_t fill;
 public:
 	Array_table() : fill(0) {};
-	T& find(const B& name) const override;
+	const T& find(const B& name) const override;
 	bool insert(const B& name, const T& obj) override;
 	bool delete_rec(const B& name) override;
-	bool is_empty()
+	bool isEmpty() const
 	{
 		return fill == 0;
 	}
