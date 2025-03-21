@@ -12,8 +12,8 @@ class List_table : public Base_table<T, B>
 	using Base_table<T, B>::Fill;
 	List<record> table;
 public:
-	List_table() : Fill(0) {}
-	const T& find(const string& name) const override
+	List_table() { Fill = 0; }
+	const B& find(const T& name) const override
 	{
 		if (table.isEmpty())
 			throw runtime_error("Table is empty!");
@@ -27,22 +27,27 @@ public:
 		}
 		throw runtime_error("Key not finded!");
 	}
-	bool insert(const string& name, const T& obj) override
+	bool insert(const T& name, const B& obj) override
 	{
+		if (Fill == max_fill)
+			return false;
 		for (int i = 0; i < table.size(); i++)
 			if (table[i].key == name)
 				return false;
-		table.PushFront(record{ obj,name });
+		table.PushFront(record{ name, obj });
 		Fill++;
 		return true;
 	}
-	bool delete_rec(const string& name) override
+	bool delete_rec(const T& name) override
 	{
 		for (int i = 0; i < table.size(); i++)
 			if (table[i].key == name)
 			{
-				table.EraseAfter(i - 1);
-				fill--;
+				if (i == 0)
+					table.PopFront();
+				else
+					table.EraseAfter(i - 1);
+				Fill--;
 				return true;
 			}
 		return false;
@@ -51,6 +56,6 @@ public:
 	{
 		return Fill == 0;
 	}
-	~List_table() override;
+	~List_table() = default;
 };
 #endif

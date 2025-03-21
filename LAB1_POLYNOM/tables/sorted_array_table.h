@@ -13,12 +13,12 @@ class Sorted_array_table : public Base_table<T, B>
 	struct binary_result
 	{
 		bool flag;
-		size_t index;
+		int index;
 	};
 	vector<record> table;
-	void shift_elem(size_t pos, const string& name, const T& obj)
+	void shift_elem(size_t pos, const T& name, const B& obj)
 	{
-		table.push_back(record{ obj,name });
+		table.push_back(record{ name, obj });
 		for (int i = table.size() - 1; i > pos; i--)
 		{
 			record tmp = table[i];
@@ -26,42 +26,44 @@ class Sorted_array_table : public Base_table<T, B>
 			table[i - 1] = tmp;
 		}
 	}
-	binary_result binary_search(const string& name)
+	binary_result binary_search(const T& name) const
 	{
-		size_t left = 0;
-		size_t right = table.size() - 1;
-		size_t mid = right / 2;
-		size_t position;
+		int left = 0;
+		int right = table.size() - 1;
+		int mid;
 		while (left <= right)
 		{
+			mid = left + (right - left) / 2;
 			if (table[mid].key == name)
-			{
-				position = mid;
-				return binary_result{ true,position };//true - значит, что элемент есть
-			}
+				return binary_result{ true,mid };//true - значит, что элемент есть
 			else if (name < table[mid].key)
 				right = mid - 1;
 			else if (name > table[mid].key)
 				left = mid + 1;
-			mid = left + (right - left) / 2;
 		}
 		return binary_result{ false, left };
 	}
 public:
-	Sorted_array_table() :Fill(0) {}
-	const T& find(const string& name) const override
+	Sorted_array_table() { Fill = 0; }
+	const B& find(const T& name) const override
 	{
 		if (isEmpty())
 			throw runtime_error("Table is empty!");
-		binary_result search = binary_search(table, name);
+		binary_result search = binary_search(name);
 		if (search.flag)
-			return table[search.index];
+			return table[search.index].data;
 		throw runtime_error("Key not finded!");
 	}
-	bool insert(const string& name, const T& obj) override
+	bool insert(const T& name, const B& obj) override
 	{
 		if (Fill == max_fill)
 			return false;
+		if (table.size() == 0)
+		{
+			table.push_back(record{ name,obj });
+			Fill++;
+			return true;
+		}
 		binary_result search = binary_search(name);
 		if (search.flag)
 			return false;
@@ -69,7 +71,7 @@ public:
 		Fill++;
 		return true;
 	}
-	bool delete_rec(const string& name) override
+	bool delete_rec(const T& name) override
 	{
 		if (isEmpty())
 			return false;
@@ -83,6 +85,15 @@ public:
 	bool isEmpty() const override
 	{
 		return Fill == 0;
+	}
+	bool isSorted()
+	{
+		if (isEmpty())
+			return true;
+		for (int i = 1; i < table.size(); i++)
+			if (table[i].key < table[i - 1].key)
+				return false;
+		return true;
 	}
 	~Sorted_array_table() override = default;
 };

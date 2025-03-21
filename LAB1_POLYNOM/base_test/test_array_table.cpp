@@ -3,7 +3,7 @@
 
 TEST(Array_table, can_create_table)
 {
-	ASSERT_NO_THROW(decltype(Array_table<std::string, int>()) tmp);
+	ASSERT_NO_THROW(decltype(Array_table<string, int>()) tmp);
 }
 
 TEST(Array_table, can_insert_elem)
@@ -38,17 +38,100 @@ TEST(Array_table, can_delete_elem)
 
 }
 
-TEST(Array_table, throws_when_delete_if_table_is_empty)
+TEST(Array_table, expected_false_when_delete_if_table_is_empty)
 {
-	ADD_FAILURE();
+	Array_table<string, int> a;
+	EXPECT_FALSE(a.delete_rec("anything"));
 }
 
 TEST(Array_table, can_find_elem)
 {
-	ADD_FAILURE();
+	Array_table<string, int> a;
+	string push;
+	for (char i = 97; i < 123; i++)
+	{
+		push = i;
+		a.insert(push, i);
+	}
+	EXPECT_EQ(97, a.find("a"));
+	EXPECT_EQ(106, a.find("j"));
+	EXPECT_EQ(113, a.find("q"));
 }
 
 TEST(Array_table, throws_when_cant_find_elem)
 {
-	ADD_FAILURE();
+	Array_table<string, int> a;
+	string push;
+	for (char i = 97; i < 123; i++)//(a -> z)
+	{
+		push = i;
+		a.insert(push, i);
+	}
+	ASSERT_ANY_THROW(a.find("A"));
 }
+
+TEST(Array_table, can_insert_same_key_after_deletion)
+{
+	Array_table<string, int> a;
+	a.insert("a", 1);
+	a.delete_rec("a");
+	EXPECT_TRUE(a.insert("a", 1));
+}
+
+TEST(Array_table, expected_false_when_insert_to_full_fill_table)
+{
+	Array_table<int, int> a;
+	for (int i = 0; i < max_fill; i++)
+		a.insert(i, 2 * i);
+	EXPECT_FALSE(a.insert(max_fill, 2 * max_fill));
+}
+
+TEST(Array_table, can_handle_large_number_of_deletions)
+{
+	Array_table<int, int> a;
+	for (int i = 0; i < max_fill; i++) 
+		a.insert(i, 2*i);
+	for (int i = 0; i < max_fill; i++) 
+		EXPECT_TRUE(a.delete_rec(i));
+	EXPECT_TRUE(a.isEmpty());
+}
+
+TEST(Array_table, can_handle_duplicate_insertions_with_different_values)
+{
+	Array_table<string, int> a;
+	a.insert("a", 1);
+	EXPECT_FALSE(a.insert("a", 2)); 
+	EXPECT_EQ(1, a.find("a")); 
+}
+
+TEST(Array_table, can_find_after_multiple_insertions_and_deletions)
+{
+	Array_table<string, int> a;
+	for (int i = 0; i < 100; i++)
+		a.insert("name" + to_string(i), i);
+	for (int i = 0; i < 50; i++)
+		a.delete_rec("name" + to_string(i));
+	for (int i = 50; i < 100; i++)
+		EXPECT_EQ(i, a.find("name" + to_string(i)));
+}
+
+TEST(Array_table, can_insert_multiple_elements_with_same_value)
+{
+	Array_table<string, int> a;
+	EXPECT_TRUE(a.insert("key1", 5));
+	EXPECT_TRUE(a.insert("key2", 5));
+	EXPECT_EQ(5, a.find("key1"));
+	EXPECT_EQ(5, a.find("key2"));
+}
+
+TEST(Array_table, can_insert_after_deleting_all_elements)
+{
+	Array_table<string, int> a;
+	for (int i = 0; i < 5; i++)
+		a.insert("item" + to_string(i), i);
+	for (int i = 0; i < 5; i++)
+		a.delete_rec("item" + to_string(i));
+	EXPECT_TRUE(a.insert("new_item", 10));
+}
+
+
