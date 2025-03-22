@@ -72,7 +72,7 @@ class Avl_tree_table : public Base_table<T, B>
 		return p; // если балансировка не нужна
 	}
 
-	TNode* FindNode(const T& key, TNode* pNode) const {
+	/*TNode* FindNode(const T& key, TNode* pNode) const {
 		if (pNode == nullptr)
 			return nullptr;
 		if (key < pNode->rc.key)
@@ -80,7 +80,19 @@ class Avl_tree_table : public Base_table<T, B>
 		if (key > pNode->rc.key)
 			pNode = FindNode(key, pNode->pRight);
 		return pNode;
+	}*/
 
+	// почему то иногда работает только с доп проверками
+	TNode* FindNode(const T& key, TNode* pNode) const {
+		if (pNode == nullptr)
+			return nullptr;
+		if (pNode->rc.key == key)
+			return pNode;
+		if (key < pNode->rc.key && pNode->pLeft != nullptr)
+			return FindNode(key, pNode->pLeft);
+		if (key > pNode->rc.key && pNode->pRight != nullptr)
+			return FindNode(key, pNode->pRight);
+		return nullptr;
 	}
 
 	TNode* InsertNode(TNode* p, const T& key, const B& data) {
@@ -92,6 +104,41 @@ class Avl_tree_table : public Base_table<T, B>
 		else if (key > p->rc.key)
 			p->pRight = InsertNode(p->pRight, key, data);
 		else return p; // Ключ уже существует
+
+		return Balance(p);
+	}
+
+	TNode* FindMin(TNode* p) {  // поиск узла с минимальным ключом в дереве p
+		return p->pLeft ? FindMin(p->pLeft) : p;
+	}
+
+	TNode* RemoveMin(TNode* p) { // удаление узла с минимальным ключом из дерева p
+		if (p->pLeft == nullptr)
+			return p->pRight;
+		p->pLeft = RemoveMin(p->pLeft);
+		return Balance(p);
+	}
+
+	TNode* Remove(TNode* p, const T& key) {
+		if (p == nullptr)
+			return nullptr;
+
+		if (key < p->rc.key)
+			p->pLeft = Remove(p->pLeft, key);
+		else if (key > p->rc.key)
+			p->pRight = Remove(p->pRight, key);
+		else {
+			TNode* left = p->pLeft;
+			TNode* right = p->pRight;
+			delete p;
+
+			if (right == nullptr) return left;
+
+			TNode* min = FindMin(right);
+			min->pRight = RemoveMin(right);
+			min->pLeft = left;
+			return Balance(min);
+		}
 
 		return Balance(p);
 	}
@@ -109,6 +156,7 @@ public:
 		Fill = 0;
 		pRoot = nullptr;
 	}
+
 	const B& find(const T& name) const override {
 		if (isEmpty())
 			throw runtime_error("Table is empty!");
@@ -134,6 +182,14 @@ public:
 	}
 
 	bool delete_rec(const T& name) override {
+		if (isEmpty())
+			return false;
+
+		if (FindNode(name, pRoot) == nullptr)
+			return false;
+
+		pRoot = Remove(pRoot, name);
+		Fill--;
 		return true;
 	}
 
