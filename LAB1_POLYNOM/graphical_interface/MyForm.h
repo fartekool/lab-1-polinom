@@ -96,7 +96,7 @@ namespace graphicalinterface {
 			this->button1->Name = L"button1";
 			this->button1->Size = System::Drawing::Size(366, 160);
 			this->button1->TabIndex = 3;
-			this->button1->Text = L"Инструкция\r\n";
+			this->button1->Text = L"Анекдот!\r\n";
 			this->button1->UseVisualStyleBackColor = true;
 			this->button1->Click += gcnew System::EventHandler(this, &MyForm::button1_Click);
 			// 
@@ -130,7 +130,7 @@ namespace graphicalinterface {
 		result = Sum(num1, num2);
 
 		textBox3->Text = System::Convert::ToString(result);*/
-		MessageBox::Show("блаблаблабалбалабала\nбалбалбалабалаб\nбалабалабла");
+		MessageBox::Show("блаблаб");
 	}
 };
 }
