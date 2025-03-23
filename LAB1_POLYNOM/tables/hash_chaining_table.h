@@ -37,7 +37,7 @@ public:
 	}
 	const B& find(const T& name) const override
 	{
-		if (Fill == 0)
+		if (isEmpty())
 			throw runtime_error("Table is empty!");
 		int hashcode = hash_function(name);
 		for (int i = 0; i < table[hashcode].size(); i++)
@@ -59,7 +59,7 @@ public:
 	}
 	bool delete_rec(const T& name) override
 	{
-		if (Fill == 0)
+		if (isEmpty())
 			return false;
 		int hashcode = hash_function(name);
 		for (int i = 0; i < table[hashcode].size(); i++)
