@@ -1,5 +1,6 @@
 #pragma once
 #include "../polynom/test_for_form.h"
+
 namespace graphicalinterface {
 
 	using namespace System;
@@ -21,6 +22,11 @@ namespace graphicalinterface {
 			//
 			//TODO: Add the constructor code here
 			//
+			this->BackColor = Color::FromArgb(130, 171, 217);
+			this->Width = 800;
+			this->Height = 450;
+			this->StartPosition = FormStartPosition::CenterScreen;
+			this->BackgroundImage = Image::FromFile("../graphical_interface/image.jpg");
 		}
 
 	protected:
@@ -39,6 +45,7 @@ namespace graphicalinterface {
 	private: System::Windows::Forms::TextBox^ textBox2;
 	private: System::Windows::Forms::TextBox^ textBox3;
 	private: System::Windows::Forms::Button^ button1;
+
 
 	private:
 		/// <summary>
@@ -89,7 +96,7 @@ namespace graphicalinterface {
 			this->button1->Name = L"button1";
 			this->button1->Size = System::Drawing::Size(366, 160);
 			this->button1->TabIndex = 3;
-			this->button1->Text = L"button1";
+			this->button1->Text = L"Инструкция\r\n";
 			this->button1->UseVisualStyleBackColor = true;
 			this->button1->Click += gcnew System::EventHandler(this, &MyForm::button1_Click);
 			// 
@@ -97,13 +104,14 @@ namespace graphicalinterface {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(12, 25);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+			this->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
 			this->ClientSize = System::Drawing::Size(1364, 755);
 			this->Controls->Add(this->button1);
 			this->Controls->Add(this->textBox3);
 			this->Controls->Add(this->textBox2);
 			this->Controls->Add(this->textBox1);
 			this->Name = L"MyForm";
-			this->Text = L"MyForm";
+			this->Text = L"Polynom";
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -116,12 +124,13 @@ namespace graphicalinterface {
 	private: System::Void textBox3_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 	}
 	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
-		double num1, num2, result;
+		/*double num1, num2, result;
 		num1 = System::Convert::ToDouble(textBox1->Text);
 		num2 = System::Convert::ToDouble(textBox2->Text);
 		result = Sum(num1, num2);
 
-		textBox3->Text = System::Convert::ToString(result);
+		textBox3->Text = System::Convert::ToString(result);*/
+		MessageBox::Show("блаблаблабалбалабала\nбалбалбалабалаб\nбалабалабла");
 	}
 };
 }

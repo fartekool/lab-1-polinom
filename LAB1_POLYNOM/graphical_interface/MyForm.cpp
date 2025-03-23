@@ -8,7 +8,7 @@ void main(array<String^>^ arg) {
     Application::EnableVisualStyles();
     Application::SetCompatibleTextRenderingDefault(false);
 
-    graphicalinterface::MyForm form; // mathpro название проекта , hello название фрмы (вашей)
+    graphicalinterface::MyForm form; 
     Application::Run(% form);
 }
 
