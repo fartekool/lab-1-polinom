@@ -21,6 +21,7 @@ namespace graphicalinterface {
 			//
 			//TODO: Add the constructor code here
 			//
+			
 		}
 
 	protected:
@@ -89,7 +90,7 @@ namespace graphicalinterface {
 			this->button1->Name = L"button1";
 			this->button1->Size = System::Drawing::Size(366, 160);
 			this->button1->TabIndex = 3;
-			this->button1->Text = L"button1";
+			this->button1->Text = L"Инструкция\r\n";
 			this->button1->UseVisualStyleBackColor = true;
 			this->button1->Click += gcnew System::EventHandler(this, &MyForm::button1_Click);
 			// 
@@ -103,7 +104,7 @@ namespace graphicalinterface {
 			this->Controls->Add(this->textBox2);
 			this->Controls->Add(this->textBox1);
 			this->Name = L"MyForm";
-			this->Text = L"MyForm";
+			this->Text = L"Polynom";
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -116,12 +117,13 @@ namespace graphicalinterface {
 	private: System::Void textBox3_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 	}
 	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
-		double num1, num2, result;
+		/*double num1, num2, result;
 		num1 = System::Convert::ToDouble(textBox1->Text);
 		num2 = System::Convert::ToDouble(textBox2->Text);
 		result = Sum(num1, num2);
 
-		textBox3->Text = System::Convert::ToString(result);
+		textBox3->Text = System::Convert::ToString(result);*/
+		MessageBox::Show("блаблаблабалбалабала\nбалбалбалабалаб\nбалабалабла");
 	}
 };
 }
