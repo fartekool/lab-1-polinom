@@ -164,3 +164,4 @@ TEST(Sorted_array_table, can_insert_after_deleting_all_elements)
 		a.delete_rec("item" + to_string(i));
 	EXPECT_TRUE(a.insert("new_item", 10));
 }
+
