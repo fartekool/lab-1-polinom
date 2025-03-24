@@ -80,6 +80,7 @@ TEST(Tables_manager, delete_out_of_all_tables_at_once)
 	Tables_manager<string, int> a;
 	a.insert("name", 1);
 	a.delete_rec("name");
+	ASSERT_ANY_THROW(a.find("name"));
 	a.set_current(list_table);
 	EXPECT_FALSE(a.delete_rec("name"));
 }

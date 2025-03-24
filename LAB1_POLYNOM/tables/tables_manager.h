@@ -31,22 +31,20 @@ class Tables_manager
 		T key;
 		B data;
 	};
+	enum class Operation {ins,del};
 	vector<Base_table<T, B>*> tables;
 	Base_table<T,B>* current_table;
 	size_t tables_fill;
-	vector<T> deleted;
-	vector<record> inserted;
-	void sync()
+	record to_synchr;
+	void sync(record elem, Operation op)
 	{
 		for (int i = 0; i < count_of_tables; i++)
 		{
-			for (int j = 0; j < deleted.size(); j++)
-				tables[i]->delete_rec(deleted[j]);
-			for (int k = 0; k < inserted.size(); k++)
-				tables[i]->insert(inserted[k].key, inserted[k].data);
+			if (op == Operation::del)
+				tables[i]->delete_rec(elem.key);
+			if (op == Operation::ins)
+				tables[i]->insert(elem.key, elem.data);
 		}
-		deleted.clear();
-		inserted.clear();
 	}
 public:
 	Tables_manager() :tables_fill{ 0 }
@@ -67,16 +65,14 @@ public:
 	}
 	const B& find(const T& name)
 	{
-		sync();
 		return current_table->find(name);
 	}
 	bool insert(const T& name, const B& obj)
 	{
-		sync();
 		if (current_table->insert(name, obj))
 		{
 			tables_fill--;
-			inserted.push_back({ name,obj });
+			sync({ name,obj }, Operation::ins);
 			return true;
 		}
 		else
@@ -84,11 +80,10 @@ public:
 	}
 	bool delete_rec(const T& name)
 	{
-		sync();
 		if (current_table->delete_rec(name))
 		{
 			tables_fill++;
-			deleted.push_back(name);
+			sync({ name }, Operation::del);
 			return true;
 		}
 		else
