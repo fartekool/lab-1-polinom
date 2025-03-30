@@ -7,7 +7,7 @@
 
 using namespace std;
 
-const size_t max_fill = 1000;
+const size_t max_fill = 500;
 
 template<class T, class B>
 class Base_table

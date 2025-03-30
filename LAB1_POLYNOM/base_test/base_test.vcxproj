@@ -142,6 +142,7 @@
     <ClCompile Include="test_rb_tree_table.cpp" />
     <ClCompile Include="test_sorted_array_table.cpp" />
     <ClCompile Include="test_stack.cpp" />
+    <ClCompile Include="test_table_manager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="gtest.h" />
