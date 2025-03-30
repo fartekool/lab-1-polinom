@@ -128,10 +128,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="expression.h" />
+    <ClInclude Include="ExpressionValidator.h" />
+    <ClInclude Include="InfixToPostfixConverter.h" />
+    <ClInclude Include="Parser.h" />
+    <ClInclude Include="PostfixCalculator.h" />
     <ClInclude Include="stack.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="expression.cpp" />
+    <ClCompile Include="ExpressionValidator.cpp" />
+    <ClCompile Include="InfixToPostfixConverter.cpp" />
+    <ClCompile Include="Parser.cpp" />
+    <ClCompile Include="PostfixCalculator.cpp" />
     <ClCompile Include="sample.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
