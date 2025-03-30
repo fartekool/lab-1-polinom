@@ -27,6 +27,13 @@ namespace graphicalinterface {
 			this->Height = 450;
 			this->StartPosition = FormStartPosition::CenterScreen;
 			this->BackgroundImage = Image::FromFile("../graphical_interface/image.jpg");
+
+			Button^ helloButton = gcnew Button();
+			helloButton->BackColor = System::Drawing::Color::LightGray;
+			helloButton->ForeColor = System::Drawing::Color::Red;
+			helloButton->Location = System::Drawing::Point(30, 30);
+			helloButton->Text = "Привет";
+			groupBox1->Controls->Add(helloButton);
 		}
 
 	protected:
@@ -45,6 +52,7 @@ namespace graphicalinterface {
 	private: System::Windows::Forms::TextBox^ textBox2;
 	private: System::Windows::Forms::TextBox^ textBox3;
 	private: System::Windows::Forms::Button^ button1;
+	private: System::Windows::Forms::GroupBox^ groupBox1;
 
 
 	private:
@@ -64,6 +72,7 @@ namespace graphicalinterface {
 			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
 			this->button1 = (gcnew System::Windows::Forms::Button());
+			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
 			this->SuspendLayout();
 			// 
 			// textBox1
@@ -100,12 +109,22 @@ namespace graphicalinterface {
 			this->button1->UseVisualStyleBackColor = true;
 			this->button1->Click += gcnew System::EventHandler(this, &MyForm::button1_Click);
 			// 
+			// groupBox1
+			// 
+			this->groupBox1->Location = System::Drawing::Point(976, 98);
+			this->groupBox1->Name = L"groupBox1";
+			this->groupBox1->Size = System::Drawing::Size(317, 166);
+			this->groupBox1->TabIndex = 4;
+			this->groupBox1->TabStop = false;
+			this->groupBox1->Text = L"groupBox1";
+			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(12, 25);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
 			this->ClientSize = System::Drawing::Size(1364, 755);
+			this->Controls->Add(this->groupBox1);
 			this->Controls->Add(this->button1);
 			this->Controls->Add(this->textBox3);
 			this->Controls->Add(this->textBox2);
@@ -130,7 +149,7 @@ namespace graphicalinterface {
 		result = Sum(num1, num2);
 
 		textBox3->Text = System::Convert::ToString(result);*/
-		MessageBox::Show("блаблаб");
+		MessageBox::Show("блабла");
 	}
 };
 }
