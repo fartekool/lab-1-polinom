@@ -1,6 +1,9 @@
 #pragma once
-#include "../polynom/test_for_form.h"
-
+#include <string>
+#include <msclr\marshal_cppstd.h>
+#include "../polynom/polynom.h"
+#include "../polynomial_algebra/expression.h"
+#include "../tables/tables_manager.h"
 namespace graphicalinterface {
 
 	using namespace System;
@@ -13,11 +16,15 @@ namespace graphicalinterface {
 	/// <summary>
 	/// Summary for MyForm
 	/// </summary>
+	Tables_manager<string, string> table;
 	public ref class MyForm : public System::Windows::Forms::Form
 	{
+	private:
+		
 	public:
 		MyForm(void)
-		{
+		{	
+			
 			InitializeComponent();
 			//
 			//TODO: Add the constructor code here
@@ -28,12 +35,11 @@ namespace graphicalinterface {
 			this->StartPosition = FormStartPosition::CenterScreen;
 			this->BackgroundImage = Image::FromFile("../graphical_interface/image.jpg");
 
-			Button^ helloButton = gcnew Button();
-			helloButton->BackColor = System::Drawing::Color::LightGray;
-			helloButton->ForeColor = System::Drawing::Color::Red;
-			helloButton->Location = System::Drawing::Point(30, 30);
-			helloButton->Text = "Привет";
-			groupBox1->Controls->Add(helloButton);
+			polynomialGridView->ColumnCount = 2;
+			polynomialGridView->Columns[0]->Name = "Имя";
+			polynomialGridView->Columns[1]->Name = "Полином";
+			
+			
 		}
 
 	protected:
@@ -52,7 +58,8 @@ namespace graphicalinterface {
 	private: System::Windows::Forms::TextBox^ textBox2;
 	private: System::Windows::Forms::TextBox^ textBox3;
 	private: System::Windows::Forms::Button^ button1;
-	private: System::Windows::Forms::GroupBox^ groupBox1;
+	private: System::Windows::Forms::DataGridView^ polynomialGridView;
+
 
 
 	private:
@@ -67,12 +74,14 @@ namespace graphicalinterface {
 		/// the contents of this method with the code editor.
 		/// </summary>
 		void InitializeComponent(void)
-		{
+		{	
+			
 			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
 			this->button1 = (gcnew System::Windows::Forms::Button());
-			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
+			this->polynomialGridView = (gcnew System::Windows::Forms::DataGridView());
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->polynomialGridView))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// textBox1
@@ -105,18 +114,19 @@ namespace graphicalinterface {
 			this->button1->Name = L"button1";
 			this->button1->Size = System::Drawing::Size(366, 160);
 			this->button1->TabIndex = 3;
-			this->button1->Text = L"Анекдот!\r\n";
+			this->button1->Text = L"Добавить\r\n";
 			this->button1->UseVisualStyleBackColor = true;
 			this->button1->Click += gcnew System::EventHandler(this, &MyForm::button1_Click);
 			// 
-			// groupBox1
+			// polynomialGridView
 			// 
-			this->groupBox1->Location = System::Drawing::Point(976, 98);
-			this->groupBox1->Name = L"groupBox1";
-			this->groupBox1->Size = System::Drawing::Size(317, 166);
-			this->groupBox1->TabIndex = 4;
-			this->groupBox1->TabStop = false;
-			this->groupBox1->Text = L"groupBox1";
+			this->polynomialGridView->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
+			this->polynomialGridView->Location = System::Drawing::Point(591, 81);
+			this->polynomialGridView->Name = L"polynomialGridView";
+			this->polynomialGridView->RowHeadersWidth = 82;
+			this->polynomialGridView->RowTemplate->Height = 33;
+			this->polynomialGridView->Size = System::Drawing::Size(761, 642);
+			this->polynomialGridView->TabIndex = 4;
 			// 
 			// MyForm
 			// 
@@ -124,13 +134,14 @@ namespace graphicalinterface {
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
 			this->ClientSize = System::Drawing::Size(1364, 755);
-			this->Controls->Add(this->groupBox1);
+			this->Controls->Add(this->polynomialGridView);
 			this->Controls->Add(this->button1);
 			this->Controls->Add(this->textBox3);
 			this->Controls->Add(this->textBox2);
 			this->Controls->Add(this->textBox1);
 			this->Name = L"MyForm";
 			this->Text = L"Polynom";
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->polynomialGridView))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -149,7 +160,14 @@ namespace graphicalinterface {
 		result = Sum(num1, num2);
 
 		textBox3->Text = System::Convert::ToString(result);*/
-		MessageBox::Show("блабла");
+		String^ NAME = textBox1->Text;
+		String^ POLYNOM = textBox2->Text;
+		std::string name = msclr::interop::marshal_as<std::string>(textBox1->Text);
+		std::string polynom = msclr::interop::marshal_as<std::string>(textBox2->Text);
+		if(table.insert(name, polynom))
+			polynomialGridView->Rows->Add(gcnew String(NAME), gcnew String(POLYNOM));
+		else
+			MessageBox::Show("Уже существует!");
 	}
 };
 }
