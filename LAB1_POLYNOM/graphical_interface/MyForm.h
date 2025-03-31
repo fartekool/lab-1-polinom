@@ -15,7 +15,6 @@ namespace graphicalinterface {
 	using namespace System::Data;
 	using namespace System::Drawing;
 	Tables_manager<string, Polynom> table;
-	Array_table<string, Polynom> arr_table;
 	public ref class MyForm : public System::Windows::Forms::Form
 	{
 	public:
@@ -52,17 +51,17 @@ namespace graphicalinterface {
 			polynomialGridView->Columns->Add(deleteColumn);
 		}
 	private:
-		System::Void UpdateTable()
-		{
-			polynomialGridView->Rows->Clear(); // Очистка таблицы
+		//System::Void UpdateTable()
+		//{
+		//	polynomialGridView->Rows->Clear(); // Очистка таблицы
 
-			for (const auto& record : arr_table.GetAll())
-			{
-				int rowIndex = polynomialGridView->Rows->Add();
-				polynomialGridView->Rows[rowIndex]->Cells[0]->Value = gcnew System::String(record.key.c_str());
-				polynomialGridView->Rows[rowIndex]->Cells[1]->Value = gcnew System::String(record.data.GetInfix().c_str());
-			}
-		}
+		//	for (const auto& record : arr_table.GetAll())
+		//	{
+		//		int rowIndex = polynomialGridView->Rows->Add();
+		//		polynomialGridView->Rows[rowIndex]->Cells[0]->Value = gcnew System::String(record.key.c_str());
+		//		polynomialGridView->Rows[rowIndex]->Cells[1]->Value = gcnew System::String(record.data.GetInfix().c_str());
+		//	}
+		//}
 	private: 
 		System::Void polynomialGridView_CellContentClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e)
 		{	
@@ -79,9 +78,10 @@ namespace graphicalinterface {
 				if (result == System::Windows::Forms::DialogResult::Yes)
 				{
 					// Удаляем полином из таблицы
-					arr_table.delete_rec(name);
 					table.delete_rec(name);
-					UpdateTable();  // Обновляем таблицу
+					//UpdateTable();  // Обновляем таблицу
+					polynomialGridView->Rows->RemoveAt(e->RowIndex);
+
 				}
 			}
 			/*if (e->ColumnIndex == 2) // Производная
@@ -228,7 +228,6 @@ namespace graphicalinterface {
 			else {
 				MessageBox::Show("Ошибка", "Полином уже существует!", MessageBoxButtons::OK, MessageBoxIcon::Error);
 			}
-			arr_table.insert(nameStr, polynom);
 		}
 		catch (const std::exception& e)
 		{
