@@ -130,15 +130,19 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="gtest-all.cc" />
+    <ClCompile Include="test_infixtopostfixconverter.cpp" />
     <ClCompile Include="test_addr_table.cpp" />
     <ClCompile Include="test_array_table.cpp" />
     <ClCompile Include="test_avl_tree_table.cpp" />
     <ClCompile Include="test_expression.cpp" />
+    <ClCompile Include="test_expression_validator.cpp" />
     <ClCompile Include="test_hash_chaining_table.cpp" />
     <ClCompile Include="test_list.cpp" />
     <ClCompile Include="test_list_table.cpp" />
     <ClCompile Include="test_main.cpp" />
+    <ClCompile Include="test_parser.cpp" />
     <ClCompile Include="test_polinom.cpp" />
+    <ClCompile Include="test_postfixcalculator.cpp" />
     <ClCompile Include="test_rb_tree_table.cpp" />
     <ClCompile Include="test_sorted_array_table.cpp" />
     <ClCompile Include="test_stack.cpp" />

@@ -50,6 +50,11 @@ public:
     const Type& getType() const;
     const OperatorAssociativity& getAsc() const;
     const string& getStr() const;
+
+    // Используется только для тестирования 
+    bool operator==(const Token& other) const;
+
+    bool operator!=(const Token& other) const;
 };
 
 class Parser {

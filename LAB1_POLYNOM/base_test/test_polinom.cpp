@@ -145,3 +145,53 @@ TEST(Polynom, can_handle_negative_coefficients) {
     Polynom p("-2x^2 - 3xy - y^2");
     ASSERT_EQ(p.calculate(1, 1, 1), -6);
 }
+
+TEST(Polynom, can_calculate_integral_with_x) {
+    Polynom p("3x^2y + 4xz + 2");
+    Polynom result = p.integrate('x');
+    ASSERT_EQ(result.calculate(1, 1, 1), 5); // x^3y + 2x^2z + 2x
+}
+
+TEST(Polynom, can_calculate_integral_with_y) {
+    Polynom p("3x^2y + 4yz + 2");
+    Polynom result = p.integrate('y');
+    ASSERT_EQ(result.calculate(1, 1, 1), 5.5); // (3/2)x^2y^2 + 2y^2z + 2y
+}
+
+TEST(Polynom, can_calculate_integral_with_z) {
+    Polynom p("3x^2z + 4yz + 2z");
+    Polynom result = p.integrate('z');
+    ASSERT_EQ(result.calculate(1, 1, 1), 4.5); // (3/2)x^2z^2 + 2yz^2 + z^2
+}
+
+TEST(Polynom, can_get_infix) {
+    Polynom p("2x^2 + 3xy - 5");
+    ASSERT_EQ(p.GetInfix(), "2x^2 + 3xy - 5");
+}
+
+TEST(Polynom, can_get_infix_from_empty_polynom) {
+    Polynom p;
+    ASSERT_EQ(p.GetInfix(), "");
+}
+
+TEST(Polynom, can_handle_invalid_integrate_variable) {
+    Polynom p("x^2");
+    ASSERT_THROW(p.integrate('a'), std::invalid_argument);
+}
+
+TEST(Polynom, can_handle_integrate_constant) {
+    Polynom p("5");
+    Polynom result = p.integrate('x');
+    ASSERT_EQ(result.calculate(2, 2, 2), 10);
+}
+
+TEST(Polynom, can_handle_integrate_zero_polynom) {
+    Polynom p("0");
+    Polynom result = p.integrate('x');
+    ASSERT_EQ(result.calculate(2, 2, 2), 0);
+}
+
+TEST(Polynom, can_handle_integrate_max_degree_plus_one_throw) {
+    Polynom p("x^9");
+    ASSERT_THROW(p.integrate('x'), std::overflow_error);
+}

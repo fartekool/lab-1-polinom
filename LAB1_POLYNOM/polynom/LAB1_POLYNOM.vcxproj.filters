@@ -33,7 +33,7 @@
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="polynom.cpp">
-      <Filter>Файлы ресурсов</Filter>
+      <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

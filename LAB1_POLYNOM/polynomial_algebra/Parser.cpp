@@ -48,6 +48,14 @@ int Token::getPrecendance() const
     }
 }
 
+bool Token::operator==(const Token& other) const {
+    return type == other.type && opAsc == other.opAsc && str == other.str;
+}
+
+bool Token:: operator!=(const Token& other) const {
+    return !(*this == other);
+}
+
 const Token::Type& Token::getType() const { return type; }
 const Token::OperatorAssociativity& Token::getAsc() const { return opAsc; }
 const string& Token::getStr() const { return str; }

@@ -343,43 +343,52 @@ Polynom Polynom::derivative(char var) const {
 	return res;
 }
 
-//Polynom Polynom::integrate(char var) const {
-//	Polynom res;
-//	for (int i = 0; i < monoms.size(); i++) {
-//		const Monom& monom = monoms[i];
-//
-//		double newCoef = monom.coef;
-//		size_t newDegree = monom.degree;
-//
-//		switch (var) {
-//		case 'x':
-//			int degX = newDegree / 100;
-//			if (degX < 9) {
-//				newDegree += 100;
-//				newCoef /= (degX + 1);
-//			}
-//			break;
-//		case 'y':
-//			int degY = (newDegree / 10) % 10;
-//			if (degY < 9) {
-//				newDegree += 10;
-//				newCoef /= (degY + 1);
-//			}
-//			break;
-//		case 'z':
-//			int degZ = newDegree % 10;
-//			if (degZ < 9) {
-//				newDegree += 1;
-//				newCoef /= (degZ + 1);
-//			}
-//			break;
-//		default:
-//			throw invalid_argument("Invalid variable");
-//		}
-//		res.AddMonom(Monom(newCoef, newDegree));
-//	}
-//	return res;
-//}
+Polynom Polynom::integrate(char var) const {
+	Polynom res;
+	for (int i = 0; i < monoms.size(); i++) {
+		const Monom& monom = monoms[i];
+
+		double newCoef = monom.coef;
+		size_t newDegree = monom.degree;
+
+		switch (var) {
+		case 'x': {
+			int degX = newDegree / 100;
+			if (degX < 9) {
+				newDegree += 100;
+				newCoef /= (degX + 1);
+			}
+			else
+				throw overflow_error("Degree of x after integration exceeds the allowed limit");
+			break;
+		}
+		case 'y': {
+			int degY = (newDegree / 10) % 10;
+			if (degY < 9) {
+				newDegree += 10;
+				newCoef /= (degY + 1);
+			}
+			else 
+				throw overflow_error("Degree of y after integration exceeds the allowed limit");
+			break;
+		}
+		case 'z': {
+			int degZ = newDegree % 10;
+			if (degZ < 9) {
+				newDegree += 1;
+				newCoef /= (degZ + 1);
+			}
+			else
+				throw overflow_error("Degree of z after integration exceeds the allowed limit");
+			break;
+		}
+		default:
+			throw invalid_argument("Invalid variable");
+		}
+		res.AddMonom(Monom(newCoef, newDegree));
+	}
+	return res;
+}
 
 string Polynom::GetInfix() const
 {
