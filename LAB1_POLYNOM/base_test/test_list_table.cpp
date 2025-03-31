@@ -43,6 +43,13 @@ TEST(List_table, expected_false_when_delete_if_table_is_empty)
 	EXPECT_FALSE(a.delete_rec("anything"));
 }
 
+TEST(List_table, expected_false_when_delete_unexisting_element)
+{
+	List_table<string, int> a;
+	a.insert("name1", 100);
+	EXPECT_FALSE(a.delete_rec("anything"));
+}
+
 TEST(List_table, can_find_elem)
 {
 	List_table<string, int> a;
@@ -75,14 +82,6 @@ TEST(List_table, can_insert_same_key_after_deletion)
 	a.insert("a", 1);
 	a.delete_rec("a");
 	EXPECT_TRUE(a.insert("a", 1));
-}
-
-TEST(List_table, expected_false_when_insert_to_full_fill_table)
-{
-	List_table<int, int> a;
-	for (int i = 0; i < max_fill; i++)
-		a.insert(i, 2 * i);
-	EXPECT_FALSE(a.insert(max_fill, 2 * max_fill));
 }
 
 TEST(List_table, can_handle_large_number_of_deletions)

@@ -89,6 +89,10 @@ public:
 		else
 			return false;
 	}
+	bool isEmpty() const
+	{
+		return current_table->isEmpty();
+	}
 	~Tables_manager() = default;
 };
 

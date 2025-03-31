@@ -19,7 +19,7 @@ TEST(Tables_manager, false_when_insert_existing_element_in_tables)
 	EXPECT_FALSE(a.insert("name1", 1));
 }
 
-TEST(Tables_manager, can_find_element_int_tables)
+TEST(Tables_manager, can_find_element_in_tables)
 {
 	Tables_manager<string, int> a;
 	a.insert("name1", 1);
@@ -91,6 +91,43 @@ TEST(Tables_manager, can_find_an_element_in_another_table)
 	a.insert("name", 1);
 	a.set_current(sorted_array_table);
 	EXPECT_EQ(a.find("name"), 1);
+}
+
+TEST(Tables_manager, false_when_insert_in_one_table_then_insert_it_in_another)
+{
+	Tables_manager<string, int> a;
+	a.insert("name", 1);
+	a.set_current(sorted_array_table);
+	EXPECT_FALSE(a.insert("name",1));
+}
+
+TEST(Tables_manager, false_when_insert_in_one_table_then_insert_it_in_another_table_but_different_value)
+{
+	Tables_manager<string, int> a;
+	a.insert("name", 1);
+	a.set_current(sorted_array_table);
+	EXPECT_FALSE(a.insert("name", 2));
+}
+
+TEST(Tables_manager, isEmpty_worked_correctly)
+{
+	Tables_manager<string, int> a;
+	EXPECT_TRUE(a.isEmpty());
+	a.insert("name1", 1);
+	EXPECT_FALSE(a.isEmpty());
+	a.delete_rec("name1");
+	EXPECT_TRUE(a.isEmpty());
+}
+
+TEST(Tables_manager, can_insert_many_values_in_one_table_and_delete_all_in_another)
+{
+	Tables_manager<string, int> a;
+	for (int i = 0; i < max_fill; i++)
+		EXPECT_TRUE(a.insert("name" + to_string(i), i));
+	a.set_current(list_table);
+	for (int i = 0; i < max_fill; i++)
+		EXPECT_TRUE(a.delete_rec("name" + to_string(i)));
+	EXPECT_TRUE(a.isEmpty());
 }
 
 

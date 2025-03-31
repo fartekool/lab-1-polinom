@@ -14,11 +14,11 @@ public:
 	const B& find(const T& name) const override
 	{
 		if (isEmpty())
-			throw runtime_error("Table is empty!");//придумать вариант получше
+			throw runtime_error("Table is empty!");
 		for (int i = 0; i < table.size(); i++)
 			if (table[i].key == name)
 				return table[i].data;
-		throw runtime_error("Key not finded!");//придумать вариант получше
+		throw runtime_error("Key not finded!");
 	}
 	bool insert(const T& name, const B& obj) override
 	{

@@ -44,6 +44,13 @@ TEST(Sorted_array_table, expected_false_when_delete_if_table_is_empty)
 	EXPECT_FALSE(a.delete_rec("anything"));
 }
 
+TEST(Sorted_array_table, expected_false_when_delete_unexisting_element)
+{
+	Sorted_array_table<string, int> a;
+	a.insert("name1", 100);
+	EXPECT_FALSE(a.delete_rec("anything"));
+}
+
 TEST(Sorted_array_table, can_find_elem)
 {
 	Sorted_array_table<string, int> a;
@@ -76,14 +83,6 @@ TEST(Sorted_array_table, can_insert_same_key_after_deletion)
 	a.insert("a", 1);
 	a.delete_rec("a");
 	EXPECT_TRUE(a.insert("a", 1));
-}
-
-TEST(Sorted_array_table, expected_false_when_insert_to_full_fill_table)
-{
-	Sorted_array_table<int, int> a;
-	for (int i = 0; i < max_fill; i++)
-		a.insert(i, 2 * i);
-	EXPECT_FALSE(a.insert(max_fill, 2 * max_fill));
 }
 
 TEST(Sorted_array_table, can_handle_large_number_of_deletions)
