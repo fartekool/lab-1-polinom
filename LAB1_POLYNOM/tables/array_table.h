@@ -49,5 +49,11 @@ public:
 		return Fill == 0;
 	}
 	~Array_table() = default;
+
+
+	const vector<record>& GetAll()
+	{
+		return table;
+	}
 };
 #endif

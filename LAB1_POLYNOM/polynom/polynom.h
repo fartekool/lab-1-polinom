@@ -16,7 +16,7 @@ private:
 	Monom ParseMonom(const string& monomStr);
 
 	void ParseFromString(const string& p);
-
+	string infix;
 public:
 	Polynom();
 
@@ -39,4 +39,7 @@ public:
 	Polynom derivative(char var) const;
 
 	Polynom integrate(char var) const;
+
+	string GetInfix() const;
+
 };

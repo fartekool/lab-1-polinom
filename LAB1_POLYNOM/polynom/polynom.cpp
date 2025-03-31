@@ -130,6 +130,7 @@ Polynom::Polynom() {
 }
 
 Polynom::Polynom(const string& polStr) {
+	infix = polStr;
 	ParseFromString(polStr);
 	monoms.PushAfter(monoms.size() - 1, Monom());
 }
@@ -379,3 +380,8 @@ Polynom Polynom::derivative(char var) const {
 //	}
 //	return res;
 //}
+
+string Polynom::GetInfix() const
+{
+	return infix;
+}
