@@ -16,7 +16,9 @@ private:
 	Monom ParseMonom(const string& monomStr);
 
 	void ParseFromString(const string& p);
+
 	string infix;
+
 public:
 	Polynom();
 

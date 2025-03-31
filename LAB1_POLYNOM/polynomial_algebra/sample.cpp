@@ -5,6 +5,7 @@
 #include "PostfixCalculator.h"
 #include "../polynom/polynom.h"
 #include "../polynom/polynom.cpp"
+#include "Expression.h"
 
 #include <map>
 
@@ -87,6 +88,19 @@ int main()
     { "poly_e", Polynom("2x5 - 3x3 + x")}
     };
     cout << PostfixCalculator::Calculate(postfix, pol) << '\n';
+
+    Expression exp1("(poly_a * poly_b - poly_c) * 2 + poly_d * (-poly_e)");
+    cout << exp1.Calculate(pol) << '\n';
+
+    /*-------------------------*/
+
+    Expression e("(pol1 + pol2) * pol3");
+    map<string, Polynom> mp{
+        {"pol1", Polynom("x3 + y3 + z3")},
+        { "pol2", Polynom("x3 + 2xy + z") },
+        { "pol3", Polynom("y2 + 3z3") }
+    };
+    cout << e.Calculate(mp) << '\n';
     return 0;
 }
 

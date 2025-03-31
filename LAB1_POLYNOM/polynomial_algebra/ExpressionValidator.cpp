@@ -8,7 +8,7 @@ void ExpressionValidator::CheckValidCharacters(const std::string& expr) {
     for (size_t i = 0; i < expr.size(); i++) {
         char c = expr[i];
         if (!isdigit(c) && !isalpha(c) && !IsOperator(c) && c != '(' && c != ')'
-            && c != ' ' && c != '.') {
+            && c != ' ' && c != '.' && c != '_') {
             throw invalid_argument("Invalid character in expression");
         }
     }

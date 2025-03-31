@@ -1,22 +1,23 @@
-#include "expression.h"
-#include "stack.h"
-#include "Parser.h"
+#include "Expression.h"
 
-//Expression::Expression(const string& expr) : infix(expr) {
-//    ExpressionValidator::Validate(infix);
-//    postfix = InfixToPostfixConverter::Convert(infix);
-//}
-//
-//string Expression::GetInfix() const { return infix; }
-//string Expression::GetPostfix() const { return postfix; }
-//
-////vector<string> Expression::GetOperands() const {
-////    vector<string> op;
-////    // ...
-////    return op;
-////}
-//
-////Polynom Expression::Calculate() {
-////    return PostfixCalculator::Calculate(postfix);
-////}
+Expression::Expression(const string& expr) : infix(expr) {
+    ExpressionValidator::Validate(infix);
+    tokens = InfixToPostfixConverter::Convert(Parser::Parse(infix));
+    for (int i = 0; i < tokens.size(); i++) {
+        postfix += (tokens[i].getStr() + " ");
+        if (tokens[i].getType() == Token::Type::POLINOM_NAME)
+            names.push_back(tokens[i].getStr());
+    }
+}
+
+string Expression::GetInfix() const { return infix; }
+string Expression::GetPostfix() const { return postfix; }
+
+vector<string> Expression::GetOperands() const {
+    return names;
+}
+
+Polynom Expression::Calculate(std::map<string, Polynom> pol) {
+    return PostfixCalculator::Calculate(tokens, pol);
+}
 

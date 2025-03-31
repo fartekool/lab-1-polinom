@@ -127,7 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="expression.h" />
+    <ClInclude Include="Expression.h" />
     <ClInclude Include="ExpressionValidator.h" />
     <ClInclude Include="InfixToPostfixConverter.h" />
     <ClInclude Include="Parser.h" />
@@ -135,7 +135,7 @@
     <ClInclude Include="stack.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="expression.cpp" />
+    <ClCompile Include="Expression.cpp" />
     <ClCompile Include="ExpressionValidator.cpp" />
     <ClCompile Include="InfixToPostfixConverter.cpp" />
     <ClCompile Include="Parser.cpp" />
