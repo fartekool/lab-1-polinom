@@ -45,9 +45,6 @@
     <ClCompile Include="test_polinom.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="test_rb_tree_table.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="test_sorted_array_table.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
@@ -67,6 +64,9 @@
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="test_postfixcalculator.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="test_rb_tree_table.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>

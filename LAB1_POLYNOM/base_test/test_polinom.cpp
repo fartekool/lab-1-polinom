@@ -71,7 +71,7 @@ TEST(Polynom, can_handle_zero_polynomial) {
     ASSERT_EQ(p.calculate(1, 1, 1), 0);
 }
 
-TEST(Polynom, can_handle_polynomial_with_large_exponents) {
+TEST(Polynom, can_handle_polynomial_with_large_degree) {
     ASSERT_THROW(Polynom("x^10"), std::invalid_argument);
 }
 
@@ -146,19 +146,19 @@ TEST(Polynom, can_handle_negative_coefficients) {
     ASSERT_EQ(p.calculate(1, 1, 1), -6);
 }
 
-TEST(Polynom, can_calculate_integral_with_x) {
+TEST(Polynom, can_calculate_integral_with_respect_to_x) {
     Polynom p("3x^2y + 4xz + 2");
     Polynom result = p.integrate('x');
     ASSERT_EQ(result.calculate(1, 1, 1), 5); // x^3y + 2x^2z + 2x
 }
 
-TEST(Polynom, can_calculate_integral_with_y) {
+TEST(Polynom, can_calculate_integral_with_respect_to_y) {
     Polynom p("3x^2y + 4yz + 2");
     Polynom result = p.integrate('y');
     ASSERT_EQ(result.calculate(1, 1, 1), 5.5); // (3/2)x^2y^2 + 2y^2z + 2y
 }
 
-TEST(Polynom, can_calculate_integral_with_z) {
+TEST(Polynom, can_calculate_integral_with_respect_to_z) {
     Polynom p("3x^2z + 4yz + 2z");
     Polynom result = p.integrate('z');
     ASSERT_EQ(result.calculate(1, 1, 1), 4.5); // (3/2)x^2z^2 + 2yz^2 + z^2
@@ -171,7 +171,7 @@ TEST(Polynom, can_get_infix) {
 
 TEST(Polynom, can_get_infix_from_empty_polynom) {
     Polynom p;
-    ASSERT_EQ(p.GetInfix(), "");
+    ASSERT_EQ(p.GetInfix(), "0");
 }
 
 TEST(Polynom, can_handle_invalid_integrate_variable) {
@@ -194,4 +194,61 @@ TEST(Polynom, can_handle_integrate_zero_polynom) {
 TEST(Polynom, can_handle_integrate_max_degree_plus_one_throw) {
     Polynom p("x^9");
     ASSERT_THROW(p.integrate('x'), std::overflow_error);
+}
+
+TEST(Polynom, can_assign_polynom_to_itself) {
+    Polynom p("2x^2 + 3xy - 5");
+    p = p;
+    ASSERT_EQ(p.GetInfix(), "2x^2 + 3xy - 5");
+}
+
+TEST(Polynom, can_assign_polynom_to_another_polynom) {
+    Polynom p1("2x^2 + 3xy - 5");
+    Polynom p2("x^2 + y^2");
+    p2 = p1;
+    ASSERT_EQ(p2.GetInfix(), "2x^2 + 3xy - 5");
+    ASSERT_EQ(p2.calculate(1, 1, 0), 0);
+}
+
+TEST(Polynom, can_assign_empty_polynom) {
+    Polynom p1("2x^2 + 3xy - 5");
+    Polynom p2;
+    p1 = p2;
+    ASSERT_EQ(p1.GetInfix(), "0");
+}
+
+TEST(Polynom, infix_updates_after_operations) {
+    Polynom p1("2x^2 + 3xy - 5");
+    Polynom p2("x^2 + y^2");
+
+    // Ќачальное значение infix
+    ASSERT_EQ(p1.GetInfix(), "2x^2 + 3xy - 5");
+
+    // ѕроверка обновлени€ после сложени€
+    Polynom sum = p1 + p2;
+    ASSERT_EQ(sum.GetInfix(), "3x^2 + 3xy + y^2 - 5");
+
+    // ѕроверка обновлени€ после вычитани€
+    Polynom diff = p1 - p2;
+    ASSERT_EQ(diff.GetInfix(), "x^2 + 3xy - y^2 - 5");
+
+    // ѕроверка обновлени€ после умножени€ на скал€р
+    Polynom mult_scalar = p1 * 2.0;
+    ASSERT_EQ(mult_scalar.GetInfix(), "4x^2 + 6xy - 10");
+
+    // ѕроверка обновлени€ после умножени€ на полином
+    Polynom mult_poly = p1 * p2;
+    ASSERT_EQ(mult_poly.GetInfix(), "2x^4 + 3x^3y + 2x^2y^2 - 5x^2 + 3xy^3 - 5y^2");
+
+    // ѕроверка обновлени€ после вз€ти€ производной
+    Polynom deriv_x = p1.derivative('x');
+    ASSERT_EQ(deriv_x.GetInfix(), "4x + 3y");
+
+    // ѕроверка обновлени€ после вз€ти€ интеграла
+    Polynom integ_x = Polynom("3x^2 + 3xy - 5").integrate('x');
+    ASSERT_EQ(integ_x.GetInfix(), "x^3 + 1.5x^2y - 5x");
+
+    // ѕроверка обновлени€ после присваивани€
+    p1 = p2;
+    ASSERT_EQ(p1.GetInfix(), "x^2 + y^2");
 }

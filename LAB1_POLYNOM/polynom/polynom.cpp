@@ -125,37 +125,17 @@ void Polynom::ParseFromString(const string& p) {
 	}
 }
 
-Polynom::Polynom() {
-	monoms.PushFront(Monom());
-}
-
-Polynom::Polynom(const string& polStr) {
-	infix = polStr;
-	ParseFromString(polStr);
-	monoms.PushAfter(monoms.size() - 1, Monom());
-}
-
-double Polynom::calculate(double x, double y, double z) const {
-	double res = 0.0;
-	for (size_t i = 0; i < monoms.size(); i++) {
-		const Monom& monom = monoms[i];
-		int degX = monom.degree / 100;
-		int degY = (monom.degree / 10) % 10;
-		int degZ = monom.degree % 10;
-		res += monom.coef * pow(x, degX) * pow(y, degY) * pow(z, degZ);
-	}
-	return res;
-}
-
-ostream& operator<<(ostream& os, const Polynom& polinom) {
+void Polynom::generateString(ostream& os) const {
 	bool isFirst = true;
-	for (size_t i = 0; i < polinom.monoms.size(); ++i) {
-		const Monom& monom = polinom.monoms[i];
+	for (size_t i = 0; i < monoms.size(); ++i) {
+		const Monom& monom = monoms[i];
 		if (monom.coef != 0) {
 			if (!isFirst) {
 				os << (monom.coef > 0 ? " + " : " - ");
 			}
-			else if (monom.coef < 0) os << (isFirst ? "-" : " - ");
+			else if (monom.coef < 0) {
+				os << (isFirst ? "-" : " - ");
+			}
 
 			if (abs(monom.coef) != 1 || (monom.degree == 0)) {
 				os << abs(monom.coef);
@@ -183,7 +163,48 @@ ostream& operator<<(ostream& os, const Polynom& polinom) {
 	if (isFirst) {
 		os << "0";
 	}
+}
+
+Polynom::Polynom() {
+	monoms.PushFront(Monom());
+	infix = "0";
+	infixChanged = true;
+}
+
+Polynom::Polynom(const string& polStr) {
+	infix = polStr;
+	ParseFromString(polStr);
+	monoms.PushAfter(monoms.size() - 1, Monom());
+	infixChanged = true;
+}
+
+double Polynom::calculate(double x, double y, double z) const {
+	double res = 0.0;
+	for (size_t i = 0; i < monoms.size(); i++) {
+		const Monom& monom = monoms[i];
+		int degX = monom.degree / 100;
+		int degY = (monom.degree / 10) % 10;
+		int degZ = monom.degree % 10;
+		res += monom.coef * pow(x, degX) * pow(y, degY) * pow(z, degZ);
+	}
+	return res;
+}
+
+ostream& operator<<(ostream& os, const Polynom& polinom) {
+	polinom.generateString(os);
 	return os;
+}
+
+Polynom& Polynom::operator=(const Polynom& other) {
+	if (this == &other) {
+		return *this;
+	}
+
+	monoms = other.monoms;
+	infix = other.infix;
+	infixChanged = other.infixChanged;
+
+	return *this;
 }
 
 Polynom Polynom::operator+(const Polynom& other) const {
@@ -224,6 +245,7 @@ Polynom Polynom::operator+(const Polynom& other) const {
 		j++;
 	}
 
+	result.infixChanged = true;
 	return result;
 }
 
@@ -265,6 +287,7 @@ Polynom Polynom::operator-(const Polynom& other) const {
 		j++;
 	}
 
+	result.infixChanged = true;
 	return result;
 }
 
@@ -275,6 +298,7 @@ Polynom Polynom::operator*(double c) const {
 		res.AddMonom(Monom(monom.coef * c, monom.degree));
 	}
 
+	res.infixChanged = true;
 	return res;
 }
 
@@ -299,6 +323,7 @@ Polynom Polynom::operator*(const Polynom& other) {
 			res.AddMonom(Monom(newCoef, newDegree));
 		}
 	}
+	res.infixChanged = true;
 	return res;
 }
 
@@ -340,6 +365,7 @@ Polynom Polynom::derivative(char var) const {
 		}
 		if (newCoef != 0) res.AddMonom(Monom(newCoef, newDegree));
 	}
+	res.infixChanged = true;
 	return res;
 }
 
@@ -387,10 +413,16 @@ Polynom Polynom::integrate(char var) const {
 		}
 		res.AddMonom(Monom(newCoef, newDegree));
 	}
+	res.infixChanged = true;
 	return res;
 }
 
-string Polynom::GetInfix() const
-{
+string Polynom::GetInfix() const {
+	if (infixChanged) {
+		std::ostringstream oss;
+		generateString(oss);
+		infix = oss.str();
+		infixChanged = false;
+	}
 	return infix;
 }

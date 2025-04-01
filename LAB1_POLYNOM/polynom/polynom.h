@@ -5,6 +5,7 @@
 #include "list.h"
 #include <string>
 #include <vector>
+#include <sstream>
 
 class Polynom {
 private:
@@ -17,8 +18,11 @@ private:
 
 	void ParseFromString(const string& p);
 
-	string infix;
+	void generateString(ostream& os) const;
 
+	mutable string infix;
+
+	mutable bool infixChanged;
 public:
 	Polynom();
 
@@ -27,6 +31,8 @@ public:
 	double calculate(double x, double y, double z) const;
 
 	friend ostream& operator<<(ostream& os, const Polynom& polinom);
+
+	Polynom& operator=(const Polynom& other);
 
 	Polynom operator+(const Polynom& other) const;
 
