@@ -143,7 +143,6 @@
     <ClCompile Include="test_parser.cpp" />
     <ClCompile Include="test_polinom.cpp" />
     <ClCompile Include="test_postfixcalculator.cpp" />
-    <ClCompile Include="test_rb_tree_table.cpp" />
     <ClCompile Include="test_sorted_array_table.cpp" />
     <ClCompile Include="test_stack.cpp" />
     <ClCompile Include="test_table_manager.cpp" />

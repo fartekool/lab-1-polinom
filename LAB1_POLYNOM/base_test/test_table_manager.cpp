@@ -71,7 +71,7 @@ TEST(Tables_manager, inserts_into_all_tables_at_once)
 {
 	Tables_manager<string, int> a;
 	a.insert("name", 1);
-	a.set_current(list_table);
+	a.set_current(TableType::LIST_TABLE);
 	EXPECT_EQ(a.find("name"), 1);
 }
 
@@ -81,7 +81,7 @@ TEST(Tables_manager, delete_out_of_all_tables_at_once)
 	a.insert("name", 1);
 	a.delete_rec("name");
 	ASSERT_ANY_THROW(a.find("name"));
-	a.set_current(list_table);
+	a.set_current(TableType::LIST_TABLE);
 	EXPECT_FALSE(a.delete_rec("name"));
 }
 
@@ -89,7 +89,7 @@ TEST(Tables_manager, can_find_an_element_in_another_table)
 {
 	Tables_manager<string, int> a;
 	a.insert("name", 1);
-	a.set_current(sorted_array_table);
+	a.set_current(TableType::SORTED_ARRAY_TABLE);
 	EXPECT_EQ(a.find("name"), 1);
 }
 
@@ -97,7 +97,7 @@ TEST(Tables_manager, false_when_insert_in_one_table_then_insert_it_in_another)
 {
 	Tables_manager<string, int> a;
 	a.insert("name", 1);
-	a.set_current(sorted_array_table);
+	a.set_current(TableType::SORTED_ARRAY_TABLE);
 	EXPECT_FALSE(a.insert("name",1));
 }
 
@@ -105,7 +105,7 @@ TEST(Tables_manager, false_when_insert_in_one_table_then_insert_it_in_another_ta
 {
 	Tables_manager<string, int> a;
 	a.insert("name", 1);
-	a.set_current(sorted_array_table);
+	a.set_current(TableType::SORTED_ARRAY_TABLE);
 	EXPECT_FALSE(a.insert("name", 2));
 }
 
@@ -124,7 +124,7 @@ TEST(Tables_manager, can_insert_many_values_in_one_table_and_delete_all_in_anoth
 	Tables_manager<string, int> a;
 	for (int i = 0; i < max_fill; i++)
 		EXPECT_TRUE(a.insert("name" + to_string(i), i));
-	a.set_current(list_table);
+	a.set_current(TableType::LIST_TABLE);
 	for (int i = 0; i < max_fill; i++)
 		EXPECT_TRUE(a.delete_rec("name" + to_string(i)));
 	EXPECT_TRUE(a.isEmpty());
