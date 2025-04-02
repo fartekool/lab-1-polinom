@@ -79,7 +79,8 @@ vector<Token> Parser::Parse(const string& expr)
 
     std::string validOperators = "+-*";
 
-    bool isDigit, isLetter, isOp, isParanth, isPoint, isLParanth, isRParanth, isSpace, isUnderscore;
+    bool isDigit, isLetter, isOp, isParanth, isPoint, isLParanth,
+        isRParanth, isSpace, isUnderscore, isUnaryMinus;
 
     std::string buffer;
     Token::Type bufferTokenType = Token::INT_LITERAL;
@@ -96,6 +97,20 @@ vector<Token> Parser::Parse(const string& expr)
         isOp = validOperators.find(s) != validOperators.npos;
         isSpace = s == ' ';
         isUnderscore = s == '_';
+
+        // Проверка на унарность минуса
+        if (s == '-') {
+            if (tokens.empty()) { // Начало выражения
+                isUnaryMinus = true;
+            }
+            else {
+                // Проверяем предыдущий токен
+                Token& prevToken = tokens.back();
+                if (prevToken.getType() == Token::L_PARANTHESIS || prevToken.getType() == Token::OPERATOR)
+                    isUnaryMinus = true;
+            }
+        }
+        else isUnaryMinus = false;
 
         // Если тип символа неопределен, значит ошибка в синтаксисе
         if (!(isDigit || isLetter || isParanth || isPoint || isOp || isSpace || isUnderscore))
@@ -131,7 +146,7 @@ vector<Token> Parser::Parse(const string& expr)
                 state = S2;
             else if (isLetter || isUnderscore)
                 state = S4;
-            else if (isPoint)
+            else if (isPoint || (isOp && !isUnaryMinus))
             {
                 stringstream ss;
                 ss << "Unexpected symbol: \"" << s << "\"";

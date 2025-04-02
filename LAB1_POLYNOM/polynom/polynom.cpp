@@ -38,7 +38,7 @@ Monom Polynom::ParseMonom(const string& monomStr) {
 	// обработка числовой части коэффициента
 	string coefStr;
 	while (i < monomStr.size() && (isdigit(monomStr[i]) || monomStr[i] == '.')) {
-		if (monomStr[i] == '.') coefStr += ',';
+		if (monomStr[i] == '.') coefStr += '.';
 		else coefStr += monomStr[i];
 		i++;
 	}
