@@ -66,51 +66,137 @@ namespace graphicalinterface {
 		//		polynomialGridView->Rows[rowIndex]->Cells[1]->Value = gcnew System::String(record.data.GetInfix().c_str());
 		//	}
 		//}
+		/*System::String^ ShowInputDialog(System::String^ prompt, System::String^ title)
+		{
+			System::Windows::Forms::Form^ form = gcnew System::Windows::Forms::Form();
+			System::Windows::Forms::Label^ label = gcnew System::Windows::Forms::Label();
+			System::Windows::Forms::TextBox^ textBox = gcnew System::Windows::Forms::TextBox();
+			System::Windows::Forms::Button^ buttonOk = gcnew System::Windows::Forms::Button();
+			System::Windows::Forms::Button^ buttonCancel = gcnew System::Windows::Forms::Button();
+
+			form->Text = title;
+			label->Text = prompt;
+			textBox->Text = "";
+
+			buttonOk->Text = "OK";
+			buttonCancel->Text = "Отмена";
+
+			buttonOk->DialogResult = System::Windows::Forms::DialogResult::OK;
+			buttonCancel->DialogResult = System::Windows::Forms::DialogResult::Cancel;
+
+			label->SetBounds(10, 10, 300, 20);
+			textBox->SetBounds(10, 40, 300, 20);
+			buttonOk->SetBounds(50, 70, 75, 25);
+			buttonCancel->SetBounds(150, 70, 75, 25);
+
+			form->ClientSize = System::Drawing::Size(320, 120);
+			form->Controls->AddRange(gcnew cli::array<System::Windows::Forms::Control^>{ label, textBox, buttonOk, buttonCancel });
+			form->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedDialog;
+			form->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
+			form->AcceptButton = buttonOk;
+			form->CancelButton = buttonCancel;
+
+			return (form->ShowDialog() == System::Windows::Forms::DialogResult::OK) ? textBox->Text : nullptr;
+		}*/
+		ref struct InputDialogResult {
+			System::String^ name;
+			char variable;
+		};
+		InputDialogResult^ ShowInputDialog(bool flag, String^ name) // 0 - der, 1 - int
+		{
+			System::Windows::Forms::Form^ form = gcnew System::Windows::Forms::Form();
+			System::Windows::Forms::Label^ label = gcnew System::Windows::Forms::Label();
+			System::Windows::Forms::TextBox^ textBox = gcnew System::Windows::Forms::TextBox();
+			System::Windows::Forms::RadioButton^ radioX = gcnew System::Windows::Forms::RadioButton();
+			System::Windows::Forms::RadioButton^ radioY = gcnew System::Windows::Forms::RadioButton();
+			System::Windows::Forms::RadioButton^ radioZ = gcnew System::Windows::Forms::RadioButton();
+			System::Windows::Forms::Button^ buttonOk = gcnew System::Windows::Forms::Button();
+			System::Windows::Forms::Button^ buttonCancel = gcnew System::Windows::Forms::Button();
+
+			if (flag)
+				form->Text = "Создание интеграла";
+			else
+				form->Text = "Создание производной";
+
+			label->Text = "Введите имя нового полинома:";
+			textBox->Text = name;
+
+			radioX->Text = "x";
+			radioY->Text = "y";
+			radioZ->Text = "z";
+			radioX->Checked = true;  // По умолчанию выбрана x
+
+			buttonOk->Text = "OK";
+			buttonCancel->Text = "Отмена";
+
+			buttonOk->DialogResult = System::Windows::Forms::DialogResult::OK;
+			buttonCancel->DialogResult = System::Windows::Forms::DialogResult::Cancel;
+
+			// Расположение элементов
+			label->SetBounds(10, 10, 300, 20);
+			textBox->SetBounds(10, 40, 300, 20);
+			radioX->SetBounds(10, 70, 50, 20);
+			radioY->SetBounds(70, 70, 50, 20);
+			radioZ->SetBounds(130, 70, 50, 20);
+			buttonOk->SetBounds(50, 100, 75, 25);
+			buttonCancel->SetBounds(150, 100, 75, 25);
+
+			form->ClientSize = System::Drawing::Size(320, 140);
+			form->Controls->AddRange(gcnew cli::array<System::Windows::Forms::Control^>{ label, textBox, radioX, radioY, radioZ, buttonOk, buttonCancel });
+			form->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedDialog;
+			form->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
+			form->AcceptButton = buttonOk;
+			form->CancelButton = buttonCancel;
+
+			if (form->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
+				InputDialogResult^ result = gcnew InputDialogResult();
+				result->name = textBox->Text;
+
+				if (radioX->Checked) result->variable = 'x';
+				else if (radioY->Checked) result->variable = 'y';
+				else result->variable = 'z';
+
+				return result;
+			}
+
+			return nullptr;
+		}
 	private:
 		System::Void polynomialGridView_CellContentClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e)
 		{	
-		
+			if (e->ColumnIndex == 2 || e->ColumnIndex == 3) // Производная
+			{	
+				InputDialogResult^ result;
+				if (e->ColumnIndex == 2)
+					result = ShowInputDialog(false, polynomialGridView->Rows[e->RowIndex]->Cells[0]->Value->ToString());
+				if (e->ColumnIndex == 3)
+					result = ShowInputDialog(true, polynomialGridView->Rows[e->RowIndex]->Cells[0]->Value->ToString());
+				if (result != nullptr && !String::IsNullOrWhiteSpace(result->name))
+				{
+					std::string new_name = msclr::interop::marshal_as<std::string>(result->name->ToString());
+					System::String^ polyName = polynomialGridView->Rows[e->RowIndex]->Cells[0]->Value->ToString();
+					std::string cur_name = msclr::interop::marshal_as<std::string>(polyName);
+					Polynom cur_pol = table.find(cur_name);
+
+					Polynom new_pol;
+					if (e->ColumnIndex == 2)
+						new_pol = cur_pol.derivative(result->variable);
+					if (e->ColumnIndex == 3)
+						new_pol = cur_pol.integrate(result->variable);
+					if (result->name == polyName)
+					{	
+
+						table.delete_rec(cur_name);
+						table.insert(cur_name, new_pol);
+						polynomialGridView->Rows[e->RowIndex]->Cells[1]->Value = gcnew System::String(new_pol.GetInfix().c_str());
+					}
+					else if(table.insert(new_name, new_pol))
+						polynomialGridView->Rows->Add(gcnew String(result->name), gcnew String(new_pol.GetInfix().c_str()));
+					else
+						MessageBox::Show("Ошибка", "Полином уже существует!", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				}
+			}
 			
-			if (e->ColumnIndex == 2) // Производная
-			{
-				System::String^ polyName = polynomialGridView->Rows[e->RowIndex]->Cells[0]->Value->ToString();
-				std::string name = msclr::interop::marshal_as<std::string>(polyName);
-				System::Windows::Forms::DialogResult result = MessageBox::Show(
-					"Взять производную по переменной " + "\'" + gcnew String(GetSelectedVariable(), 1)+ "\' " + "у полинома '" + polyName + "' ? ", "Подтверждение",
-					MessageBoxButtons::YesNo, MessageBoxIcon::Warning);
-
-				if (result == System::Windows::Forms::DialogResult::Yes)
-				{
-					Polynom polynom = table.find(name);
-					table.delete_rec(name);
-
-					Polynom new_polynom = polynom.derivative(GetSelectedVariable());
-					table.insert(name, new_polynom);
-
-					polynomialGridView->Rows[e->RowIndex]->Cells[0]->Value = polyName;
-					polynomialGridView->Rows[e->RowIndex]->Cells[1]->Value = gcnew System::String(new_polynom.GetInfix().c_str());
-				}
-			}
-			if (e->ColumnIndex == 3) // Интеграл
-			{
-				System::String^ polyName = polynomialGridView->Rows[e->RowIndex]->Cells[0]->Value->ToString();
-				std::string name = msclr::interop::marshal_as<std::string>(polyName);
-				System::Windows::Forms::DialogResult result = MessageBox::Show(
-					"Взять интеграл по переменной " + "\'" + gcnew String(GetSelectedVariable(), 1) + "\' " + "у полинома '" + polyName + "' ? ", "Подтверждение",
-					MessageBoxButtons::YesNo, MessageBoxIcon::Warning);
-
-				if (result == System::Windows::Forms::DialogResult::Yes)
-				{
-					Polynom polynom = table.find(name);
-					table.delete_rec(name);
-
-					Polynom new_polynom = polynom.integrate(GetSelectedVariable());
-					table.insert(name, new_polynom);
-
-					polynomialGridView->Rows[e->RowIndex]->Cells[0]->Value = polyName;
-					polynomialGridView->Rows[e->RowIndex]->Cells[1]->Value = gcnew System::String(new_polynom.GetInfix().c_str());
-				}
-			}
 			if (e->ColumnIndex == 4) // Удаление
 			{
 				System::String^ polyName = polynomialGridView->Rows[e->RowIndex]->Cells[0]->Value->ToString();
@@ -131,13 +217,7 @@ namespace graphicalinterface {
 			}
 		}
 	private:
-		char GetSelectedVariable()
-		{
-			if (radioButtonX->Checked) return 'x';
-			if (radioButtonY->Checked) return 'y';
-			if (radioButtonZ->Checked) return 'z';
-			return 'x';
-		}
+		
 	protected:
 		~MyForm()
 		{
@@ -148,16 +228,16 @@ namespace graphicalinterface {
 		}
 	private: System::Windows::Forms::TextBox^ textBox1;
 	private: System::Windows::Forms::TextBox^ textBox2;
-	private: System::Windows::Forms::TextBox^ textBox3;
+
 	private: System::Windows::Forms::Button^ button1;
 	private: System::Windows::Forms::DataGridView^ polynomialGridView;
 	private: System::Windows::Forms::ImageList^ imageList1;
-private: System::Windows::Forms::GroupBox^ groupBox1;
-private: System::Windows::Forms::RadioButton^ radioButtonZ;
 
-private: System::Windows::Forms::RadioButton^ radioButtonY;
 
-private: System::Windows::Forms::RadioButton^ radioButtonX;
+
+
+
+
 
 	private: System::ComponentModel::IContainer^ components;
 
@@ -172,16 +252,10 @@ private: System::Windows::Forms::RadioButton^ radioButtonX;
 			this->components = (gcnew System::ComponentModel::Container());
 			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
-			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
 			this->button1 = (gcnew System::Windows::Forms::Button());
 			this->polynomialGridView = (gcnew System::Windows::Forms::DataGridView());
 			this->imageList1 = (gcnew System::Windows::Forms::ImageList(this->components));
-			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
-			this->radioButtonZ = (gcnew System::Windows::Forms::RadioButton());
-			this->radioButtonY = (gcnew System::Windows::Forms::RadioButton());
-			this->radioButtonX = (gcnew System::Windows::Forms::RadioButton());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->polynomialGridView))->BeginInit();
-			this->groupBox1->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// textBox1
@@ -199,14 +273,6 @@ private: System::Windows::Forms::RadioButton^ radioButtonX;
 			this->textBox2->Size = System::Drawing::Size(366, 31);
 			this->textBox2->TabIndex = 1;
 			this->textBox2->TextChanged += gcnew System::EventHandler(this, &MyForm::textBox2_TextChanged);
-			// 
-			// textBox3
-			// 
-			this->textBox3->Location = System::Drawing::Point(137, 619);
-			this->textBox3->Name = L"textBox3";
-			this->textBox3->Size = System::Drawing::Size(366, 31);
-			this->textBox3->TabIndex = 2;
-			this->textBox3->TextChanged += gcnew System::EventHandler(this, &MyForm::textBox3_TextChanged);
 			// 
 			// button1
 			// 
@@ -237,68 +303,19 @@ private: System::Windows::Forms::RadioButton^ radioButtonX;
 			this->imageList1->ImageSize = System::Drawing::Size(16, 16);
 			this->imageList1->TransparentColor = System::Drawing::Color::Transparent;
 			// 
-			// groupBox1
-			// 
-			this->groupBox1->Controls->Add(this->radioButtonZ);
-			this->groupBox1->Controls->Add(this->radioButtonY);
-			this->groupBox1->Controls->Add(this->radioButtonX);
-			this->groupBox1->Location = System::Drawing::Point(521, 81);
-			this->groupBox1->Name = L"groupBox1";
-			this->groupBox1->Size = System::Drawing::Size(200, 182);
-			this->groupBox1->TabIndex = 5;
-			this->groupBox1->TabStop = false;
-			this->groupBox1->Text = L"groupBox1";
-			// 
-			// radioButtonZ
-			// 
-			this->radioButtonZ->AutoSize = true;
-			this->radioButtonZ->Location = System::Drawing::Point(7, 115);
-			this->radioButtonZ->Name = L"radioButtonZ";
-			this->radioButtonZ->Size = System::Drawing::Size(95, 29);
-			this->radioButtonZ->TabIndex = 2;
-			this->radioButtonZ->TabStop = true;
-			this->radioButtonZ->Text = L"По \'z\'";
-			this->radioButtonZ->UseVisualStyleBackColor = true;
-			// 
-			// radioButtonY
-			// 
-			this->radioButtonY->AutoSize = true;
-			this->radioButtonY->Location = System::Drawing::Point(7, 79);
-			this->radioButtonY->Name = L"radioButtonY";
-			this->radioButtonY->Size = System::Drawing::Size(95, 29);
-			this->radioButtonY->TabIndex = 1;
-			this->radioButtonY->TabStop = true;
-			this->radioButtonY->Text = L"По \'y\'";
-			this->radioButtonY->UseVisualStyleBackColor = true;
-			// 
-			// radioButtonX
-			// 
-			this->radioButtonX->AutoSize = true;
-			this->radioButtonX->Location = System::Drawing::Point(7, 43);
-			this->radioButtonX->Name = L"radioButtonX";
-			this->radioButtonX->Size = System::Drawing::Size(95, 29);
-			this->radioButtonX->TabIndex = 0;
-			this->radioButtonX->TabStop = true;
-			this->radioButtonX->Text = L"По \'x\'";
-			this->radioButtonX->UseVisualStyleBackColor = true;
-			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(12, 25);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
 			this->ClientSize = System::Drawing::Size(2047, 1146);
-			this->Controls->Add(this->groupBox1);
 			this->Controls->Add(this->polynomialGridView);
 			this->Controls->Add(this->button1);
-			this->Controls->Add(this->textBox3);
 			this->Controls->Add(this->textBox2);
 			this->Controls->Add(this->textBox1);
 			this->Name = L"MyForm";
 			this->Text = L"Polynom";
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->polynomialGridView))->EndInit();
-			this->groupBox1->ResumeLayout(false);
-			this->groupBox1->PerformLayout();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
