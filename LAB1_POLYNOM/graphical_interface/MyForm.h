@@ -24,11 +24,17 @@ namespace graphicalinterface {
 			//
 			//TODO: Add the constructor code here
 			//
-			this->BackColor = Color::FromArgb(130, 171, 217);
+			this->BackColor = Color::FromArgb(255, 255, 255);
 			this->Width = 1600;
 			this->Height = 900;
 			this->StartPosition = FormStartPosition::CenterScreen;
 			this->BackgroundImage = Image::FromFile("../graphical_interface/image.jpg");
+
+			textBox1->Enter += gcnew System::EventHandler(this, &MyForm::textBox1_Enter);
+			textBox1->Leave += gcnew System::EventHandler(this, &MyForm::textBox1_Leave);
+
+			textBox2->Enter += gcnew System::EventHandler(this, &MyForm::textBox2_Enter);
+			textBox2->Leave += gcnew System::EventHandler(this, &MyForm::textBox2_Leave);
 
 			SetupGridView();
 			
@@ -53,8 +59,51 @@ namespace graphicalinterface {
 			polynomialGridView->Columns->Add(derivativeColumn);
 			polynomialGridView->Columns->Add(integralColumn);
 			polynomialGridView->Columns->Add(deleteColumn);
+
+			polynomialGridView->CellMouseEnter += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &MyForm::polynomialGridView_CellMouseEnter);
+			polynomialGridView->CellMouseLeave += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &MyForm::polynomialGridView_CellMouseLeave);
+
 		}
-	private:
+	private: System::Void polynomialGridView_CellMouseEnter(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
+		if (e->RowIndex >= 0 && e->ColumnIndex == 4) {
+			polynomialGridView->Rows[e->RowIndex]->Cells[e->ColumnIndex]->Style->BackColor = System::Drawing::Color::Red;
+			polynomialGridView->Rows[e->RowIndex]->Cells[e->ColumnIndex]->Style->ForeColor = System::Drawing::Color::White;
+			polynomialGridView->Rows[e->RowIndex]->Cells[e->ColumnIndex]->Style->Font =
+				gcnew System::Drawing::Font(polynomialGridView->Font, System::Drawing::FontStyle::Bold);
+		}
+	}
+	private: System::Void polynomialGridView_CellMouseLeave(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
+		if (e->RowIndex >= 0 && e->ColumnIndex == 4) {
+			polynomialGridView->Rows[e->RowIndex]->Cells[e->ColumnIndex]->Style->BackColor = System::Drawing::Color::White;
+			polynomialGridView->Rows[e->RowIndex]->Cells[e->ColumnIndex]->Style->ForeColor = System::Drawing::Color::Red;
+		}
+	}
+	private: System::Void textBox1_Enter(System::Object^ sender, System::EventArgs^ e) {
+		if (textBox1->Text == "Имя") {
+			textBox1->Text = "";
+			textBox1->ForeColor = System::Drawing::Color::Black;
+		}
+	}
+
+	private: System::Void textBox1_Leave(System::Object^ sender, System::EventArgs^ e) {
+		if (textBox1->Text == "") {
+			textBox1->Text = "Имя";
+			textBox1->ForeColor = System::Drawing::Color::Gray;
+		}
+	}
+	private: System::Void textBox2_Enter(System::Object^ sender, System::EventArgs^ e) {
+		if (textBox2->Text == "Полином") {
+			textBox2->Text = "";
+			textBox2->ForeColor = System::Drawing::Color::Black;
+		}
+	}
+
+	private: System::Void textBox2_Leave(System::Object^ sender, System::EventArgs^ e) {
+		if (textBox2->Text == "") {
+			textBox2->Text = "Полином";
+			textBox2->ForeColor = System::Drawing::Color::Gray;
+		}
+	}
 		//System::Void UpdateTable()
 		//{
 		//	polynomialGridView->Rows->Clear(); // Очистка таблицы
@@ -164,7 +213,9 @@ namespace graphicalinterface {
 	private:
 		System::Void polynomialGridView_CellContentClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e)
 		{	
-			if (e->ColumnIndex == 2 || e->ColumnIndex == 3) // Производная
+			if (e->RowIndex < 0)
+				return;
+			if (e->ColumnIndex == 2 || e->ColumnIndex == 3) // Производная и интеграл
 			{	
 				InputDialogResult^ result;
 				if (e->ColumnIndex == 2)
@@ -239,6 +290,7 @@ namespace graphicalinterface {
 
 
 
+
 	private: System::ComponentModel::IContainer^ components;
 
 
@@ -260,18 +312,22 @@ namespace graphicalinterface {
 			// 
 			// textBox1
 			// 
+			this->textBox1->ForeColor = System::Drawing::Color::Gray;
 			this->textBox1->Location = System::Drawing::Point(137, 81);
 			this->textBox1->Name = L"textBox1";
 			this->textBox1->Size = System::Drawing::Size(366, 31);
 			this->textBox1->TabIndex = 0;
+			this->textBox1->Text = L"Имя";
 			this->textBox1->TextChanged += gcnew System::EventHandler(this, &MyForm::textBox1_TextChanged);
 			// 
 			// textBox2
 			// 
+			this->textBox2->ForeColor = System::Drawing::Color::Gray;
 			this->textBox2->Location = System::Drawing::Point(137, 155);
 			this->textBox2->Name = L"textBox2";
 			this->textBox2->Size = System::Drawing::Size(366, 31);
 			this->textBox2->TabIndex = 1;
+			this->textBox2->Text = L"Полином";
 			this->textBox2->TextChanged += gcnew System::EventHandler(this, &MyForm::textBox2_TextChanged);
 			// 
 			// button1
@@ -313,8 +369,10 @@ namespace graphicalinterface {
 			this->Controls->Add(this->button1);
 			this->Controls->Add(this->textBox2);
 			this->Controls->Add(this->textBox1);
+			this->KeyPreview = true;
 			this->Name = L"MyForm";
 			this->Text = L"Polynom";
+			this->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &MyForm::MyForm_KeyDown);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->polynomialGridView))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
@@ -348,5 +406,17 @@ namespace graphicalinterface {
 			MessageBox::Show("Ошибка: " + errorMessage, "Некорректный ввод полинома!", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		}
 	}
+	private: System::Void MyForm_KeyDown(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e){
+		
+		if (e->KeyCode == Keys::Enter) {
+			button1->PerformClick(); 
+			e->SuppressKeyPress = true;
+		}
+		if (e->KeyCode == Keys::Up)
+			MyForm::ActiveControl = textBox1;
+		if (e->KeyCode == Keys::Down)
+			MyForm::ActiveControl = textBox2;
+	}
+
 };
 }

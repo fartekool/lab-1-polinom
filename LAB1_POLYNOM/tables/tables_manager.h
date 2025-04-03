@@ -69,7 +69,7 @@ public:
 	{
 		if (current_table->insert(name, obj))
 		{
-			tables_fill--;
+			tables_fill++;
 			sync({ name,obj }, Operation::ins);
 			return true;
 		}
@@ -80,7 +80,7 @@ public:
 	{
 		if (current_table->delete_rec(name))
 		{
-			tables_fill++;
+			tables_fill--;
 			sync({ name }, Operation::del);
 			return true;
 		}
@@ -91,7 +91,12 @@ public:
 	{
 		return current_table->isEmpty();
 	}
+	size_t GetFill() const
+	{
+		return tables_fill;
+	}
 	~Tables_manager() = default;
+
 };
 
 #endif
