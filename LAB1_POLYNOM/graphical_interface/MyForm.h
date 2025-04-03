@@ -237,8 +237,9 @@ namespace graphicalinterface {
 					if (result->name == polyName)
 					{	
 
-						table.delete_rec(cur_name);
-						table.insert(cur_name, new_pol);
+						/*table.delete_rec(cur_name);
+						table.insert(cur_name, new_pol);*/
+						table.find(cur_name) = new_pol;
 						polynomialGridView->Rows[e->RowIndex]->Cells[1]->Value = gcnew System::String(new_pol.GetInfix().c_str());
 					}
 					else if(table.insert(new_name, new_pol))
@@ -283,6 +284,7 @@ namespace graphicalinterface {
 	private: System::Windows::Forms::Button^ button1;
 	private: System::Windows::Forms::DataGridView^ polynomialGridView;
 	private: System::Windows::Forms::ImageList^ imageList1;
+private: System::Windows::Forms::Button^ button2;
 
 
 
@@ -307,6 +309,7 @@ namespace graphicalinterface {
 			this->button1 = (gcnew System::Windows::Forms::Button());
 			this->polynomialGridView = (gcnew System::Windows::Forms::DataGridView());
 			this->imageList1 = (gcnew System::Windows::Forms::ImageList(this->components));
+			this->button2 = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->polynomialGridView))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -359,12 +362,23 @@ namespace graphicalinterface {
 			this->imageList1->ImageSize = System::Drawing::Size(16, 16);
 			this->imageList1->TransparentColor = System::Drawing::Color::Transparent;
 			// 
+			// button2
+			// 
+			this->button2->Location = System::Drawing::Point(1811, 778);
+			this->button2->Name = L"button2";
+			this->button2->Size = System::Drawing::Size(163, 68);
+			this->button2->TabIndex = 5;
+			this->button2->Text = L"Удалить все";
+			this->button2->UseVisualStyleBackColor = true;
+			this->button2->Click += gcnew System::EventHandler(this, &MyForm::button2_Click);
+			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(12, 25);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
 			this->ClientSize = System::Drawing::Size(2047, 1146);
+			this->Controls->Add(this->button2);
 			this->Controls->Add(this->polynomialGridView);
 			this->Controls->Add(this->button1);
 			this->Controls->Add(this->textBox2);
@@ -418,5 +432,23 @@ namespace graphicalinterface {
 			MyForm::ActiveControl = textBox2;
 	}
 
+	private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
+
+		if (table.GetFill() == 0)
+			System::Windows::Forms::DialogResult result = MessageBox::Show("Таблица пустая!", "Ошибка");
+		else
+		{
+			System::Windows::Forms::DialogResult result = MessageBox::Show(
+				"Удалить все полиномы?", "Подтверждение",
+				MessageBoxButtons::YesNo, MessageBoxIcon::Warning);
+
+			if (result == System::Windows::Forms::DialogResult::Yes)
+			{
+				table = Tables_manager<string, Polynom>();
+				polynomialGridView->Rows->Clear();
+			}
+		}
+
+	}
 };
 }

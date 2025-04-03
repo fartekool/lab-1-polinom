@@ -13,7 +13,7 @@ class List_table : public Base_table<T, B>
 	List<record> table;
 public:
 	List_table() { Fill = 0; }
-	const B& find(const T& name) const override
+	B& find(const T& name) override
 	{
 		if (table.isEmpty())
 			throw runtime_error("Table is empty!");

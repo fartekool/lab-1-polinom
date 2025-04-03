@@ -20,7 +20,7 @@ protected:
 	};
 	size_t Fill;
 public:
-	virtual const B& find(const T& name) const = 0;
+	virtual B& find(const T& name) = 0;
 	virtual bool insert(const T& name, const B& obj) = 0;
 	virtual bool delete_rec(const T& name) = 0;
 	virtual bool isEmpty() const = 0;

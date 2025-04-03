@@ -11,7 +11,7 @@ class Array_table: public Base_table<T, B>
 	vector<record> table;
 public:
 	Array_table() { Fill = 0; }
-	const B& find(const T& name) const override
+	B& find(const T& name) override
 	{
 		if (isEmpty())
 			throw runtime_error("Table is empty!");

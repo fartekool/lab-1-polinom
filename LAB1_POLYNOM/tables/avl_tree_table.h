@@ -157,7 +157,7 @@ public:
 		pRoot = nullptr;
 	}
 
-	const B& find(const T& name) const override {
+	B& find(const T& name) override {
 		if (isEmpty())
 			throw runtime_error("Table is empty!");
 

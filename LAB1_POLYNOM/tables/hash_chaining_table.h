@@ -35,7 +35,7 @@ public:
 			hashcode += last_bites[i] * (i + 1);
 		return hashcode % count_of_rows;
 	}
-	const B& find(const T& name) const override
+	B& find(const T& name) override
 	{
 		if (isEmpty())
 			throw runtime_error("Table is empty!");

@@ -61,7 +61,7 @@ public:
 	{
 		current_table = tables[static_cast<size_t>(table)];
 	}
-	const B& find(const T& name)
+	B& find(const T& name)
 	{
 		return current_table->find(name);
 	}

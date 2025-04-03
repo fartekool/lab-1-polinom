@@ -45,7 +45,7 @@ class Sorted_array_table : public Base_table<T, B>
 	}
 public:
 	Sorted_array_table() { Fill = 0; }
-	const B& find(const T& name) const override
+	B& find(const T& name) override
 	{
 		if (isEmpty())
 			throw runtime_error("Table is empty!");
