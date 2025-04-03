@@ -43,3 +43,15 @@ void ExpressionValidator::Validate(const string& expr) {
     CheckValidCharacters(expr);
     CheckBrackets(expr);
 }
+
+
+bool ValidateName(const string& name)
+{   
+
+    for (int i = 0; i < name.length(); ++i)
+    {
+        if (!(((97 <= name[i]) && (name[i] <= 122)) || ((48 <= name[i]) && (name[i] <= 57)) || (name[i] == 95)))
+            return false;
+    }
+    return true;
+}

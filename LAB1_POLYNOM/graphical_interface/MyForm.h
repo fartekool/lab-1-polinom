@@ -49,8 +49,13 @@ namespace graphicalinterface {
 			textBox2->Leave += gcnew System::EventHandler(this, &MyForm::textBox2_Leave);
 
 			SetupGridView();
-			
-			
+			//RichTextBox^ instructionText = gcnew RichTextBox();
+			//instructionText->Text = "Шаг 1: Описание действия.\nШаг 2: Следующее действие.";
+			//instructionText->Location = System::Drawing::Point(20, 20);
+			//instructionText->Size = System::Drawing::Size(300, 150);
+			//instructionText->ReadOnly = true; // Чтобы нельзя было редактировать
+			//this->Controls->Add(instructionText);
+			////this->Controls->Remove(instructionText);
 		}
 	private: 
 		System::Void SetupGridView()
@@ -366,7 +371,7 @@ private: System::Windows::Forms::Button^ button2;
 			this->polynomialGridView->ReadOnly = true;
 			this->polynomialGridView->RowHeadersWidth = 82;
 			this->polynomialGridView->RowTemplate->Height = 33;
-			this->polynomialGridView->Size = System::Drawing::Size(1214, 642);
+			this->polynomialGridView->Size = System::Drawing::Size(1163, 642);
 			this->polynomialGridView->TabIndex = 4;
 			this->polynomialGridView->CellContentClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &MyForm::polynomialGridView_CellContentClick);
 			// 
@@ -433,12 +438,18 @@ private: System::Windows::Forms::Button^ button2;
 			System::String^ errorMessage = gcnew System::String(e.what());
 			MessageBox::Show("Ошибка: " + errorMessage, "Некорректный ввод полинома!", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		}*/
-		try {
-			String^ NAME = textBox1->Text;
-			string name = msclr::interop::marshal_as<std::string>(NAME);
+		String^ NAME = textBox1->Text;
+		string name = msclr::interop::marshal_as<std::string>(NAME);
+		if (!ValidateName(name))
+		{
+			MessageBox::Show("Ошибка", "Некорректное имя!", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			return;
+		}
 
-			String^ EXP = textBox2->Text;
-			string exp = msclr::interop::marshal_as<std::string>(EXP);
+		String^ EXP = textBox2->Text;
+		string exp = msclr::interop::marshal_as<std::string>(EXP);
+		try {
+			
 
 			try
 			{

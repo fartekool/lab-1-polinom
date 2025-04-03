@@ -13,3 +13,6 @@ public:
 
     static void Validate(const string& expr);
 };
+
+
+bool ValidateName(const string& name);
