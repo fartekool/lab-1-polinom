@@ -4,8 +4,20 @@
 #include "../polynom/polynom.h"
 #include "../polynom/polynom.cpp"
 #include "../polynomial_algebra/expression.h"
-#include "../tables/tables_manager.h"
+#include "../polynomial_algebra/ExpressionValidator.h"
+#include "../polynomial_algebra/InfixToPostfixConverter.h"
+#include "../polynomial_algebra/Parser.h"
+#include "../polynomial_algebra/PostfixCalculator.h"
+#include "../polynomial_algebra/stack.h"
 
+#include "../polynomial_algebra/expression.cpp"
+#include "../polynomial_algebra/ExpressionValidator.cpp"
+#include "../polynomial_algebra/InfixToPostfixConverter.cpp"
+#include "../polynomial_algebra/Parser.cpp"
+#include "../polynomial_algebra/PostfixCalculator.cpp"
+#include "../polynomial_algebra/stack.h"
+
+#include "../tables/tables_manager.h"
 namespace graphicalinterface {
 
 	using namespace System;
@@ -293,6 +305,8 @@ private: System::Windows::Forms::Button^ button2;
 
 
 
+
+
 	private: System::ComponentModel::IContainer^ components;
 
 
@@ -401,7 +415,7 @@ private: System::Windows::Forms::Button^ button2;
 	}
 	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
 
-		try {
+		/*try {
 			String^ NAME = textBox1->Text;
 			String^ POLYNOM = textBox2->Text;
 			std::string nameStr = msclr::interop::marshal_as<std::string>(textBox1->Text);
@@ -418,7 +432,53 @@ private: System::Windows::Forms::Button^ button2;
 		{
 			System::String^ errorMessage = gcnew System::String(e.what());
 			MessageBox::Show("Ошибка: " + errorMessage, "Некорректный ввод полинома!", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		}*/
+		try {
+			String^ NAME = textBox1->Text;
+			string name = msclr::interop::marshal_as<std::string>(NAME);
+
+			String^ EXP = textBox2->Text;
+			string exp = msclr::interop::marshal_as<std::string>(EXP);
+
+			try
+			{
+				Polynom polynom(exp);
+				if (table.insert(name, polynom))
+					polynomialGridView->Rows->Add(gcnew String(NAME), gcnew String(polynom.GetInfix().c_str()));
+				else {
+					MessageBox::Show("Ошибка", "Полином уже существует!", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				}
+			}
+			catch (const std::exception& e)
+			{
+				Expression exp1(exp);
+
+				vector<string> poly_names = exp1.GetOperands();
+
+				map<string, Polynom> pol;
+
+				for (string& i : poly_names)
+				{
+					pol.insert(std::make_pair(i, table.find(i)));
+				}
+
+				Polynom result = exp1.Calculate(pol);
+
+
+				if (table.insert(name, result))
+					polynomialGridView->Rows->Add(gcnew String(NAME), gcnew String(result.GetInfix().c_str()));
+				else {
+					MessageBox::Show("Ошибка", "Полином уже существует!", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				}
+			}
 		}
+		catch (const std::exception& e)
+		{
+			System::String^ errorMessage = gcnew System::String(e.what());
+			MessageBox::Show("Ошибка: " + errorMessage, "Некорректный ввод полинома!", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		}
+
+
 	}
 	private: System::Void MyForm_KeyDown(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e){
 		
@@ -450,5 +510,6 @@ private: System::Windows::Forms::Button^ button2;
 		}
 
 	}
+	
 };
 }

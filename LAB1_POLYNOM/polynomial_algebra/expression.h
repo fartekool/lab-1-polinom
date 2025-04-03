@@ -8,8 +8,11 @@
 #include "InfixToPostfixConverter.h"
 #include "PostfixCalculator.h"
 #include "Parser.h"
-
 using namespace std;
+
+
+pair<string, string> splitString(const string& input);
+
 
 class Expression {
     string infix;
@@ -23,3 +26,5 @@ public:
     vector<string> GetOperands() const;
     Polynom Calculate(map<string, Polynom>);
 };
+
+

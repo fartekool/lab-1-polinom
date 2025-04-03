@@ -11,21 +11,7 @@
 
 using namespace std;
 
-pair<string, string> splitString(const string& input) {
-    string left, right;
-    size_t equalSignPos = input.find('=');
 
-    if (equalSignPos != string::npos) {
-        left = input.substr(0, equalSignPos);
-        right = input.substr(equalSignPos + 1);
-    }
-    else {
-        // Если знак '=' не найден, левая часть - вся строка, правая - пустая
-        left = input;
-    }
-
-    return { left, right };
-}
 
 int main()
 {
