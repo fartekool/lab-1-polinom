@@ -33,9 +33,6 @@ namespace graphicalinterface {
 		MyForm(void)
 		{	
 			InitializeComponent();
-			//
-			//TODO: Add the constructor code here
-			//
 			this->BackColor = Color::FromArgb(255, 255, 255);
 			this->Width = 1600;
 			this->Height = 900;
@@ -49,22 +46,19 @@ namespace graphicalinterface {
 			textBox2->Leave += gcnew System::EventHandler(this, &MyForm::textBox2_Leave);
 
 			SetupGridView();
-			//RichTextBox^ instructionText = gcnew RichTextBox();
-			//instructionText->Text = "Шаг 1: Описание действия.\nШаг 2: Следующее действие.";
-			//instructionText->Location = System::Drawing::Point(20, 20);
-			//instructionText->Size = System::Drawing::Size(300, 150);
-			//instructionText->ReadOnly = true; // Чтобы нельзя было редактировать
-			//this->Controls->Add(instructionText);
-			////this->Controls->Remove(instructionText);
 		}
 	private: 
 		System::Void SetupGridView()
 		{	
 			DataGridViewButtonColumn^ derivativeColumn = gcnew DataGridViewButtonColumn();
 			derivativeColumn->HeaderText = "Производная";
+			derivativeColumn->Text = "Взять";
+			derivativeColumn->UseColumnTextForButtonValue = true;
 
 			DataGridViewButtonColumn^ integralColumn = gcnew DataGridViewButtonColumn();
 			integralColumn->HeaderText = "Интеграл";
+			integralColumn->Text = "Взять";
+			integralColumn->UseColumnTextForButtonValue = true;
 
 			DataGridViewButtonColumn^ deleteColumn = gcnew DataGridViewButtonColumn();
 			deleteColumn->HeaderText = "Удалить";
@@ -121,49 +115,7 @@ namespace graphicalinterface {
 			textBox2->ForeColor = System::Drawing::Color::Gray;
 		}
 	}
-		//System::Void UpdateTable()
-		//{
-		//	polynomialGridView->Rows->Clear(); // Очистка таблицы
-
-		//	for (const auto& record : arr_table.GetAll())
-		//	{
-		//		int rowIndex = polynomialGridView->Rows->Add();
-		//		polynomialGridView->Rows[rowIndex]->Cells[0]->Value = gcnew System::String(record.key.c_str());
-		//		polynomialGridView->Rows[rowIndex]->Cells[1]->Value = gcnew System::String(record.data.GetInfix().c_str());
-		//	}
-		//}
-		/*System::String^ ShowInputDialog(System::String^ prompt, System::String^ title)
-		{
-			System::Windows::Forms::Form^ form = gcnew System::Windows::Forms::Form();
-			System::Windows::Forms::Label^ label = gcnew System::Windows::Forms::Label();
-			System::Windows::Forms::TextBox^ textBox = gcnew System::Windows::Forms::TextBox();
-			System::Windows::Forms::Button^ buttonOk = gcnew System::Windows::Forms::Button();
-			System::Windows::Forms::Button^ buttonCancel = gcnew System::Windows::Forms::Button();
-
-			form->Text = title;
-			label->Text = prompt;
-			textBox->Text = "";
-
-			buttonOk->Text = "OK";
-			buttonCancel->Text = "Отмена";
-
-			buttonOk->DialogResult = System::Windows::Forms::DialogResult::OK;
-			buttonCancel->DialogResult = System::Windows::Forms::DialogResult::Cancel;
-
-			label->SetBounds(10, 10, 300, 20);
-			textBox->SetBounds(10, 40, 300, 20);
-			buttonOk->SetBounds(50, 70, 75, 25);
-			buttonCancel->SetBounds(150, 70, 75, 25);
-
-			form->ClientSize = System::Drawing::Size(320, 120);
-			form->Controls->AddRange(gcnew cli::array<System::Windows::Forms::Control^>{ label, textBox, buttonOk, buttonCancel });
-			form->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedDialog;
-			form->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
-			form->AcceptButton = buttonOk;
-			form->CancelButton = buttonCancel;
-
-			return (form->ShowDialog() == System::Windows::Forms::DialogResult::OK) ? textBox->Text : nullptr;
-		}*/
+		
 		ref struct InputDialogResult {
 			System::String^ name;
 			char variable;
@@ -253,9 +205,6 @@ namespace graphicalinterface {
 						new_pol = cur_pol.integrate(result->variable);
 					if (result->name == polyName)
 					{	
-
-						/*table.delete_rec(cur_name);
-						table.insert(cur_name, new_pol);*/
 						table.find(cur_name) = new_pol;
 						polynomialGridView->Rows[e->RowIndex]->Cells[1]->Value = gcnew System::String(new_pol.GetInfix().c_str());
 					}
@@ -383,7 +332,7 @@ private: System::Windows::Forms::Button^ button2;
 			// 
 			// button2
 			// 
-			this->button2->Location = System::Drawing::Point(1811, 778);
+			this->button2->Location = System::Drawing::Point(1760, 772);
 			this->button2->Name = L"button2";
 			this->button2->Size = System::Drawing::Size(163, 68);
 			this->button2->TabIndex = 5;
@@ -419,25 +368,6 @@ private: System::Windows::Forms::Button^ button2;
 	private: System::Void textBox3_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 	}
 	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
-
-		/*try {
-			String^ NAME = textBox1->Text;
-			String^ POLYNOM = textBox2->Text;
-			std::string nameStr = msclr::interop::marshal_as<std::string>(textBox1->Text);
-			std::string polynomStr = msclr::interop::marshal_as<std::string>(textBox2->Text);
-
-			Polynom polynom(polynomStr);
-			if (table.insert(nameStr, polynom))
-				polynomialGridView->Rows->Add(gcnew String(NAME), gcnew String(POLYNOM));
-			else {
-				MessageBox::Show("Ошибка", "Полином уже существует!", MessageBoxButtons::OK, MessageBoxIcon::Error);
-			}
-		}
-		catch (const std::exception& e)
-		{
-			System::String^ errorMessage = gcnew System::String(e.what());
-			MessageBox::Show("Ошибка: " + errorMessage, "Некорректный ввод полинома!", MessageBoxButtons::OK, MessageBoxIcon::Error);
-		}*/
 		String^ NAME = textBox1->Text;
 		string name = msclr::interop::marshal_as<std::string>(NAME);
 		if (!ValidateName(name))
@@ -461,7 +391,7 @@ private: System::Windows::Forms::Button^ button2;
 				}
 			}
 			catch (const std::exception& e)
-			{
+			{	
 				Expression exp1(exp);
 
 				vector<string> poly_names = exp1.GetOperands();

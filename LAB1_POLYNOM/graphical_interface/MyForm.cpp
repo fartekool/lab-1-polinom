@@ -1,5 +1,4 @@
 #include "MyForm.h"
-#include "../polynom/test_for_form.h"
 using namespace System;
 using namespace System::Windows::Forms;
 

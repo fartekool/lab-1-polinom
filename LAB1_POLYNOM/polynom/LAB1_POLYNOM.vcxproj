@@ -131,7 +131,6 @@
     <ClInclude Include="list.h" />
     <ClInclude Include="monom.h" />
     <ClInclude Include="polynom.h" />
-    <ClInclude Include="test_for_form.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="polynom.cpp" />
