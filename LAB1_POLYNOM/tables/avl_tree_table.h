@@ -72,17 +72,6 @@ class Avl_tree_table : public Base_table<T, B>
 		return p; // если балансировка не нужна
 	}
 
-	/*TNode* FindNode(const T& key, TNode* pNode) const {
-		if (pNode == nullptr)
-			return nullptr;
-		if (key < pNode->rc.key)
-			pNode = FindNode(key, pNode->pLeft);
-		if (key > pNode->rc.key)
-			pNode = FindNode(key, pNode->pRight);
-		return pNode;
-	}*/
-
-	// почему то иногда работает только с доп проверками
 	TNode* FindNode(const T& key, TNode* pNode) const {
 		if (pNode == nullptr)
 			return nullptr;
@@ -151,6 +140,13 @@ class Avl_tree_table : public Base_table<T, B>
 		}
 	}
 
+	void GetRecord(TNode* node, vector<record>& records) const {
+		if (node != nullptr) {
+			GetRecord(node->pLeft, records);
+			records.push_back(node->rc);
+			GetRecord(node->pRight, records);
+		}
+	}
 public:
 	Avl_tree_table() {
 		Fill = 0;
@@ -196,6 +192,12 @@ public:
 	bool isEmpty() const override
 	{
 		return Fill == 0;
+	}
+
+	vector<record> GetAllRecords() const {
+		vector<record> records;
+		GetRecord(pRoot, records);
+		return records;
 	}
 
 	~Avl_tree_table() override {

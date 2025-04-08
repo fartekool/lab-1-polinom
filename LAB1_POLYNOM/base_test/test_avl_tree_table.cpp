@@ -132,3 +132,66 @@ TEST(Avl_tree_table, can_insert_after_deleting_all_elements)
 		a.delete_rec("item" + to_string(i));
 	EXPECT_TRUE(a.insert("new_item", 10));
 }
+
+TEST(Avl_tree_table, can_get_all_records_from_empty_tree)
+{
+	Avl_tree_table<string, int> a;
+	EXPECT_TRUE(a.GetAllRecords().empty());
+}
+
+TEST(Avl_tree_table, can_get_all_records_from_non_empty_tree)
+{
+	Avl_tree_table<string, int> a;
+	a.insert("banana", 2);
+	a.insert("apple", 1);
+	a.insert("cherry", 3);
+
+	ASSERT_EQ(a.GetAllRecords().size(), 3);
+
+	// Проверяем, что записи отсортированы по ключу
+	ASSERT_EQ(a.GetAllRecords()[0].key, "apple");
+	ASSERT_EQ(a.GetAllRecords()[0].data, 1);
+	ASSERT_EQ(a.GetAllRecords()[1].key, "banana");
+	ASSERT_EQ(a.GetAllRecords()[1].data, 2);
+	ASSERT_EQ(a.GetAllRecords()[2].key, "cherry");
+	ASSERT_EQ(a.GetAllRecords()[2].data, 3);
+}
+
+TEST(Avl_tree_table, can_get_all_records_after_insertions_and_deletions)
+{
+	Avl_tree_table<int, string> a;
+	a.insert(5, "five");
+	a.insert(3, "three");
+	a.insert(8, "eight");
+	a.delete_rec(3);
+	a.insert(1, "one");
+	a.insert(4, "four");
+
+	ASSERT_EQ(a.GetAllRecords().size(), 4);
+
+	// Проверяем порядок после вставок и удаления
+	ASSERT_EQ(a.GetAllRecords()[0].key, 1);
+	ASSERT_EQ(a.GetAllRecords()[0].data, "one");
+	ASSERT_EQ(a.GetAllRecords()[1].key, 4);
+	ASSERT_EQ(a.GetAllRecords()[1].data, "four");
+	ASSERT_EQ(a.GetAllRecords()[2].key, 5);
+	ASSERT_EQ(a.GetAllRecords()[2].data, "five");
+	ASSERT_EQ(a.GetAllRecords()[3].key, 8);
+	ASSERT_EQ(a.GetAllRecords()[3].data, "eight");
+}
+
+TEST(Avl_tree_table, can_get_all_records_with_duplicate_values)
+{
+	Avl_tree_table<string, int> a;
+	a.insert("a", 5);
+	a.insert("b", 5);
+	a.insert("c", 5);
+
+	ASSERT_EQ(a.GetAllRecords().size(), 3);
+	ASSERT_EQ(a.GetAllRecords()[0].key, "a");
+	ASSERT_EQ(a.GetAllRecords()[0].data, 5);
+	ASSERT_EQ(a.GetAllRecords()[1].key, "b");
+	ASSERT_EQ(a.GetAllRecords()[1].data, 5);
+	ASSERT_EQ(a.GetAllRecords()[2].key, "c");
+	ASSERT_EQ(a.GetAllRecords()[2].data, 5);
+}
