@@ -27,6 +27,7 @@ namespace graphicalinterface {
 	using namespace System::Data;
 	using namespace System::Drawing;
 	Tables_manager<string, Polynom> table;
+	TableType cur_type = TableType::ARRAY_TABLE;
 	public ref class MyForm : public System::Windows::Forms::Form
 	{
 	public:
@@ -251,6 +252,7 @@ namespace graphicalinterface {
 	private: System::Windows::Forms::DataGridView^ polynomialGridView;
 	private: System::Windows::Forms::ImageList^ imageList1;
 private: System::Windows::Forms::Button^ button2;
+private: System::Windows::Forms::Button^ button3;
 
 
 
@@ -278,6 +280,7 @@ private: System::Windows::Forms::Button^ button2;
 			this->polynomialGridView = (gcnew System::Windows::Forms::DataGridView());
 			this->imageList1 = (gcnew System::Windows::Forms::ImageList(this->components));
 			this->button2 = (gcnew System::Windows::Forms::Button());
+			this->button3 = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->polynomialGridView))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -340,12 +343,23 @@ private: System::Windows::Forms::Button^ button2;
 			this->button2->UseVisualStyleBackColor = true;
 			this->button2->Click += gcnew System::EventHandler(this, &MyForm::button2_Click);
 			// 
+			// button3
+			// 
+			this->button3->Location = System::Drawing::Point(760, 772);
+			this->button3->Name = L"button3";
+			this->button3->Size = System::Drawing::Size(196, 68);
+			this->button3->TabIndex = 6;
+			this->button3->Text = L"Выбор Таблицы";
+			this->button3->UseVisualStyleBackColor = true;
+			this->button3->Click += gcnew System::EventHandler(this, &MyForm::button3_Click);
+			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(12, 25);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
 			this->ClientSize = System::Drawing::Size(2047, 1146);
+			this->Controls->Add(this->button3);
 			this->Controls->Add(this->button2);
 			this->Controls->Add(this->polynomialGridView);
 			this->Controls->Add(this->button1);
@@ -446,11 +460,92 @@ private: System::Windows::Forms::Button^ button2;
 			if (result == System::Windows::Forms::DialogResult::Yes)
 			{
 				table = Tables_manager<string, Polynom>();
+				table.set_current(cur_type);
 				polynomialGridView->Rows->Clear();
 			}
 		}
 
 	}
 	
-};
+	private: System::Void button3_Click(System::Object^ sender, System::EventArgs^ e) {
+
+		System::Windows::Forms::Form^ form = gcnew System::Windows::Forms::Form();
+		System::Windows::Forms::Label^ label = gcnew System::Windows::Forms::Label();
+
+		System::Windows::Forms::RadioButton^ radio_ARRAY_TABLE = gcnew System::Windows::Forms::RadioButton();
+		System::Windows::Forms::RadioButton^ radio_AVL_TREE_TABLE = gcnew System::Windows::Forms::RadioButton();
+		System::Windows::Forms::RadioButton^ radio_HASH_CHAINING_TABLE = gcnew System::Windows::Forms::RadioButton();
+		System::Windows::Forms::RadioButton^ radio_HASH_OPEN_ADDR_TABLE = gcnew System::Windows::Forms::RadioButton();
+		System::Windows::Forms::RadioButton^ radio_LIST_TABLE = gcnew System::Windows::Forms::RadioButton();
+		System::Windows::Forms::RadioButton^ radio_SORTED_ARRAY_TABLE = gcnew System::Windows::Forms::RadioButton();
+
+		System::Windows::Forms::Button^ buttonOk = gcnew System::Windows::Forms::Button();
+		System::Windows::Forms::Button^ buttonCancel = gcnew System::Windows::Forms::Button();
+		form->Text = "Выбор таблицы";
+		label->Text = "Выберите таблицу:";
+
+		radio_ARRAY_TABLE->Text = "Array Table";
+		radio_AVL_TREE_TABLE->Text = "AVL Tree Table";
+		radio_HASH_CHAINING_TABLE->Text = "Hash Chaining Table";
+		radio_HASH_OPEN_ADDR_TABLE->Text = "Hash Open Addr Table";
+		radio_LIST_TABLE->Text = "List Table";
+		radio_SORTED_ARRAY_TABLE->Text = "Sorted Array Table";
+		if (cur_type == TableType::ARRAY_TABLE)
+			radio_ARRAY_TABLE->Checked = true;
+		else if (cur_type == TableType::AVL_TREE_TABLE)
+			radio_AVL_TREE_TABLE->Checked = true;
+		else if (cur_type == TableType::HASH_CHAINING_TABLE)
+			radio_HASH_CHAINING_TABLE->Checked = true;
+		else if (cur_type == TableType::HASH_OPEN_ADDR_TABLE)
+			radio_HASH_OPEN_ADDR_TABLE->Checked = true;
+		else if (cur_type == TableType::LIST_TABLE)
+			radio_LIST_TABLE->Checked = true;
+		else if (cur_type == TableType::SORTED_ARRAY_TABLE)
+			radio_SORTED_ARRAY_TABLE->Checked = true;
+
+		buttonOk->Text = "OK";
+		buttonCancel->Text = "Отмена";
+
+		buttonOk->DialogResult = System::Windows::Forms::DialogResult::OK;
+		buttonCancel->DialogResult = System::Windows::Forms::DialogResult::Cancel;
+
+		label->SetBounds(10, 10, 300, 20);
+
+		radio_ARRAY_TABLE->SetBounds(10, 70, 200, 20);
+		radio_AVL_TREE_TABLE->SetBounds(10, 120, 200, 20);
+		radio_HASH_CHAINING_TABLE->SetBounds(10, 170, 200, 20);
+		radio_HASH_OPEN_ADDR_TABLE->SetBounds(10, 220, 200, 20);
+		radio_LIST_TABLE->SetBounds(10, 270, 200, 20);
+		radio_SORTED_ARRAY_TABLE->SetBounds(10, 320, 200, 20);
+
+
+		buttonOk->SetBounds(50, 350, 75, 25);
+		buttonCancel->SetBounds(150, 350, 75, 25);
+
+		form->ClientSize = System::Drawing::Size(300, 400);
+		form->Controls->AddRange(gcnew cli::array<System::Windows::Forms::Control^>{ label, radio_ARRAY_TABLE, radio_AVL_TREE_TABLE, radio_HASH_CHAINING_TABLE, radio_HASH_OPEN_ADDR_TABLE, radio_LIST_TABLE, radio_SORTED_ARRAY_TABLE, buttonOk, buttonCancel });
+		form->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedDialog;
+		form->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
+		form->AcceptButton = buttonOk;
+		form->CancelButton = buttonCancel;
+
+		if (form->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
+			if (radio_ARRAY_TABLE->Checked)
+				cur_type = TableType::ARRAY_TABLE;
+			else if (radio_AVL_TREE_TABLE->Checked)
+				cur_type = TableType::AVL_TREE_TABLE;
+			else if (radio_HASH_CHAINING_TABLE->Checked)
+				cur_type = TableType::HASH_CHAINING_TABLE;
+			else if (radio_HASH_OPEN_ADDR_TABLE->Checked)
+				cur_type = TableType::HASH_OPEN_ADDR_TABLE;
+			else if (radio_LIST_TABLE->Checked)
+				cur_type = TableType::LIST_TABLE;
+			else if (radio_SORTED_ARRAY_TABLE->Checked)
+				cur_type = TableType::SORTED_ARRAY_TABLE;
+
+			table.set_current(cur_type);
+		}
+	}
+	
+	};
 }
