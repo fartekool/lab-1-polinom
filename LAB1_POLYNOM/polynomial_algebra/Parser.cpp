@@ -83,7 +83,7 @@ vector<Token> Parser::Parse(const string& expr)
         isRParanth, isSpace, isUnderscore, isUnaryMinus;
 
     std::string buffer;
-    Token::Type bufferTokenType = Token::INT_LITERAL;
+    Token::Type bufferTokenType = Token::Type::NONE_TYPE;
 
     for (auto& s : expr)
     {
@@ -115,7 +115,6 @@ vector<Token> Parser::Parse(const string& expr)
         // Если тип символа неопределен, значит ошибка в синтаксисе
         if (!(isDigit || isLetter || isParanth || isPoint || isOp || isSpace || isUnderscore))
         {
-            cout << s << '\n';
             stringstream ss;
             ss << "Unknown symbol: " << s;
             throw invalid_argument(ss.str());
@@ -128,10 +127,14 @@ vector<Token> Parser::Parse(const string& expr)
         case S0:
             if (isOp || isParanth)
                 state = S1;
-            else if (isDigit)
+            else if (isDigit) {
                 state = S2;
-            else if (isLetter || isUnderscore)
+                bufferTokenType = Token::INT_LITERAL;
+            }
+            else if (isLetter || isUnderscore) {
                 state = S4;
+                isLetter ? bufferTokenType = Token::POLINOM_NAME : bufferTokenType = Token::L_PARANTHESIS;
+            }
             else if (isPoint)
             {
                 stringstream ss;

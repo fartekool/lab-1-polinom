@@ -23,7 +23,9 @@ public:
         R_PARANTHESIS, // закрывающая скобка
         INT_LITERAL,   // целое число
         FLOAT_LITERAL, // число с плавающей точкой
-        POLINOM_NAME   // имя полинома
+        POLINOM_NAME,  // имя полинома
+        POLINOM,       // полином
+        NONE_TYPE           // неопределённое тип 
     };
 
     // Ассоциативность
@@ -34,7 +36,7 @@ public:
         LEFT   // левоассоциативный
     };
 
-    Token(string token, Type type, OperatorAssociativity asc = NONE);
+    Token(string token, Type type, OperatorAssociativity asc = OperatorAssociativity::NONE);
 
 private:
     Type type;
