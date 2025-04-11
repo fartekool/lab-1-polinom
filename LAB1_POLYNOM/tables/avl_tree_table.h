@@ -194,7 +194,8 @@ public:
 		return Fill == 0;
 	}
 
-	vector<record> GetAllRecords() const {
+	vector<record> GetAllRecords() const override
+	{
 		vector<record> records;
 		GetRecord(pRoot, records);
 		return records;

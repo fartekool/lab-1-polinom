@@ -110,6 +110,14 @@ public:
 	{
 		return Fill == 0;
 	}
+	vector<record> GetAllRecords() const override
+	{
+		vector<record> records;
+		for (const auto& rc : table)
+			if (rc.cond == Condition::busy)
+				records.push_back(rc.rc);
+		return records;
+	}
 	~Hash_open_addr_table() override = default;
 };
 

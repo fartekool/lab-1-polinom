@@ -56,6 +56,13 @@ public:
 	{
 		return Fill == 0;
 	}
+	vector<record> GetAllRecords() const override
+	{
+		vector<record> records;
+		for (int i = 0; i < table.size(); i++)
+			records.push_back(table[i]);
+		return records;
+	}
 	~List_table() = default;
 };
 #endif

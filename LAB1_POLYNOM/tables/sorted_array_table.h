@@ -95,6 +95,10 @@ public:
 				return false;
 		return true;
 	}
+	vector<record> GetAllRecords() const override
+	{
+		return table;
+	}
 	~Sorted_array_table() override = default;
 };
 

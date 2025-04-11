@@ -96,7 +96,10 @@ public:
 		return tables_fill;
 	}
 	~Tables_manager() = default;
-
+	vector<record> GetAllRecords() const
+	{
+		return current_table->GetAllRecords();
+	}
 };
 
 #endif

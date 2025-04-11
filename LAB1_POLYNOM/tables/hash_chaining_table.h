@@ -78,6 +78,14 @@ public:
 	{
 		return Fill == 0;
 	}
+	vector<record> GetAllRecords() const override
+	{
+		vector<record> records;
+		for (int i = 0; i < table.size(); i++)
+			for (int j = 0; j < table[i].size(); j++)
+				records.push_back(table[i][j]);
+		return records;
+	}
 	~Hash_chaining_table() override = default;
 };
 

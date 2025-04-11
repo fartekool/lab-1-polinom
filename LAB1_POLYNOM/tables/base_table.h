@@ -24,6 +24,7 @@ public:
 	virtual bool insert(const T& name, const B& obj) = 0;
 	virtual bool delete_rec(const T& name) = 0;
 	virtual bool isEmpty() const = 0;
+	virtual vector<record> GetAllRecords() const = 0;
 	virtual ~Base_table() = default;
 };
 

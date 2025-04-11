@@ -18,7 +18,7 @@ public:
 		for (int i = 0; i < table.size(); i++)
 			if (table[i].key == name)
 				return table[i].data;
-		throw runtime_error("Key not finded!");
+		throw runtime_error("Key not found!");
 	}
 	bool insert(const T& name, const B& obj) override
 	{
@@ -48,12 +48,10 @@ public:
 	{
 		return Fill == 0;
 	}
-	~Array_table() = default;
-
-
-	const vector<record>& GetAll()
+	vector<record> GetAllRecords() const override
 	{
 		return table;
 	}
+	~Array_table() = default;
 };
 #endif
