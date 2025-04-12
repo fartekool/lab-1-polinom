@@ -140,7 +140,6 @@
     <ClCompile Include="InfixToPostfixConverter.cpp" />
     <ClCompile Include="Parser.cpp" />
     <ClCompile Include="PostfixCalculator.cpp" />
-    <ClCompile Include="sample.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

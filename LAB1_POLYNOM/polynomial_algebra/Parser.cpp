@@ -125,15 +125,19 @@ vector<Token> Parser::Parse(const string& expr)
         switch (state)
         {
         case S0:
-            if (isOp || isParanth)
+            if (isOp || isParanth) {
                 state = S1;
+                if (isOp) bufferTokenType = Token::OPERATOR;
+                else isLParanth ? bufferTokenType = Token::L_PARANTHESIS : bufferTokenType == Token::R_PARANTHESIS;
+            }
             else if (isDigit) {
                 state = S2;
                 bufferTokenType = Token::INT_LITERAL;
             }
             else if (isLetter || isUnderscore) {
                 state = S4;
-                isLetter ? bufferTokenType = Token::POLINOM_NAME : bufferTokenType = Token::L_PARANTHESIS;
+                if (isLetter) bufferTokenType = Token::POLINOM_NAME;
+                else isLParanth ? bufferTokenType = Token::L_PARANTHESIS : bufferTokenType = Token::R_PARANTHESIS;
             }
             else if (isPoint)
             {
@@ -145,10 +149,16 @@ vector<Token> Parser::Parse(const string& expr)
                 state = S0;
             break;
         case S1:
-            if (isDigit)
+            if (isDigit) {
                 state = S2;
-            else if (isLetter || isUnderscore)
+                bufferTokenType = Token::INT_LITERAL;
+                isLetter ? bufferTokenType = Token::POLINOM_NAME : bufferTokenType = Token::L_PARANTHESIS;
+            }
+            else if (isLetter || isUnderscore) {
+                if (isLetter) bufferTokenType = Token::POLINOM_NAME;
+                else isLParanth ? bufferTokenType = Token::L_PARANTHESIS : bufferTokenType = Token::R_PARANTHESIS;
                 state = S4;
+            }
             else if (isPoint || (isOp && !isUnaryMinus))
             {
                 stringstream ss;
@@ -199,12 +209,16 @@ vector<Token> Parser::Parse(const string& expr)
             }
             break;
         case S5:
-            if (isParanth || isOp)
+            if (isParanth || isOp) 
                 state = S1;
-            else if (isDigit)
+            else if (isDigit) {
                 state = S2;
-            else if (isLetter || isUnderscore)
+                bufferTokenType = Token::INT_LITERAL;
+            }
+            else if (isLetter || isUnderscore) {
                 state = S4;
+                bufferTokenType = Token::POLINOM_NAME;
+            }
             else if (isPoint)
             {
                 stringstream ss;
