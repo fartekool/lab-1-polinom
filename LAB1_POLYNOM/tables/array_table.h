@@ -6,9 +6,9 @@
 template<class T, class B>
 class Array_table: public Base_table<T, B>
 {
-	using Base_table<T, B>::record;
+
 	using Base_table<T, B>::Fill;
-	vector<record> table;
+	vector<record<T, B>> table;
 public:
 	Array_table() { Fill = 0; }
 	B& find(const T& name) override
@@ -27,7 +27,7 @@ public:
 		for (int i = 0; i < table.size(); i++)
 			if (table[i].key == name)
 				return false;
-		table.push_back(record{ name, obj });
+		table.push_back(record<T, B>{ name, obj });
 		Fill++;
 		return true;
 	}
@@ -48,7 +48,7 @@ public:
 	{
 		return Fill == 0;
 	}
-	vector<record> GetAllRecords() const override
+	vector<record<T, B>> GetAllRecords() const override
 	{
 		return table;
 	}

@@ -8,9 +8,9 @@
 template<class T, class B>
 class List_table : public Base_table<T, B>
 {
-	using Base_table<T, B>::record;
+
 	using Base_table<T, B>::Fill;
-	List<record> table;
+	List<record<T, B>> table;
 public:
 	List_table() { Fill = 0; }
 	B& find(const T& name) override
@@ -34,7 +34,7 @@ public:
 		for (int i = 0; i < table.size(); i++)
 			if (table[i].key == name)
 				return false;
-		table.PushFront(record{ name, obj });
+		table.PushFront(record<T, B>{ name, obj });
 		Fill++;
 		return true;
 	}
@@ -56,9 +56,9 @@ public:
 	{
 		return Fill == 0;
 	}
-	vector<record> GetAllRecords() const override
+	vector<record<T, B>> GetAllRecords() const override
 	{
-		vector<record> records;
+		vector<record<T, B>> records;
 		for (int i = 0; i < table.size(); i++)
 			records.push_back(table[i]);
 		return records;

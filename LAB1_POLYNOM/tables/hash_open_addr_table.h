@@ -8,12 +8,12 @@
 template<class T, class B>
 class Hash_open_addr_table : public Base_table<T, B>
 {
-	using Base_table<T, B>::record;
+
 	using Base_table<T, B>::Fill;
 	enum class Condition { empty, busy, deleted };
 	struct HashRecord
 	{
-		record rc;
+		record<T, B> rc;
 		Condition cond = Condition::empty;
 	};
 	vector<HashRecord> table;
@@ -110,9 +110,9 @@ public:
 	{
 		return Fill == 0;
 	}
-	vector<record> GetAllRecords() const override
+	vector<record<T, B>> GetAllRecords() const override
 	{
-		vector<record> records;
+		vector<record<T, B>> records;
 		for (const auto& rc : table)
 			if (rc.cond == Condition::busy)
 				records.push_back(rc.rc);

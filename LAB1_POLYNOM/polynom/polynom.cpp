@@ -25,7 +25,7 @@ Monom Polynom::ParseMonom(const string& monomStr) {
 	double coef = 0;
 	size_t degrees[3] = { 0, 0, 0 };
 	size_t i = 0;
-
+	
 	// обработка знака монома
 	bool isNegative = false;
 	if (monomStr[i] == '-') {

@@ -8,20 +8,20 @@
 template<class T, class B>
 class Sorted_array_table : public Base_table<T, B>
 {
-	using Base_table<T, B>::record;
+
 	using Base_table<T, B>::Fill;
 	struct binary_result
 	{
 		bool flag;
 		int index;
 	};
-	vector<record> table;
+	vector<record<T, B>> table;
 	void shift_elem(size_t pos, const T& name, const B& obj)
 	{
-		table.push_back(record{ name, obj });
+		table.push_back(record<T, B>{ name, obj });
 		for (int i = table.size() - 1; i > pos; i--)
 		{
-			record tmp = table[i];
+			record<T, B> tmp = table[i];
 			table[i] = table[i - 1];
 			table[i - 1] = tmp;
 		}
@@ -60,7 +60,7 @@ public:
 			return false;
 		if (table.size() == 0)
 		{
-			table.push_back(record{ name,obj });
+			table.push_back(record<T, B>{ name,obj });
 			Fill++;
 			return true;
 		}
@@ -95,7 +95,7 @@ public:
 				return false;
 		return true;
 	}
-	vector<record> GetAllRecords() const override
+	vector<record<T, B>> GetAllRecords() const override
 	{
 		return table;
 	}

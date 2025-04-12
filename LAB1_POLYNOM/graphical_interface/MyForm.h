@@ -39,14 +39,30 @@ namespace graphicalinterface {
 			this->Height = 900;
 			this->StartPosition = FormStartPosition::CenterScreen;
 			this->BackgroundImage = Image::FromFile("../graphical_interface/image.jpg");
-
+			
 			textBox1->Enter += gcnew System::EventHandler(this, &MyForm::textBox1_Enter);
 			textBox1->Leave += gcnew System::EventHandler(this, &MyForm::textBox1_Leave);
 
 			textBox2->Enter += gcnew System::EventHandler(this, &MyForm::textBox2_Enter);
 			textBox2->Leave += gcnew System::EventHandler(this, &MyForm::textBox2_Leave);
 
+			textBox3->Enter += gcnew System::EventHandler(this, &MyForm::textBox3_Enter);
+			textBox3->Leave += gcnew System::EventHandler(this, &MyForm::textBox3_Leave);
+
+			textBox4->Enter += gcnew System::EventHandler(this, &MyForm::textBox4_Enter);
+			textBox4->Leave += gcnew System::EventHandler(this, &MyForm::textBox4_Leave);
+
 			SetupGridView();
+		}
+	private:
+		System::Void UpdateGrid()
+		{
+			polynomialGridView->Rows->Clear();
+
+			for (auto& item : table.GetAllRecords())
+			{
+				polynomialGridView->Rows->Add(gcnew String(item.key.c_str()), gcnew String(item.data.GetInfix().c_str()));
+			}
 		}
 	private: 
 		System::Void SetupGridView()
@@ -116,7 +132,31 @@ namespace graphicalinterface {
 			textBox2->ForeColor = System::Drawing::Color::Gray;
 		}
 	}
-		
+	private: System::Void textBox3_Enter(System::Object^ sender, System::EventArgs^ e) {
+		if (textBox3->Text == "Имя") {
+			textBox3->Text = "";
+			textBox3->ForeColor = System::Drawing::Color::Black;
+		}
+	}
+	private: System::Void textBox3_Leave(System::Object^ sender, System::EventArgs^ e) {
+		if (textBox3->Text == "") {
+			textBox3->Text = "Имя";
+			textBox3->ForeColor = System::Drawing::Color::Gray;
+		}
+	}
+	private: System::Void textBox4_Enter(System::Object^ sender, System::EventArgs^ e) {
+		if (textBox4->Text == "Выражение") {
+			textBox4->Text = "";
+			textBox4->ForeColor = System::Drawing::Color::Black;
+		}
+	}
+
+	private: System::Void textBox4_Leave(System::Object^ sender, System::EventArgs^ e) {
+		if (textBox4->Text == "") {
+			textBox4->Text = "Выражение";
+			textBox4->ForeColor = System::Drawing::Color::Gray;
+		}
+	}
 		ref struct InputDialogResult {
 			System::String^ name;
 			char variable;
@@ -205,12 +245,12 @@ namespace graphicalinterface {
 					if (e->ColumnIndex == 3)
 						new_pol = cur_pol.integrate(result->variable);
 					if (result->name == polyName)
-					{	
+					{
 						table.find(cur_name) = new_pol;
-						polynomialGridView->Rows[e->RowIndex]->Cells[1]->Value = gcnew System::String(new_pol.GetInfix().c_str());
+						UpdateGrid();
 					}
-					else if(table.insert(new_name, new_pol))
-						polynomialGridView->Rows->Add(gcnew String(result->name), gcnew String(new_pol.GetInfix().c_str()));
+					else if (table.insert(new_name, new_pol))
+						UpdateGrid();
 					else
 						MessageBox::Show("Ошибка", "Полином уже существует!", MessageBoxButtons::OK, MessageBoxIcon::Error);
 				}
@@ -227,10 +267,10 @@ namespace graphicalinterface {
 
 				if (result == System::Windows::Forms::DialogResult::Yes)
 				{
-					// Удаляем полином из таблицы
+					
 					table.delete_rec(name);
-					//UpdateTable();  // Обновляем таблицу
-					polynomialGridView->Rows->RemoveAt(e->RowIndex);
+					UpdateGrid();
+					
 
 				}
 			}
@@ -247,12 +287,17 @@ namespace graphicalinterface {
 		}
 	private: System::Windows::Forms::TextBox^ textBox1;
 	private: System::Windows::Forms::TextBox^ textBox2;
+	private: System::Windows::Forms::TextBox^ textBox3;
+	private: System::Windows::Forms::TextBox^ textBox4;
+
+
 
 	private: System::Windows::Forms::Button^ button1;
+	private: System::Windows::Forms::Button^ button4;
 	private: System::Windows::Forms::DataGridView^ polynomialGridView;
 	private: System::Windows::Forms::ImageList^ imageList1;
-private: System::Windows::Forms::Button^ button2;
-private: System::Windows::Forms::Button^ button3;
+	private: System::Windows::Forms::Button^ button2;
+	private: System::Windows::Forms::Button^ button3;
 
 
 
@@ -276,7 +321,10 @@ private: System::Windows::Forms::Button^ button3;
 			this->components = (gcnew System::ComponentModel::Container());
 			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
+			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
+			this->textBox4 = (gcnew System::Windows::Forms::TextBox());
 			this->button1 = (gcnew System::Windows::Forms::Button());
+			this->button4 = (gcnew System::Windows::Forms::Button());
 			this->polynomialGridView = (gcnew System::Windows::Forms::DataGridView());
 			this->imageList1 = (gcnew System::Windows::Forms::ImageList(this->components));
 			this->button2 = (gcnew System::Windows::Forms::Button());
@@ -304,6 +352,26 @@ private: System::Windows::Forms::Button^ button3;
 			this->textBox2->Text = L"Полином";
 			this->textBox2->TextChanged += gcnew System::EventHandler(this, &MyForm::textBox2_TextChanged);
 			// 
+			// textBox3
+			// 
+			this->textBox3->ForeColor = System::Drawing::Color::Gray;
+			this->textBox3->Location = System::Drawing::Point(2180, 81);
+			this->textBox3->Name = L"textBox3";
+			this->textBox3->Size = System::Drawing::Size(366, 31);
+			this->textBox3->TabIndex = 0;
+			this->textBox3->Text = L"Имя";
+			this->textBox3->TextChanged += gcnew System::EventHandler(this, &MyForm::textBox3_TextChanged);
+			// 
+			// textBox4
+			// 
+			this->textBox4->ForeColor = System::Drawing::Color::Gray;
+			this->textBox4->Location = System::Drawing::Point(2180, 155);
+			this->textBox4->Name = L"textBox4";
+			this->textBox4->Size = System::Drawing::Size(366, 31);
+			this->textBox4->TabIndex = 1;
+			this->textBox4->Text = L"Выражение";
+			this->textBox4->TextChanged += gcnew System::EventHandler(this, &MyForm::textBox4_TextChanged);
+			// 
 			// button1
 			// 
 			this->button1->Location = System::Drawing::Point(137, 345);
@@ -313,6 +381,16 @@ private: System::Windows::Forms::Button^ button3;
 			this->button1->Text = L"Добавить\r\n";
 			this->button1->UseVisualStyleBackColor = true;
 			this->button1->Click += gcnew System::EventHandler(this, &MyForm::button1_Click);
+			// 
+			// button4
+			// 
+			this->button4->Location = System::Drawing::Point(2180, 345);
+			this->button4->Name = L"button1";
+			this->button4->Size = System::Drawing::Size(366, 160);
+			this->button4->TabIndex = 3;
+			this->button4->Text = L"Добавить\r\n";
+			this->button4->UseVisualStyleBackColor = true;
+			this->button4->Click += gcnew System::EventHandler(this, &MyForm::button4_Click);
 			// 
 			// polynomialGridView
 			// 
@@ -363,8 +441,11 @@ private: System::Windows::Forms::Button^ button3;
 			this->Controls->Add(this->button2);
 			this->Controls->Add(this->polynomialGridView);
 			this->Controls->Add(this->button1);
+			this->Controls->Add(this->button4);
 			this->Controls->Add(this->textBox2);
 			this->Controls->Add(this->textBox1);
+			this->Controls->Add(this->textBox3);
+			this->Controls->Add(this->textBox4);
 			this->KeyPreview = true;
 			this->Name = L"MyForm";
 			this->Text = L"Polynom";
@@ -381,6 +462,8 @@ private: System::Windows::Forms::Button^ button3;
 	}
 	private: System::Void textBox3_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 	}
+	private: System::Void textBox4_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+	}
 	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
 		String^ NAME = textBox1->Text;
 		string name = msclr::interop::marshal_as<std::string>(NAME);
@@ -390,16 +473,34 @@ private: System::Windows::Forms::Button^ button3;
 			return;
 		}
 
-		String^ EXP = textBox2->Text;
-		string exp = msclr::interop::marshal_as<std::string>(EXP);
-		try {
+		String^ POLYNOM_STR = textBox2->Text;
+		string polynom_str = msclr::interop::marshal_as<std::string>(POLYNOM_STR);
+		try
+		{
+			Polynom polynom(polynom_str);
+			if (table.insert(name, polynom))
+				UpdateGrid();
+			else
+			{
+				MessageBox::Show("Ошибка", "Полином уже существует!", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+		}
+		catch (const std::exception& e)
+		{
+			System::String^ errorMessage = gcnew System::String(e.what());
+			MessageBox::Show("Ошибка: " + errorMessage, "Некорректный ввод полинома!", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		}
+
+
+		/*try {
 			
 
 			try
 			{
 				Polynom polynom(exp);
+				
 				if (table.insert(name, polynom))
-					polynomialGridView->Rows->Add(gcnew String(NAME), gcnew String(polynom.GetInfix().c_str()));
+					UpdateGrid();
 				else {
 					MessageBox::Show("Ошибка", "Полином уже существует!", MessageBoxButtons::OK, MessageBoxIcon::Error);
 				}
@@ -421,7 +522,7 @@ private: System::Windows::Forms::Button^ button3;
 
 
 				if (table.insert(name, result))
-					polynomialGridView->Rows->Add(gcnew String(NAME), gcnew String(result.GetInfix().c_str()));
+					UpdateGrid();
 				else {
 					MessageBox::Show("Ошибка", "Полином уже существует!", MessageBoxButtons::OK, MessageBoxIcon::Error);
 				}
@@ -431,9 +532,46 @@ private: System::Windows::Forms::Button^ button3;
 		{
 			System::String^ errorMessage = gcnew System::String(e.what());
 			MessageBox::Show("Ошибка: " + errorMessage, "Некорректный ввод полинома!", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		}*/
+
+
+	}
+	private: System::Void button4_Click(System::Object^ sender, System::EventArgs^ e) {
+		String^ NAME = textBox3->Text;
+		string name = msclr::interop::marshal_as<std::string>(NAME);
+		if (!ValidateName(name))
+		{
+			MessageBox::Show("Ошибка", "Некорректное имя!", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			return;
 		}
 
+		String^ EXPRESSION_STR = textBox4->Text;
+		string expression_str = msclr::interop::marshal_as<std::string>(EXPRESSION_STR);
 
+		try
+		{
+			Expression exp(expression_str);
+			vector<string> poly_names = exp.GetOperands();
+
+			map<string, Polynom> pol;
+
+			for (string& i : poly_names)
+			{
+				pol.insert(std::make_pair(i, table.find(i)));
+			}
+			Polynom result = exp.Calculate(pol);
+
+			if (table.insert(name, result))
+				UpdateGrid();
+			else {
+				MessageBox::Show("Ошибка", "Полином уже существует!", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+		}
+		catch (const std::exception& e)
+		{
+			System::String^ errorMessage = gcnew System::String(e.what());
+			MessageBox::Show("Ошибка: " + errorMessage, "Некорректный ввод выражения!", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		}
 	}
 	private: System::Void MyForm_KeyDown(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e){
 		
@@ -544,6 +682,7 @@ private: System::Windows::Forms::Button^ button3;
 				cur_type = TableType::SORTED_ARRAY_TABLE;
 
 			table.set_current(cur_type);
+			UpdateGrid();
 		}
 	}
 	

@@ -7,11 +7,11 @@
 template<class T, class B>
 class Avl_tree_table : public Base_table<T, B>
 {
-	using Base_table<T, B>::record;
+
 	using Base_table<T, B>::Fill;
 
 	struct TNode {
-		record rc;
+		record<T, B> rc;
 
 		size_t height = 0;
 
@@ -140,7 +140,7 @@ class Avl_tree_table : public Base_table<T, B>
 		}
 	}
 
-	void GetRecord(TNode* node, vector<record>& records) const {
+	void GetRecord(TNode* node, vector<record<T, B>>& records) const {
 		if (node != nullptr) {
 			GetRecord(node->pLeft, records);
 			records.push_back(node->rc);
@@ -194,9 +194,9 @@ public:
 		return Fill == 0;
 	}
 
-	vector<record> GetAllRecords() const override
+	vector<record<T, B>> GetAllRecords() const override
 	{
-		vector<record> records;
+		vector<record<T, B>> records;
 		GetRecord(pRoot, records);
 		return records;
 	}

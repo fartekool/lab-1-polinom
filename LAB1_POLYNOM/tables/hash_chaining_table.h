@@ -11,9 +11,9 @@ const size_t default_count_of_rows = 10;
 template<class T, class B>
 class Hash_chaining_table : public Base_table<T, B>
 {
-	using Base_table<T, B>::record;
+
 	using Base_table<T, B>::Fill;
-	vector<List<record>> table;
+	vector<List<record<T, B>>> table;
 	size_t count_of_rows;
 public:
 	Hash_chaining_table(size_t rows = default_count_of_rows)
@@ -53,7 +53,7 @@ public:
 		for (int i = 0; i < table[hashcode].size(); i++)
 			if (table[hashcode][i].key == name)
 				return false;//ключ уже есть
-		table[hashcode].PushFront(record{ name, obj });
+		table[hashcode].PushFront(record<T, B>{ name, obj });
 		Fill++;
 		return true;
 	}
@@ -78,9 +78,9 @@ public:
 	{
 		return Fill == 0;
 	}
-	vector<record> GetAllRecords() const override
+	vector<record<T, B>> GetAllRecords() const override
 	{
-		vector<record> records;
+		vector<record<T, B>> records;
 		for (int i = 0; i < table.size(); i++)
 			for (int j = 0; j < table[i].size(); j++)
 				records.push_back(table[i][j]);

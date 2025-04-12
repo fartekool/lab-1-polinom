@@ -25,17 +25,12 @@ enum class TableType {
 template<class T, class B>
 class Tables_manager
 {
-	struct record
-	{
-		T key;
-		B data;
-	};
 	enum class Operation {ins,del};
 	vector<Base_table<T, B>*> tables;
 	Base_table<T,B>* current_table;
 	size_t tables_fill;
-	record to_synchr;
-	void sync(record elem, Operation op)
+	record<T, B> to_synchr;
+	void sync(record<T, B> elem, Operation op)
 	{
 		for (int i = 0; i < count_of_tables; i++)
 		{
@@ -96,7 +91,7 @@ public:
 		return tables_fill;
 	}
 	~Tables_manager() = default;
-	vector<record> GetAllRecords() const
+	vector<record<T, B>> GetAllRecords() const
 	{
 		return current_table->GetAllRecords();
 	}
