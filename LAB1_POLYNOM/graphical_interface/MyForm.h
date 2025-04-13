@@ -345,10 +345,10 @@ namespace graphicalinterface {
 			// 
 			// textBox1
 			// 
-			this->textBox1->ForeColor = System::Drawing::Color::Gray;
-			this->textBox1->Location = System::Drawing::Point(137, 81);
+			this->textBox1->ForeColor = System::Drawing::Color::Gray; 
+			this->textBox1->Location = System::Drawing::Point(250, 100);
 			this->textBox1->Name = L"textBox1";
-			this->textBox1->Size = System::Drawing::Size(366, 31);
+			this->textBox1->Size = System::Drawing::Size(400, 50);
 			this->textBox1->TabIndex = 0;
 			this->textBox1->Text = L"Имя";
 			this->textBox1->Font = gcnew System::Drawing::Font("Microsoft Sans Serif", 16);
@@ -357,69 +357,75 @@ namespace graphicalinterface {
 			// textBox2
 			// 
 			this->textBox2->ForeColor = System::Drawing::Color::Gray;
-			this->textBox2->Location = System::Drawing::Point(137, 155);
+			this->textBox2->Location = System::Drawing::Point(250, 200);
 			this->textBox2->Name = L"textBox2";
-			this->textBox2->Size = System::Drawing::Size(366, 31);
+			this->textBox2->Size = System::Drawing::Size(400, 50);
 			this->textBox2->TabIndex = 1;
 			this->textBox2->Text = L"Полином";
 			this->textBox2->Font = gcnew System::Drawing::Font("Microsoft Sans Serif", 16);
 			this->textBox2->TextChanged += gcnew System::EventHandler(this, &MyForm::textBox2_TextChanged);
+			
 			// 
 			// textBox3
 			// 
 			this->textBox3->ForeColor = System::Drawing::Color::Gray;
-			this->textBox3->Location = System::Drawing::Point(2180, 81);
+			this->textBox3->Location = System::Drawing::Point(2500, 100);
 			this->textBox3->Name = L"textBox3";
-			this->textBox3->Size = System::Drawing::Size(366, 31);
-			this->textBox3->TabIndex = 0;
+			this->textBox3->Size = System::Drawing::Size(400, 50);
+			this->textBox3->TabIndex = 2;
 			this->textBox3->Text = L"Имя";
 			this->textBox3->Font = gcnew System::Drawing::Font("Microsoft Sans Serif", 16);
 			this->textBox3->TextChanged += gcnew System::EventHandler(this, &MyForm::textBox3_TextChanged);
+
 			// 
 			// textBox4
 			// 
 			this->textBox4->ForeColor = System::Drawing::Color::Gray;
-			this->textBox4->Location = System::Drawing::Point(2180, 155);
+			this->textBox4->Location = System::Drawing::Point(2500, 200);
 			this->textBox4->Name = L"textBox4";
-			this->textBox4->Size = System::Drawing::Size(366, 31);
-			this->textBox4->TabIndex = 1;
+			this->textBox4->Size = System::Drawing::Size(400, 50);
+			this->textBox4->TabIndex = 3;
 			this->textBox4->Text = L"Выражение";
 			this->textBox4->Font = gcnew System::Drawing::Font("Microsoft Sans Serif", 16);
 			this->textBox4->TextChanged += gcnew System::EventHandler(this, &MyForm::textBox4_TextChanged);
+			
 			// 
 			// button1
 			// 
-			this->button1->Location = System::Drawing::Point(137, 345);
+			this->button1->Location = System::Drawing::Point(250, 350);
 			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(366, 160);
-			this->button1->TabIndex = 3;
+			this->button1->Size = System::Drawing::Size(400, 150);
+			this->button1->TabIndex = 4;
 			this->button1->Text = L"Добавить\r\n";
 			this->button1->Font = gcnew System::Drawing::Font("Microsoft Sans Serif", 16, System::Drawing::FontStyle::Bold);
 			this->button1->UseVisualStyleBackColor = true;
 			this->button1->Click += gcnew System::EventHandler(this, &MyForm::button1_Click);
+			
 			// 
 			// button4
 			// 
-			this->button4->Location = System::Drawing::Point(2180, 345);
+			this->button4->Location = System::Drawing::Point(2500, 350);
 			this->button4->Name = L"button1";
-			this->button4->Size = System::Drawing::Size(366, 160);
-			this->button4->TabIndex = 3;
+			this->button4->Size = System::Drawing::Size(400, 150);
+			this->button4->TabIndex = 5;
 			this->button4->Text = L"Добавить\r\n";
 			this->button4->Font = gcnew System::Drawing::Font("Microsoft Sans Serif", 16, System::Drawing::FontStyle::Bold);
 			this->button4->UseVisualStyleBackColor = true;
 			this->button4->Click += gcnew System::EventHandler(this, &MyForm::button4_Click);
+			
 			// 
 			// polynomialGridView
 			// 
 			this->polynomialGridView->AllowUserToAddRows = false;
 			this->polynomialGridView->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			this->polynomialGridView->Location = System::Drawing::Point(760, 81);
+			this->polynomialGridView->Location = System::Drawing::Point(925, 100);
 			this->polynomialGridView->Name = L"polynomialGridView";
 			this->polynomialGridView->ReadOnly = true;
 			this->polynomialGridView->RowHeadersWidth = 82;
 			this->polynomialGridView->RowTemplate->Height = 33;
-			this->polynomialGridView->Size = System::Drawing::Size(1300, 642);
-			this->polynomialGridView->TabIndex = 4;
+			this->polynomialGridView->Size = System::Drawing::Size(1300, 1000);
+			this->polynomialGridView->TabIndex = 6;
+			
 			//this->polynomialGridView->CellContentClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &MyForm::polynomialGridView_CellContentClick);
 			// 
 			// imageList1
@@ -430,23 +436,27 @@ namespace graphicalinterface {
 			// 
 			// button2
 			// 
-			this->button2->Location = System::Drawing::Point(1760, 772);
+			this->button2->Location = System::Drawing::Point(2025, 1200);
 			this->button2->Name = L"button2";
-			this->button2->Size = System::Drawing::Size(163, 68);
-			this->button2->TabIndex = 5;
+			this->button2->Size = System::Drawing::Size(200, 100);
+			this->button2->TabIndex = 7;
 			this->button2->Text = L"Удалить все";
+			this->button2->Font = gcnew System::Drawing::Font("Microsoft Sans Serif", 10, System::Drawing::FontStyle::Bold);
 			this->button2->UseVisualStyleBackColor = true;
 			this->button2->Click += gcnew System::EventHandler(this, &MyForm::button2_Click);
+			
 			// 
 			// button3
 			// 
-			this->button3->Location = System::Drawing::Point(760, 772);
+			this->button3->Location = System::Drawing::Point(925, 1200);
 			this->button3->Name = L"button3";
-			this->button3->Size = System::Drawing::Size(196, 68);
-			this->button3->TabIndex = 6;
+			this->button3->Size = System::Drawing::Size(200, 100);
+			this->button3->TabIndex = 8;
 			this->button3->Text = L"Выбор Таблицы";
+			this->button3->Font = gcnew System::Drawing::Font("Microsoft Sans Serif", 10, System::Drawing::FontStyle::Bold);
 			this->button3->UseVisualStyleBackColor = true;
 			this->button3->Click += gcnew System::EventHandler(this, &MyForm::button3_Click);
+			
 
 
 			// Создаём контекстное меню
@@ -471,7 +481,7 @@ namespace graphicalinterface {
 			this->AutoScaleDimensions = System::Drawing::SizeF(12, 25);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
-			this->ClientSize = System::Drawing::Size(2047, 1146);
+			this->ClientSize = System::Drawing::Size(3000, 1500);
 			this->Controls->Add(this->button3);
 			this->Controls->Add(this->button2);
 			this->Controls->Add(this->polynomialGridView);
@@ -610,14 +620,30 @@ namespace graphicalinterface {
 	}
 	private: System::Void MyForm_KeyDown(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e){
 		
-		if (e->KeyCode == Keys::Enter) {
-			button1->PerformClick(); 
+		System::Windows::Forms::Control^ currentControl = this->ActiveControl;
+
+		if (e->KeyCode == Keys::Enter)
+		{	
+			if (currentControl == textBox1 || currentControl == textBox2)
+				button1->PerformClick();
+			else if (currentControl == textBox3 || currentControl == textBox4)
+				button4->PerformClick();
 			e->SuppressKeyPress = true;
 		}
 		if (e->KeyCode == Keys::Up)
-			MyForm::ActiveControl = textBox1;
+		{
+			if (currentControl == textBox2)
+				MyForm::ActiveControl = textBox1;
+			else if (currentControl == textBox4)
+				MyForm::ActiveControl = textBox3;
+		}
 		if (e->KeyCode == Keys::Down)
-			MyForm::ActiveControl = textBox2;
+		{
+			if (currentControl == textBox1)
+				MyForm::ActiveControl = textBox2;
+			else if (currentControl == textBox3)
+				MyForm::ActiveControl = textBox4;
+		}
 	}
 
 	private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
