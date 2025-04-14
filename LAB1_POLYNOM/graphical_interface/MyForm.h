@@ -73,46 +73,11 @@ namespace graphicalinterface {
 
 			polynomialGridView->DefaultCellStyle->Font = gcnew System::Drawing::Font("Microsoft Sans Serif", 16);
 
-			/*DataGridViewButtonColumn^ derivativeColumn = gcnew DataGridViewButtonColumn();
-			derivativeColumn->HeaderText = "Производная";
-			derivativeColumn->Text = "Взять";
-			derivativeColumn->UseColumnTextForButtonValue = true;
-
-			DataGridViewButtonColumn^ integralColumn = gcnew DataGridViewButtonColumn();
-			integralColumn->HeaderText = "Интеграл";
-			integralColumn->Text = "Взять";
-			integralColumn->UseColumnTextForButtonValue = true;
-
-			DataGridViewButtonColumn^ deleteColumn = gcnew DataGridViewButtonColumn();
-			deleteColumn->HeaderText = "Удалить";
-			deleteColumn->Text = "X";
-			deleteColumn->UseColumnTextForButtonValue = true;*/
-
 			polynomialGridView->Columns->Add("Name", "Имя");
 			polynomialGridView->Columns->Add("Polynom", "Полином");
 			polynomialGridView->Columns["Polynom"]->Width = 470;
-			/*polynomialGridView->Columns->Add(derivativeColumn);
-			polynomialGridView->Columns->Add(integralColumn);
-			polynomialGridView->Columns->Add(deleteColumn);*/
-
-			/*polynomialGridView->CellMouseEnter += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &MyForm::polynomialGridView_CellMouseEnter);
-			polynomialGridView->CellMouseLeave += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &MyForm::polynomialGridView_CellMouseLeave);*/
 
 		}
-	/*private: System::Void polynomialGridView_CellMouseEnter(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
-		if (e->RowIndex >= 0 && e->ColumnIndex == 4) {
-			polynomialGridView->Rows[e->RowIndex]->Cells[e->ColumnIndex]->Style->BackColor = System::Drawing::Color::Red;
-			polynomialGridView->Rows[e->RowIndex]->Cells[e->ColumnIndex]->Style->ForeColor = System::Drawing::Color::White;
-			polynomialGridView->Rows[e->RowIndex]->Cells[e->ColumnIndex]->Style->Font =
-				gcnew System::Drawing::Font(polynomialGridView->Font, System::Drawing::FontStyle::Bold);
-		}
-	}
-	private: System::Void polynomialGridView_CellMouseLeave(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
-		if (e->RowIndex >= 0 && e->ColumnIndex == 4) {
-			polynomialGridView->Rows[e->RowIndex]->Cells[e->ColumnIndex]->Style->BackColor = System::Drawing::Color::White;
-			polynomialGridView->Rows[e->RowIndex]->Cells[e->ColumnIndex]->Style->ForeColor = System::Drawing::Color::Red;
-		}
-	}*/
 	private: System::Void textBox1_Enter(System::Object^ sender, System::EventArgs^ e) {
 		if (textBox1->Text == "Имя") {
 			textBox1->Text = "";
@@ -227,63 +192,6 @@ namespace graphicalinterface {
 
 			return nullptr;
 		}
-	private:
-		//System::Void polynomialGridView_CellContentClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e)
-		//{	
-		//	if (e->RowIndex < 0)
-		//		return;
-		//	if (e->ColumnIndex == 2 || e->ColumnIndex == 3) // Производная и интеграл
-		//	{	
-		//		InputDialogResult^ result;
-		//		if (e->ColumnIndex == 2)
-		//			result = ShowInputDialog(false, polynomialGridView->Rows[e->RowIndex]->Cells[0]->Value->ToString());
-		//		if (e->ColumnIndex == 3)
-		//			result = ShowInputDialog(true, polynomialGridView->Rows[e->RowIndex]->Cells[0]->Value->ToString());
-		//		if (result != nullptr && !String::IsNullOrWhiteSpace(result->name))
-		//		{
-		//			std::string new_name = msclr::interop::marshal_as<std::string>(result->name->ToString());
-		//			System::String^ polyName = polynomialGridView->Rows[e->RowIndex]->Cells[0]->Value->ToString();
-		//			std::string cur_name = msclr::interop::marshal_as<std::string>(polyName);
-		//			Polynom cur_pol = table.find(cur_name);
-
-		//			Polynom new_pol;
-		//			if (e->ColumnIndex == 2)
-		//				new_pol = cur_pol.derivative(result->variable);
-		//			if (e->ColumnIndex == 3)
-		//				new_pol = cur_pol.integrate(result->variable);
-		//			if (result->name == polyName)
-		//			{
-		//				table.find(cur_name) = new_pol;
-		//				UpdateGrid();
-		//			}
-		//			else if (table.insert(new_name, new_pol))
-		//				UpdateGrid();
-		//			else
-		//				MessageBox::Show("Ошибка", "Полином уже существует!", MessageBoxButtons::OK, MessageBoxIcon::Error);
-		//		}
-		//	}
-		//	
-		//	if (e->ColumnIndex == 4) // Удаление
-		//	{
-		//		System::String^ polyName = polynomialGridView->Rows[e->RowIndex]->Cells[0]->Value->ToString();
-		//		std::string name = msclr::interop::marshal_as<std::string>(polyName);
-
-		//		System::Windows::Forms::DialogResult result = MessageBox::Show(
-		//			"Удалить полином '" + polyName + "'?", "Подтверждение",
-		//			MessageBoxButtons::YesNo, MessageBoxIcon::Warning);
-
-		//		if (result == System::Windows::Forms::DialogResult::Yes)
-		//		{
-		//			
-		//			table.delete_rec(name);
-		//			UpdateGrid();
-		//			
-
-		//		}
-		//	}
-		//}
-	private:
-		
 	protected:
 		~MyForm()
 		{
@@ -300,13 +208,10 @@ namespace graphicalinterface {
 
 
 	private: System::Windows::Forms::Button^ button1;
-	private: System::Windows::Forms::Button^ button4;
-	private: System::Windows::Forms::DataGridView^ polynomialGridView;
-	private: System::Windows::Forms::ImageList^ imageList1;
 	private: System::Windows::Forms::Button^ button2;
 	private: System::Windows::Forms::Button^ button3;
-
-
+	private: System::Windows::Forms::Button^ button4;
+	private: System::Windows::Forms::DataGridView^ polynomialGridView;
 	private: System::Windows::Forms::ContextMenuStrip^ contextMenu = gcnew System::Windows::Forms::ContextMenuStrip();
 
 	private: System::Windows::Forms::ToolStripMenuItem^ derivativeItem = gcnew System::Windows::Forms::ToolStripMenuItem("Взять производную");
@@ -335,11 +240,10 @@ namespace graphicalinterface {
 			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox4 = (gcnew System::Windows::Forms::TextBox());
 			this->button1 = (gcnew System::Windows::Forms::Button());
-			this->button4 = (gcnew System::Windows::Forms::Button());
-			this->polynomialGridView = (gcnew System::Windows::Forms::DataGridView());
-			this->imageList1 = (gcnew System::Windows::Forms::ImageList(this->components));
 			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->button3 = (gcnew System::Windows::Forms::Button());
+			this->button4 = (gcnew System::Windows::Forms::Button());
+			this->polynomialGridView = (gcnew System::Windows::Forms::DataGridView());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->polynomialGridView))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -388,7 +292,6 @@ namespace graphicalinterface {
 			this->textBox4->Text = L"Выражение";
 			this->textBox4->Font = gcnew System::Drawing::Font("Microsoft Sans Serif", 16);
 			this->textBox4->TextChanged += gcnew System::EventHandler(this, &MyForm::textBox4_TextChanged);
-			
 			// 
 			// button1
 			// 
@@ -400,7 +303,28 @@ namespace graphicalinterface {
 			this->button1->Font = gcnew System::Drawing::Font("Microsoft Sans Serif", 16, System::Drawing::FontStyle::Bold);
 			this->button1->UseVisualStyleBackColor = true;
 			this->button1->Click += gcnew System::EventHandler(this, &MyForm::button1_Click);
-			
+			// 
+			// button2
+			// 
+			this->button2->Location = System::Drawing::Point(2025, 1200);
+			this->button2->Name = L"button2";
+			this->button2->Size = System::Drawing::Size(200, 100);
+			this->button2->TabIndex = 7;
+			this->button2->Text = L"Удалить все";
+			this->button2->Font = gcnew System::Drawing::Font("Microsoft Sans Serif", 10, System::Drawing::FontStyle::Bold);
+			this->button2->UseVisualStyleBackColor = true;
+			this->button2->Click += gcnew System::EventHandler(this, &MyForm::button2_Click);
+			// 
+			// button3
+			// 
+			this->button3->Location = System::Drawing::Point(925, 1200);
+			this->button3->Name = L"button3";
+			this->button3->Size = System::Drawing::Size(200, 100);
+			this->button3->TabIndex = 8;
+			this->button3->Text = L"Выбор Таблицы";
+			this->button3->Font = gcnew System::Drawing::Font("Microsoft Sans Serif", 10, System::Drawing::FontStyle::Bold);
+			this->button3->UseVisualStyleBackColor = true;
+			this->button3->Click += gcnew System::EventHandler(this, &MyForm::button3_Click);
 			// 
 			// button4
 			// 
@@ -426,51 +350,10 @@ namespace graphicalinterface {
 			this->polynomialGridView->Size = System::Drawing::Size(1300, 1000);
 			this->polynomialGridView->TabIndex = 6;
 			
-			//this->polynomialGridView->CellContentClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &MyForm::polynomialGridView_CellContentClick);
-			// 
-			// imageList1
-			// 
-			this->imageList1->ColorDepth = System::Windows::Forms::ColorDepth::Depth8Bit;
-			this->imageList1->ImageSize = System::Drawing::Size(16, 16);
-			this->imageList1->TransparentColor = System::Drawing::Color::Transparent;
-			// 
-			// button2
-			// 
-			this->button2->Location = System::Drawing::Point(2025, 1200);
-			this->button2->Name = L"button2";
-			this->button2->Size = System::Drawing::Size(200, 100);
-			this->button2->TabIndex = 7;
-			this->button2->Text = L"Удалить все";
-			this->button2->Font = gcnew System::Drawing::Font("Microsoft Sans Serif", 10, System::Drawing::FontStyle::Bold);
-			this->button2->UseVisualStyleBackColor = true;
-			this->button2->Click += gcnew System::EventHandler(this, &MyForm::button2_Click);
-			
-			// 
-			// button3
-			// 
-			this->button3->Location = System::Drawing::Point(925, 1200);
-			this->button3->Name = L"button3";
-			this->button3->Size = System::Drawing::Size(200, 100);
-			this->button3->TabIndex = 8;
-			this->button3->Text = L"Выбор Таблицы";
-			this->button3->Font = gcnew System::Drawing::Font("Microsoft Sans Serif", 10, System::Drawing::FontStyle::Bold);
-			this->button3->UseVisualStyleBackColor = true;
-			this->button3->Click += gcnew System::EventHandler(this, &MyForm::button3_Click);
-			
-
-
-			// Создаём контекстное меню
-			
-
-			// Привязываем события
 			derivativeItem->Click += gcnew System::EventHandler(this, &MyForm::OnDerivativeClick);
 			integralItem->Click += gcnew System::EventHandler(this, &MyForm::OnIntegralClick);
 			deleteItem->Click += gcnew System::EventHandler(this, &MyForm::OnDeleteClick);
-
-			// Добавляем в контекстное меню
 			contextMenu->Items->AddRange(gcnew cli::array<System::Windows::Forms::ToolStripItem^>{ derivativeItem, integralItem, deleteItem });
-
-			// Привязываем меню к таблице
 
 			this->polynomialGridView->MouseDown += gcnew System::Windows::Forms::MouseEventHandler(this, &MyForm::polynomialGridView_MouseDown);
 
@@ -535,50 +418,6 @@ namespace graphicalinterface {
 			System::String^ errorMessage = gcnew System::String(e.what());
 			MessageBox::Show("Ошибка: " + errorMessage, "Некорректный ввод полинома!", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		}
-
-
-		/*try {
-			
-
-			try
-			{
-				Polynom polynom(exp);
-				
-				if (table.insert(name, polynom))
-					UpdateGrid();
-				else {
-					MessageBox::Show("Ошибка", "Полином уже существует!", MessageBoxButtons::OK, MessageBoxIcon::Error);
-				}
-			}
-			catch (const std::exception& e)
-			{	
-				Expression exp1(exp);
-
-				vector<string> poly_names = exp1.GetOperands();
-
-				map<string, Polynom> pol;
-
-				for (string& i : poly_names)
-				{
-					pol.insert(std::make_pair(i, table.find(i)));
-				}
-
-				Polynom result = exp1.Calculate(pol);
-
-
-				if (table.insert(name, result))
-					UpdateGrid();
-				else {
-					MessageBox::Show("Ошибка", "Полином уже существует!", MessageBoxButtons::OK, MessageBoxIcon::Error);
-				}
-			}
-		}
-		catch (const std::exception& e)
-		{
-			System::String^ errorMessage = gcnew System::String(e.what());
-			MessageBox::Show("Ошибка: " + errorMessage, "Некорректный ввод полинома!", MessageBoxButtons::OK, MessageBoxIcon::Error);
-		}*/
-
 
 	}
 	private: System::Void button4_Click(System::Object^ sender, System::EventArgs^ e) {
